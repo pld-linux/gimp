@@ -6,18 +6,20 @@ Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.1
-Release:	7
+Release:	8
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
+Group(de):	X11/Applikationen/Grafik
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
 Source0:	ftp://ftp.gimp.org/pub/gimp/v1.2/v%{version}/%{name}-%{version}.tar.bz2
-Source1:	gimp.desktop
-Patch0:		gimp-perldep.patch
-Patch1:		gimp-DESTDIR.patch
-Patch2:		gimp-croak.patch
-Patch3:		gimp-i18n.patch
+Source1:	%{name}.desktop
+Patch0:		%{name}-perldep.patch
+Patch1:		%{name}-DESTDIR.patch
+Patch2:		%{name}-croak.patch
+Patch3:		%{name}-i18n.patch
+Patch4:		%{name}-setlocale.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gettext-devel
@@ -90,6 +92,7 @@ Summary(de):	GIMP-Plugin und Extension Development Kit
 Summary(pl):	Pliki do budowania modu³ów i rozszerzeñ dla Gimp
 Summary(tr):	GIMP plugin ve uzantý geliþtirme araçlarý
 Group:		X11/Applications/Graphics
+Group(de):	X11/Applikationen/Grafik
 Group(pl):	X11/Aplikacje/Grafika
 License:	LGPL
 Requires:	%{name} = %{version}
@@ -124,6 +127,7 @@ Summary:	ASCII Art plugin for Gimp
 Summary(fr):	Plugin d'art ASCII pour Gimp
 Summary(pl):	Wsparcie dla ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
+Group(de):	X11/Applikationen/Grafik
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
 Requires:	%{name} = %{version}
@@ -143,6 +147,7 @@ Ten pakiet zawiera "wtyczkê" do Gimpa ze wsparciem dla ASCII Art.
 Summary:	Xdelta plugin for GIMP
 Summary(fr):	Plugin Xdelta pour GIMP
 Group:		X11/Applications/Graphics
+Group(de):	X11/Applikationen/Grafik
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
 Requires:	%{name} = %{version}
@@ -161,6 +166,7 @@ partagée xdelta.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
