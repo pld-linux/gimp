@@ -9,11 +9,10 @@ Release:	2
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
-#######		ftp://ftp.gimp.org/pub/gimp/unstable/v1.1.5/
-Source:		%{name}-%{version}.tar.bz2
+Source:		ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 URL:		http://www.gimp.org/
-BuildPrereq:	gtk+-devel
-BuildPrereq:	glib-devel
+BuildPrereq:	gtk+-devel >= 1.2.0
+BuildPrereq:	glib-devel >= 1.2.0
 BuildPrereq:	perl
 BuildPrereq:	XFree86-devel
 BuildPrereq:	libtiff-devel
@@ -22,8 +21,6 @@ BuildPrereq:	libpng-devel
 BuildPrereq:	libungif-devel
 BuildPrereq:	xpm-devel
 BuildPrereq:	zlib-devel
-Requires:	gtk+ >= 1.2.0
-Requires:	glib >= 1.2.0
 %requires_eq	perl
 Requires:	%{perl_sitearch}
 BuildRoot:	/tmp/%{name}-%{version}-root
@@ -59,7 +56,7 @@ Program Gimp jest przeznaczony do obróbki i tworzenia plików w ró¿nych
 formatach graficznych. Dziêki niemu bêdziesz móg³ stworzyæ grafikê dla 
 stron WWW, przerobiæ zdjêcia, czy stworzyæ w³asne logo.
 
-%package	devel
+%package devel
 Summary:	GIMP plugin and extension development kit
 Summary(fr):	Plugin GIMP et kit de développement d'extensions
 Summary(de):	GIMP-Plugin und Extension Development Kit
@@ -81,16 +78,16 @@ Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen
 Pliki nag³ówkowe dla GIMP.
 
 %package static
-Summary:     GIMP static libraries
-Summary(pl): Biblioteki statyczne do GIMPa
-Group:       Libraries
-Requires:    %{name}-devel = %{version}
+Summary:	GIMP static libraries
+Summary(pl):	Biblioteki statyczne do GIMPa
+Group:		Libraries
+Requires:	%{name}-devel = %{version}
 
 %description static
-GIMP static libraries
+GIMP static libraries.
 
 %description -l pl static
-Biblioteki statyczne do GIMPa
+Biblioteki statyczne do GIMPa.
 
 %prep
 %setup -q
@@ -180,7 +177,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/tips/gimp_tips.txt
 %lang(fr) %{_datadir}/gimp/tips/gimp_conseils.fr.txt
 %lang(de) %{_datadir}/gimp/tips/gimp_tips.de.txt
-
 
 %config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
 %config %{_datadir}/gimp/gtkrc*
