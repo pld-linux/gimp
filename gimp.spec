@@ -23,7 +23,6 @@ Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
-Patch0:		%{name}-ac.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	aalib-devel
@@ -32,6 +31,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{!?_without_print:BuildRequires:	gimp-print-devel}
 BuildRequires:	gtk+2-devel >= 2.2.0
+BuildRequires:	intltool
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libgtkhtml-devel
 BuildRequires:	libjpeg-devel
@@ -237,7 +237,6 @@ Wtyczka do drukowania dla Gimpa.
 
 %prep
 %setup	-q
-#%patch0 -p1
 
 %build
 %{__libtoolize}
