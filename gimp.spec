@@ -100,7 +100,7 @@ make
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/X11/wmconfig,usr/share/aclocal} \
 	$RPM_BUILD_ROOT/usr/X11R6/share/icons \
-	$RPM_BUILD_ROOT/usr/lib/perl5/5.00502/$RPM_ARCH-linux-thread
+	$RPM_BUILD_ROOT%{_libdir}/perl5/5.00502/$RPM_ARCH-linux-thread
 
 make install \
 	prefix=$RPM_BUILD_ROOT/usr/X11R6 \
@@ -157,7 +157,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) /usr/X11R6/share/gimp/user_install
 
-#%attr(-,root,root,755) /usr/lib/perl5/site_perl/*
+#%attr(-,root,root,755) %{_libdir}/perl5/site_perl/*
 
 %lang(de) /usr/X11R6/share/locale/de/LC_MESSAGES/gimp.mo
 %lang(fi) /usr/X11R6/share/locale/fi/LC_MESSAGES/gimp.mo
