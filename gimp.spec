@@ -341,15 +341,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_aclocaldir}/gimp.m4
 
 %attr(755,root,root) %{_bindir}/embedxpm
-%attr(755,root,root) %{_bindir}/escputil
-%attr(755,root,root) %{_bindir}/escputil-1.2
 %attr(755,root,root) %{_bindir}/scm2perl
 %attr(755,root,root) %{_bindir}/scm2scm
 %attr(755,root,root) %{_bindir}/xcftopnm
 
 %{_mandir}/man1/gimptool-1.2.1*
 %{_mandir}/man1/embedxpm.1*
-%{_mandir}/man1/escputil-1.2.1*
 %{_mandir}/man1/scm2perl.1*
 %{_mandir}/man1/scm2scm.1*
 %{_mandir}/man1/xcftopnm.1*
