@@ -1,0 +1,26 @@
+diff -ruN gimp-2.0pre4./libgimpwidgets/gimphelpui.c gimp-2.0pre4/libgimpwidgets/gimphelpui.c
+--- gimp-2.0pre4./libgimpwidgets/gimphelpui.c	2003-11-20 02:44:13.000000000 +0100
++++ gimp-2.0pre4/libgimpwidgets/gimphelpui.c	2004-03-05 22:14:37.244505088 +0100
+@@ -44,7 +44,7 @@
+                                                     GtkWidget       **help_widget,
+                                                     gpointer         *ret_data);
+ static gboolean   gimp_help_callback               (GtkWidget        *widget,
+-                                                    GtkWidgetHelpType help_type,
++                                                    GimpWidgetHelpType help_type,
+                                                     GimpHelpFunc      help_func);
+ 
+ static gboolean   gimp_context_help_idle_start     (gpointer          widget);
+diff -ruN gimp-2.0pre4./app/paint-funcs/paint-funcs.h gimp-2.0pre4/app/paint-funcs/paint-funcs.h
+--- gimp-2.0pre4./app/paint-funcs/paint-funcs.h	2004-03-03 23:22:38.000000000 +0100
++++ gimp-2.0pre4/app/paint-funcs/paint-funcs.h	2004-03-05 22:22:09.315779808 +0100
+@@ -352,8 +352,8 @@
+ 
+ void  initial_region                      (PixelRegion *, PixelRegion *,
+ 					   PixelRegion *, guchar *,
+-					   int, GimpLayerModeEffects, int *,
+-					   CombinationMode);
++					   gint, GimpLayerModeEffects,
++					   gboolean *, InitialMode);
+ 
+ void  combine_regions                     (PixelRegion *, PixelRegion *,
+ 					   PixelRegion *, PixelRegion *,

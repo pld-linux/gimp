@@ -28,6 +28,7 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/testing/%{name}-%{version}%{pre}.tar.b
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-GIMP_VISIBLE_NAME.patch
 Patch2:		%{name}-locale-names.patch
+Patch3:		%{name}-gcc34.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -257,6 +258,7 @@ Wtyczka do drukowania dla Gimpa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 for dir in po po-libgimp po-plug-ins po-script-fu; do
 	mv $dir/{no,nb}.po
