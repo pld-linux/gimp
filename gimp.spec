@@ -8,6 +8,7 @@ Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.29
 Release: 	1
+Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
