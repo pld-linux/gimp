@@ -5,7 +5,7 @@
 %bcond_without	python		# without python plugins
 #
 %define	mver	2.0
-%define	pre	pre1
+%define	pre	pre2
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulación de imagen GNU
@@ -24,10 +24,9 @@ Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/testing/%{name}-%{version}-%{pre}.tar.bz2
-# Source0-md5:	f88e30b6a11b2d3c81219bc10a6de19a
+# Source0-md5:	ebf7e6ecfd8140933ba8def721df49cd
 # Source0-size:	13847868
 Patch0:		%{name}-home_etc.patch
-Patch1:		%{name}-locale-names.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -259,11 +258,6 @@ Wtyczka do drukowania dla Gimpa.
 %prep
 %setup -qn %{name}-%{version}-%{pre}
 %patch0 -p1
-%patch1 -p1
-
-for dir in po po-libgimp po-plug-ins po-script-fu; do
-	mv $dir/{no,nb}.po
-done
 
 %build
 %{__libtoolize}
@@ -315,6 +309,7 @@ echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
 rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,keys}
+rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --all-name
 
@@ -333,7 +328,7 @@ umask 022
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog MAINTAINERS NEWS PLUGIN_MAINTAINERS README
+%doc AUTHORS ChangeLog NEWS README
 %doc docs/{*.txt,quick_reference.*,Wilber*}
 
 %attr(755,root,root) %{_bindir}/gimp-2.2
