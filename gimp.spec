@@ -30,6 +30,7 @@ BuildRequires:	libungif-devel
 BuildRequires:	xpm-devel
 BuildRequires:	zlib-devel
 BuildRequires:	aalib-devel
+BuildRequires:	rpm-perlprov
 %requires_eq	perl
 Requires:	%{perl_sitearch}
 Requires:	perl-Parse-RecDescent
@@ -140,7 +141,7 @@ aalib.
 
 %prep
 %setup  -q
-%patch0 -p0
+%patch0 -p1
 
 %build
 LDFLAGS="-s"; export LDFLAGS
@@ -168,6 +169,7 @@ make install \
 	gimpplugindir=$RPM_BUILD_ROOT%{_libdir}/gimp/1.1 \
 	gimpdatadir=$RPM_BUILD_ROOT%{_datadir}/gimp \
 	m4datadir=$RPM_BUILD_ROOT/usr/share/aclocal \
+	datadir=$RPM_BUILD_ROOT%{_datadir} \
 	PREFIX=$RPM_BUILD_ROOT/usr \
 	INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
 	INSTALLMAN3DIR=$RPM_BUILD_ROOT/usr/share/man/man3
@@ -182,7 +184,7 @@ strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* \
 	$RPM_BUILD_ROOT%{_libdir}/gimp/1.1/modules/lib*.so \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*.so \
-	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/{Lib,Net}/*.so
+	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*/*.so
 
 gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
 	$RPM_BUILD_ROOT%{_mandir}/man[135]/* \
@@ -191,11 +193,16 @@ gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
 
 %find_lang %{name}
 %find_lang %{name}-std-plugins
-cat %{name}.lang %{name}-std-plugins.lang > %{name}.list
+%find_lang %{name}-perl
+cat %{name}.lang %{name}-std-plugins.lang %{name}-perl.lang > %{name}.list
+
+echo "%defattr(755,root,root,755)" >> %{name}.list
 
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.1/plug-ins/* | \
 	egrep -w -v -e "aa|xd" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.list
+	
+echo "%defattr(644,root,root,755)" >> %{name}.list
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
