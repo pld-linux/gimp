@@ -16,7 +16,6 @@ Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v1.3/v%{version}/%{name}-%{version}.tar.bz2
-Source1:	%{name}.desktop
 URL:		http://www.gimp.org/
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel
@@ -224,28 +223,28 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 
 %{__make}
 
-exit 1
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_pixmapsdir} \
-	$RPM_BUILD_ROOT%{_applnkdir}/Graphics
+install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}/Graphics}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	m4datadir=%{_aclocaldir}
 
-install pixmaps/*.xpm plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
+#install pixmaps/*.xpm plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
-mv -f $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
-mv -f $RPM_BUILD_ROOT/usr/share/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
+cat $RPM_BUILD_ROOT%{_datadir}/gimp/1.3/misc/gimp.desktop | \
+	sed 's@/usr/X11R6/share/gimp/1.3/images/@@' > \
+	$RPM_BUILD_ROOT%{_applnkdir}/Graphics/gimp13.desktop
+rm $RPM_BUILD_ROOT%{_datadir}/gimp/1.3/misc/gimp.desktop
+install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %find_lang %{name} --all-name
 
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
-ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
-	egrep -w -v -e "aa|gap_decode_mpeg|mpeg|print" | \
+\ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.3/plug-ins/* | \
+	egrep -w -v -e "aa|something_else" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 
 echo "%defattr(644,root,root,755)" >> %{name}.lang
@@ -261,113 +260,50 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog NEWS README README.i18n README.perl MAINTAINERS
-%doc docs/*.txt docs/*README
-%doc docs/quick_reference.*
+%doc AUTHORS ChangeLog MAINTAINERS NEWS PLUGIN_MAINTAINERS README TODO
+%doc docs/{*.txt,quick_reference.*,Wilber*}
 
-%attr(755,root,root) %{_bindir}/gimp-1.2
-%attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-remote-1.2
-%attr(755,root,root) %{_bindir}/gimp-remote
-%attr(755,root,root) %{_bindir}/gimpdoc
-%{_applnkdir}/Graphics/gimp.desktop
+%attr(755,root,root) %{_bindir}/gimp-1.3
+%attr(755,root,root) %{_bindir}/gimp-remote-1.3
+%{_applnkdir}/Graphics/gimp13.desktop
 
-%{_mandir}/man1/gimp-1.2.1*
-%{_mandir}/man1/gimp-remote-1.2.1*
-%{_mandir}/man5/gimprc-1.2.5*
+%{_mandir}/man1/gimp-1.3.1*
+%{_mandir}/man1/gimp-remote-1.3.1*
+%{_mandir}/man5/gimprc-1.3.5*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%dir %{_libdir}/gimp
-%dir %{_libdir}/gimp/1.2
-%dir %{_libdir}/gimp/1.2/plug-ins
-%dir %{_libdir}/gimp/1.2/modules
-%attr(755,root,root) %{_libdir}/gimp/1.2/modules/*.so
+# 1.2 own it
+#%dir %{_libdir}/gimp
+%dir %{_libdir}/gimp/1.3
+%dir %{_libdir}/gimp/1.3/plug-ins
+%dir %{_libdir}/gimp/1.3/modules
+%attr(755,root,root) %{_libdir}/gimp/1.3/modules/*.so
 
-%dir %{_datadir}/gimp
-%dir %{_datadir}/gimp/1.2
-%{_datadir}/gimp/1.2/brushes
-%{_datadir}/gimp/1.2/fractalexplorer
-%{_datadir}/gimp/1.2/gfig
-%{_datadir}/gimp/1.2/gflare
-%{_datadir}/gimp/1.2/gimpressionist
-%{_datadir}/gimp/1.2/gradients
-%{_datadir}/gimp/1.2/help
-%{_datadir}/gimp/1.2/palettes
-%{_datadir}/gimp/1.2/patterns
-%{_datadir}/gimp/1.2/scripts
-%{_datadir}/gimp/1.2/*.ppm
+%{_datadir}/gimp/1.3
 
-%dir %{_datadir}/gimp/1.2/tips
-%{_datadir}/gimp/1.2/tips/gimp_tips.txt
-%lang(cs) %{_datadir}/gimp/1.2/tips/gimp_tips.cs.txt
-%lang(da) %{_datadir}/gimp/1.2/tips/gimp_tips.da.txt
-%lang(de) %{_datadir}/gimp/1.2/tips/gimp_tips.de.txt
-%lang(es) %{_datadir}/gimp/1.2/tips/gimp_tips.es.txt
-%lang(fr) %{_datadir}/gimp/1.2/tips/gimp_conseils.fr.txt
-%lang(hu) %{_datadir}/gimp/1.2/tips/gimp_tips.hu.txt
-%lang(it) %{_datadir}/gimp/1.2/tips/gimp_tips.it.txt
-%lang(ja) %{_datadir}/gimp/1.2/tips/gimp_tips.ja.txt
-%lang(ko) %{_datadir}/gimp/1.2/tips/gimp_tips.ko.txt
-%lang(lt) %{_datadir}/gimp/1.2/tips/gimp_tips.lt.txt
-%lang(pl) %{_datadir}/gimp/1.2/tips/gimp_tips.pl.txt
-%lang(ru) %{_datadir}/gimp/1.2/tips/gimp_tips.ru.txt
-%lang(tr) %{_datadir}/gimp/1.2/tips/gimp_tips.tr.txt
-%lang(uk) %{_datadir}/gimp/1.2/tips/gimp_tips.uk.txt
-%lang(zh_CN) %{_datadir}/gimp/1.2/tips/gimp_tips.zh_CN.txt
-%lang(zh_TW) %{_datadir}/gimp/1.2/tips/gimp_tips.zh_TW.txt
+# 1.2 own it
+#%dir %{_sysconfdir}/gimp
+%dir %{_sysconfdir}/gimp/1.3
+%config %verify(not md5 mtime) %{_sysconfdir}/gimp/1.3/gimprc*
+%config %{_sysconfdir}/gimp/1.3/gtkrc*
+%config %{_sysconfdir}/gimp/1.3/ps-menurc
+%config %{_sysconfdir}/gimp/1.3/unitrc
 
-%dir %{_sysconfdir}/gimp
-%dir %{_sysconfdir}/gimp/1.2
-%config %verify(not md5 mtime) %{_sysconfdir}/gimp/1.2/gimprc*
-%config %{_sysconfdir}/gimp/1.2/gtkrc*
-%config %{_sysconfdir}/gimp/1.2/ps-menurc
-%config %{_sysconfdir}/gimp/1.2/unitrc
-
-%attr(755,root,root) %{_datadir}/gimp/1.2/user_install
-
-%{_pixmapsdir}/*.xpm
-
-## perl stuff
-%{perl_sitearch}/Gimp
-%{perl_sitearch}/Gimp.pm
-%dir %{perl_sitearch}/auto/Gimp
-%dir %{perl_sitearch}/auto/Gimp/Lib
-%dir %{perl_sitearch}/auto/Gimp/Net
-%dir %{perl_sitearch}/auto/Gimp/UI
-%{perl_sitearch}/auto/Gimp/Gimp.bs
-%{perl_sitearch}/auto/Gimp/Lib/Lib.bs
-%{perl_sitearch}/auto/Gimp/Net/Net.bs
-%{perl_sitearch}/auto/Gimp/UI/UI.bs
-%attr(755,root,root) %{perl_sitearch}/auto/Gimp/Lib/Lib.so
-%attr(755,root,root) %{perl_sitearch}/auto/Gimp/Net/Net.so
-%attr(755,root,root) %{perl_sitearch}/auto/Gimp/UI/UI.so
-%attr(755,root,root) %{perl_sitearch}/auto/Gimp/Gimp.so
+%{_pixmapsdir}/*
 
 %files devel
 %defattr(644,root,root,755)
-%doc devel-docs/libgimp/html/*
-%attr(755,root,root) %{_bindir}/gimptool
-%attr(755,root,root) %{_bindir}/gimptool-1.2
-%attr(755,root,root) %{_bindir}/gimp-config
+%doc %{_datadir}/gtk-doc/html/*
+%attr(755,root,root) %{_bindir}/gimptool-1.3
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
-%attr(755,root,root) %{_libdir}/gimp/1.2/modules/*.la
+%{_libdir}/pkgconfig/*
+%attr(755,root,root) %{_libdir}/gimp/1.3/modules/*.la
 
-%{_includedir}/gck
-%{_includedir}/libgimp
-%{_aclocaldir}/gimp.m4
+%{_includedir}/gimp-1.3
+%{_aclocaldir}/gimp-1.4.m4
 
-%attr(755,root,root) %{_bindir}/embedxpm
-%attr(755,root,root) %{_bindir}/scm2perl
-%attr(755,root,root) %{_bindir}/scm2scm
-%attr(755,root,root) %{_bindir}/xcftopnm
-
-%{_mandir}/man1/gimptool-1.2.1*
-%{_mandir}/man1/embedxpm.1*
-%{_mandir}/man1/scm2perl.1*
-%{_mandir}/man1/scm2scm.1*
-%{_mandir}/man1/xcftopnm.1*
-/usr/share/man/man3/*
+%{_mandir}/man1/gimptool-1.3.1*
 
 %files static
 %defattr(644,root,root,755)
@@ -375,4 +311,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files aa
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/aa
+%attr(755,root,root) %{_libdir}/gimp/1.3/plug-ins/aa
