@@ -1,0 +1,11 @@
+diff -urN aa/gimp-2.0pre3/data/misc/gimp.applications.in gimp-2.0pre3/data/misc/gimp.applications.in
+--- aa/gimp-2.0pre3/data/misc/gimp.applications.in	2004-01-27 04:45:01.000000000 +0100
++++ gimp-2.0pre3/data/misc/gimp.applications.in	2004-03-02 13:41:57.482096440 +0100
+@@ -1,6 +1,6 @@
+ gimp-@GIMP_APP_VERSION@
+ 	command=gimp-remote-@GIMP_APP_VERSION@
+-	name=@GIMP_VISIBLE_NAME@
++	name=The Gimp
+ 	can_open_multiple_files=true
+ 	expects_uris=non-file
+ 	requires_terminal=false
