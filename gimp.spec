@@ -19,13 +19,15 @@ Summary(zh_CN):	[Í¼Ïñ]GNUÍ¼Ïó´¦Àí¹¤¾ß
 Summary(zh_TW):	[¹Ï¹³]GNU¹Ï¶H³B²z¤u¨ã
 Name:		gimp
 Version:	2.0
-Release:	0.%{pre}.1
+Release:	0.%{pre}.2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/testing/%{name}-%{version}%{pre}.tar.bz2
 # Source0-md5:	f4d45d83cba87bc9d45399b0e6bce27c
 Patch0:		%{name}-home_etc.patch
+Patch1:		%{name}-GIMP_VISIBLE_NAME.patch
+Patch2:		%{name}-locale-names.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -34,25 +36,25 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.0}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gtk+2-devel >= 2.2.0
+BuildRequires:	gtk+2-devel >= 2.2.2
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel
-BuildRequires:	libgtkhtml-devel >= 1.99.5
+BuildRequires:	libgtkhtml-devel >= 2.0.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel >= 1.0.8
-BuildRequires:	librsvg-devel
+BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 0.2.8
 BuildRequires:	pkgconfig
-%{?with_python:BuildRequires:	python-pygtk-devel}
+%{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 BuildRequires:	rpm-build >= 4.1-13
-%{?with_python:Requires:	python-pygtk-gtk}
+%{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -180,9 +182,9 @@ Summary(zh_CN):	[¿ª·¢]gimpµÄ¿ª·¢°ü
 Summary(zh_TW):	[¶}µo]gimpªº¶}µo¥]
 License:	LGPL
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gtk-doc-common
-Requires:	gtk+2-devel >= 2.2.0
+Requires:	gtk+2-devel >= 2.2.2
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -205,7 +207,7 @@ para o Gimp.
 Summary:	GIMP static libraries
 Summary(pl):	Biblioteki statyczne Gimpa
 Group:		X11/Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 GIMP static libraries.
@@ -225,7 +227,7 @@ Summary:	ASCII Art plugin for Gimp
 Summary(fr):	Plugin d'art ASCII pour Gimp
 Summary(pl):	Wtyczka do ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description aa
 This package contains the ASCII Art plugin which requires the aalib
@@ -242,7 +244,7 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 Summary:	Print plugin for Gimp
 Summary(pl):	Wtyczka do drukowania dla Gimpa
 Group:		X11/Applications/Graphics
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description print
 Print plugin for Gimp.
@@ -253,6 +255,12 @@ Wtyczka do drukowania dla Gimpa.
 %prep
 %setup -q -n %{name}-%{version}%{pre}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+for dir in po po-libgimp po-plug-ins po-script-fu; do
+	mv $dir/{no,nb}.po
+done
 
 %build
 %{__libtoolize}
@@ -264,10 +272,11 @@ Wtyczka do drukowania dla Gimpa.
 	--disable-rpath \
 	%{!?with_print: --disable-print} \
 	%{?with_python: --enable-python} \
-	--with-mp \
+	--enable-mp \
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-default-binary \
-	--enable-static
+	--enable-static \
+	--enable-gtk-doc
 %{__make}
 
 %install
