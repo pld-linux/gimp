@@ -5,6 +5,7 @@
 %bcond_without python	# without python plugins
 #
 %define mver 1.3
+%define pre  pre1
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulaci鏮 de imagen GNU
@@ -17,13 +18,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	1.3.23
-Release:	3
+Version:	2.0
+Release:	0.%{pre}.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	1f30a6979d62241915964db034c4f306
+Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/testing/%{name}-%{version}%{pre}.tar.bz2
+# Source0-md5:	7862920def4ee411f6417c9372753a6d
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-am18.patch
 URL:		http://www.gimp.org/
@@ -251,8 +252,8 @@ Print plugin for Gimp.
 Wtyczka do drukowania dla Gimpa.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-%{version}%{pre}
+#%patch0 -p1
 %patch1 -p1
 
 %build
