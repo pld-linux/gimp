@@ -159,14 +159,14 @@ CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
 	--with-mp \
 	--with-threads=posix 
 make
-make -C plug-ins/perl/po update-gmo
+%{__make} -C plug-ins/perl/po update-gmo
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_datadir}/icons \
 	$RPM_BUILD_ROOT%{_applnkdir}/Graphics
 
-make install \
+%{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	m4datadir=%{_aclocaldir}
 
