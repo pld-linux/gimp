@@ -5,7 +5,7 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.6
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
@@ -124,7 +124,8 @@ mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/site_perl/5.005/* \
 gzip -9 $RPM_BUILD_ROOT/usr/X11R6/man/man[135]/*
 gzip -9 $RPM_BUILD_ROOT/usr/share/man/man[13]/*
 
-bzip2 -9 ChangeLog NEWS README docs/*.txt
+bzip2 -9 ChangeLog NEWS README README.i18n README.perl TODO \
+	MAINTAINERS docs/*.tex docs/*.txt
 
 %find_lang	gimp
 %find_lang	gimp-std-plugins
@@ -135,14 +136,15 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%files -f gimp.lang -f gimp-std-plugins
+%files -f gimp.lang -f gimp-std-plugins.lang
 %defattr(644,root,root,755)
-%doc ChangeLog.bz2 NEWS.bz2 README.bz2 docs/*.bz2 docs/*.eps
+%doc ChangeLog.bz2 NEWS.bz2 README.bz2 README.i18n.bz2 README.perl.bz2 \
+	docs/*.bz2 docs/*.eps docs/*.tex docs/quick_reference.*
 
 %attr(755,root,root) %{_bindir}/gimp 
 %attr(755,root,root) %{_bindir}/gimpdoc 
 
-%attr(644,root, man) %{_mandir}/man1/gimp.1* 
+%attr(644,root, man) /usr/X11R6/man/man1/gimp.1* 
 
 %attr(755,root,root) %{_libdir}/lib*.so.* 
 
@@ -195,6 +197,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(644,root,root) %{_libdir}/lib*.la
 
 %changelog
+* Tue Jun 15 1999 Wojciech "Sas" Ciêciwa <cieciwa@alpha.zarz.agh.edu.pl>
+  [1.1.6-2]
+- fixed documentation.
+
 * Mon Jun 14 1999 Wojciech "Sas" Ciêciwa <cieciwa@alpha.zarz.agh.edu.pl>
   [1.1.6-1]
 - updated to version 1.1.6.
