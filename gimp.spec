@@ -41,7 +41,6 @@ BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
 %{?with_file_chooser:BuildRequires:	gtk+2-devel >= 2:2.4.0}
 %{!?with_file_chooser:BuildRequires:	gtk+2-devel >= 1:2.2.2}
-BuildRequires:	gnome-vfs2-devel
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
