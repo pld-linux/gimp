@@ -5,7 +5,7 @@
 %bcond_without python	# without python plugins
 #
 %define mver 1.3
-%define pre  pre3
+%define pre  pre4
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulación de imagen GNU
@@ -24,7 +24,7 @@ Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/testing/%{name}-%{version}%{pre}.tar.bz2
-# Source0-md5:	f4d45d83cba87bc9d45399b0e6bce27c
+# Source0-md5:	cbd15608c08110a392edd89ebdf8bcef
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-GIMP_VISIBLE_NAME.patch
 Patch2:		%{name}-locale-names.patch
