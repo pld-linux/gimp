@@ -265,7 +265,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/application-registry
 install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT 
+	DESTDIR=$RPM_BUILD_ROOT
 
 #############################################################
 # This is hack indeed, but it is supposed to disappear when #
@@ -281,7 +281,7 @@ install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 ###################### end hack #############################
 
-# Remove obsolete files 
+# Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
 rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,keys}
