@@ -1,9 +1,9 @@
 #
 # Conditional build:
 # _without_print - no need for gimp-print
-
 #
-# todo:
+
+# TODO:
 #   - perl support
 #
 
@@ -24,7 +24,7 @@ Summary(zh_CN):	[Í¼Ïñ]GNUÍ¼Ïó´¦Àí¹¤¾ß
 Summary(zh_TW):	[¹Ï¹³]GNU¹Ï¶H³B²z¤u¨ã
 Name:		gimp
 Version:	1.3.12
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -230,6 +230,18 @@ partagée aalib.
 %description aa -l pl
 Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 
+%package print
+Summary:	Print plugin for Gimp
+Summary(pl):	Wtyczka do drukowania dla Gimpa
+Group:		X11/Applications/Graphics
+Requires:	%{name} = %{version}
+
+%description print
+Print plugin for Gimp.
+
+%description print -l pl
+Wtyczka do drukowania dla Gimpa.
+
 %prep
 %setup	-q
 
@@ -265,7 +277,7 @@ install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/plug-ins/* | \
-	egrep -w -v -e "aa|something_else" | \
+	egrep -w -v -e "aa|print" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 
 echo "%defattr(644,root,root,755)" >> %{name}.lang
@@ -344,9 +356,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp-config
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/gimp/%{mver}/modules/*.la
 %{_libdir}/lib*.la
-%{_libdir}/pkgconfig/*
+%{_pkgconfigdir}/*
 %{_gtkdocdir}/*
 
 %{_includedir}/gimp-%{mver}
@@ -361,3 +372,9 @@ rm -rf $RPM_BUILD_ROOT
 %files aa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/aa
+
+%if 0%{!?_without_print:1}
+%files print
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/print
+%endif
