@@ -128,13 +128,6 @@ strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*.so \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/{Lib,Net}/*.so
 
-#mv $RPM_BUILD_ROOT/usr/share/aclocal/gimp* $RPM_BUILD_ROOT/%{_datadir}/aclocal
-
-#mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/5.* $RPM_BUILD_ROOT/usr/lib/perl5/
-#install -d $RPM_BUILD_ROOT/usr/lib/perl5/site_perl/5.005
-#mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/site_perl/5.005/* \
-#	$RPM_BUILD_ROOT/usr/lib/perl5/site_perl/5.005/
-
 gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
 	$RPM_BUILD_ROOT%{_mandir}/man[135]/* \
 	ChangeLog NEWS README README.i18n README.perl \
@@ -173,7 +166,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/scripts
 %{_datadir}/gimp/*.ppm
 
-%dir%{_datadir}/gimp/tips
+%dir %{_datadir}/gimp/tips
 %{_datadir}/gimp/tips/gimp_tips.txt
 %lang(fr) %{_datadir}/gimp/tips/gimp_conseils.fr.txt
 %lang(de) %{_datadir}/gimp/tips/gimp_tips.de.txt
