@@ -24,7 +24,7 @@ BuildRequires:	libungif-devel
 BuildRequires:	xpm-devel
 BuildRequires:	zlib-devel
 %requires_eq	perl
-BuildConflicts:	gimp
+#BuildConflicts:	gimp
 Requires:	%{perl_sitearch}
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
