@@ -175,7 +175,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/patterns
 %{_datadir}/gimp/scripts
 %{_datadir}/gimp/*.ppm
-%{_datadir}/gimp/tips
+
+%dir%{_datadir}/gimp/tips
+%{_datadir}/gimp/tips/gimp_tips.txt
+%lang(fr) %{_datadir}/gimp/tips/gimp_conseils.fr.txt
+%lang(de) %{_datadir}/gimp/tips/gimp_tips.de.txt
+
 
 %config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
 %config %{_datadir}/gimp/gtkrc*
