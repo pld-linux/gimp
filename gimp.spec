@@ -7,7 +7,7 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.24
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
@@ -208,7 +208,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS,README,README.i18n,README.perl,MAINTAINERS}.gz
-%doc docs/*.gz docs/*README docs/*.eps docs/script-fu.tex 
+%doc docs/*.gz docs/*README
 %doc docs/white-paper/gimp-white-paper.tex docs/quick_reference.*
 
 %attr(755,root,root) %{_bindir}/gimp* 
