@@ -367,6 +367,7 @@ umask 022
 %if %{with python}
 %dir %{_libdir}/gimp/%{mver}/python
 %{_libdir}/gimp/%{mver}/python/*.py[co]
+%{_libdir}/gimp/%{mver}/python/*.png
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/python/*.so
 %endif
 
