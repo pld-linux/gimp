@@ -8,7 +8,7 @@ Summary(pt_BR):	Programa de manipulação de imagem GNU
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.3
-Release:	1
+Release:	1.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -220,9 +220,6 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
 mv -f $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
 mv -f $RPM_BUILD_ROOT/usr/share/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 
-gzip -9nf ChangeLog NEWS README README.i18n README.perl \
-	TODO MAINTAINERS docs/*.txt
-
 %find_lang %{name} --all-name
 
 echo "%defattr(755,root,root,755)" >> %{name}.lang
@@ -236,6 +233,9 @@ echo "%defattr(644,root,root,755)" >> %{name}.lang
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/yes.xpm
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/no.xpm
 
+gzip -9nf ChangeLog NEWS README README.i18n README.perl \
+	TODO MAINTAINERS docs/*.txt
+
 %post	-p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
@@ -248,7 +248,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/*.gz docs/*README
 %doc docs/quick_reference.*
 
+%attr(755,root,root) %{_bindir}/gimp-1.2
 %attr(755,root,root) %{_bindir}/gimp
+%attr(755,root,root) %{_bindir}/gimp-remote-1.2
 %attr(755,root,root) %{_bindir}/gimp-remote
 %attr(755,root,root) %{_bindir}/gimpdoc
 %{_applnkdir}/Graphics/gimp.desktop
@@ -280,15 +282,22 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_datadir}/gimp/1.2/tips
 %{_datadir}/gimp/1.2/tips/gimp_tips.txt
-%lang(fr) %{_datadir}/gimp/1.2/tips/gimp_conseils.fr.txt
 %lang(cs) %{_datadir}/gimp/1.2/tips/gimp_tips.cs.txt
+%lang(da) %{_datadir}/gimp/1.2/tips/gimp_tips.da.txt
 %lang(de) %{_datadir}/gimp/1.2/tips/gimp_tips.de.txt
+%lang(es) %{_datadir}/gimp/1.2/tips/gimp_tips.es.txt
+%lang(fr) %{_datadir}/gimp/1.2/tips/gimp_conseils.fr.txt
+%lang(hu) %{_datadir}/gimp/1.2/tips/gimp_tips.hu.txt
 %lang(it) %{_datadir}/gimp/1.2/tips/gimp_tips.it.txt
 %lang(ja) %{_datadir}/gimp/1.2/tips/gimp_tips.ja.txt
 %lang(ko) %{_datadir}/gimp/1.2/tips/gimp_tips.ko.txt
+%lang(lt) %{_datadir}/gimp/1.2/tips/gimp_tips.lt.txt
 %lang(pl) %{_datadir}/gimp/1.2/tips/gimp_tips.pl.txt
 %lang(ru) %{_datadir}/gimp/1.2/tips/gimp_tips.ru.txt
+%lang(tr) %{_datadir}/gimp/1.2/tips/gimp_tips.tr.txt
 %lang(uk) %{_datadir}/gimp/1.2/tips/gimp_tips.uk.txt
+%lang(zh_CN) %{_datadir}/gimp/1.2/tips/gimp_tips.zh_CN.txt
+%lang(zh_TW) %{_datadir}/gimp/1.2/tips/gimp_tips.zh_TW.txt
 
 %dir %{_sysconfdir}/gimp
 %dir %{_sysconfdir}/gimp/1.2
@@ -321,6 +330,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc devel-docs/libgimp/html/*
 %attr(755,root,root) %{_bindir}/gimptool
+%attr(755,root,root) %{_bindir}/gimptool-1.2
 %attr(755,root,root) %{_bindir}/gimp-config
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
@@ -331,7 +341,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_aclocaldir}/gimp.m4
 
 %attr(755,root,root) %{_bindir}/embedxpm
-%attr(755,root,root) %{_bindir}/gimpdoc
+%attr(755,root,root) %{_bindir}/escputil
+%attr(755,root,root) %{_bindir}/escputil-1.2
 %attr(755,root,root) %{_bindir}/scm2perl
 %attr(755,root,root) %{_bindir}/scm2scm
 %attr(755,root,root) %{_bindir}/xcftopnm
