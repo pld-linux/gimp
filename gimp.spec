@@ -17,13 +17,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	1.3.19
+Version:	1.3.20
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	82478d568ac06f0b75005294bbf5b690
+# Source0-md5:	e77d4b2948b57eb0739cde0f76aea57b
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -33,7 +33,7 @@ BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.0}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
 BuildRequires:	gtk+2-devel >= 2.2.0
-BuildRequires:	gtkdoc >= 1.0
+BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel
