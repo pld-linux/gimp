@@ -144,7 +144,7 @@ Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen.
 Bibliotecas y archivos de inclusión para escribir extensiones y
 plugins para Gimp.
 
-%descriptions -l pl devel
+%description -l pl devel
 Pliki nag³ówkowe dla GIMP.
 
 %description -l pt_BR devel
@@ -205,7 +205,7 @@ partagée aalib.
 Ten pakiet zawiera "wtyczkê" do Gimpa ze wsparciem dla ASCII Art.
 
 %prep
-%setup  -q
+%setup	-q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -218,7 +218,7 @@ CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
 	--without-included-gettext \
 	--enable-perl \
 	--with-mp \
-	--with-threads=posix 
+	--with-threads=posix
 %{__make}
 %{__make} -C plug-ins/perl/po update-gmo
 
@@ -247,13 +247,13 @@ echo "%defattr(755,root,root,755)" >> %{name}.lang
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
 	egrep -w -v -e "aa|print" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
-	
+
 echo "%defattr(644,root,root,755)" >> %{name}.lang
 
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/yes.xpm
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/no.xpm
 
-%post   -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %clean
@@ -265,12 +265,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/*.gz docs/*README
 %doc docs/quick_reference.*
 
-%attr(755,root,root) %{_bindir}/gimp 
-%attr(755,root,root) %{_bindir}/gimp-remote 
+%attr(755,root,root) %{_bindir}/gimp
+%attr(755,root,root) %{_bindir}/gimp-remote
 %attr(755,root,root) %{_bindir}/gimpdoc
 %{_applnkdir}/Graphics/gimp.desktop
 
-%{_mandir}/man1/gimp.1* 
+%{_mandir}/man1/gimp.1*
 %{_mandir}/man5/gimprc.5*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
@@ -315,7 +315,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_datadir}/gimp/1.2/user_install
 
-%{_pixmapsdir}/*.xpm 
+%{_pixmapsdir}/*.xpm
 
 ## perl stuff
 %{perl_sitearch}/Gimp
@@ -338,11 +338,11 @@ rm -rf $RPM_BUILD_ROOT
 %doc devel-docs/libgimp/html/*
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_bindir}/gimp-config
-%attr(755,root,root) %{_libdir}/lib*.so 
+%attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %attr(755,root,root) %{_libdir}/gimp/1.2/modules/*.la
 
-%{_includedir}/gck 
+%{_includedir}/gck
 %{_includedir}/libgimp
 %{_aclocaldir}/gimp.m4
 
