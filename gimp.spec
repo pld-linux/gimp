@@ -1,11 +1,12 @@
+%include	/usr/lib/rpm/macros.perl
 Summary:	The GNU Image Manipulation Program
 Summary(fr):	Le programme de manipulation d'images de GNU
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.10
-Release:	2
+Version:	1.1.13
+Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
@@ -13,7 +14,6 @@ Group(pl):	X11/Aplikacje/Grafika
 Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	gimp.desktop
 Patch0:		gimp-perlinst.patch
-Patch1:		gimp-noWIN.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gtk+-devel >= 1.2.0
@@ -141,7 +141,6 @@ aalib.
 %prep
 %setup  -q
 %patch0 -p0
-%patch1 -p1
 
 %build
 LDFLAGS="-s"; export LDFLAGS
@@ -210,13 +209,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/*.gz docs/*README docs/*.eps docs/script-fu.tex 
 %doc docs/white-paper/gimp-white-paper.tex docs/quick_reference.*
 
-%attr(755,root,root) %{_bindir}/gimp 
+%attr(755,root,root) %{_bindir}/gimp* 
 %{_datadir}/applnk/Graphics/gimp.desktop
 
-%{_mandir}/man1/gimp.1* 
+%{_mandir}/man1/gimp*.1* 
 %{_mandir}/man5/gimprc.5*
 
-%attr(755,root,root) %{_libdir}/lib*.so.* 
+%attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/1.1
 %dir %{_libdir}/gimp/1.1/plug-ins
@@ -243,6 +242,9 @@ rm -rf $RPM_BUILD_ROOT
 %lang(de) %{_datadir}/gimp/tips/gimp_tips.de.txt
 %lang(ja) %{_datadir}/gimp/tips/gimp_tips.ja.txt
 %lang(ru) %{_datadir}/gimp/tips/gimp_tips.ru.txt
+%lang(it) %{_datadir}/gimp/tips/gimp_tips.it.txt
+%lang(ko) %{_datadir}/gimp/tips/gimp_tips.ko.txt
+%lang(pl) %{_datadir}/gimp/tips/gimp_tips.pl.txt
 
 %config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
 %config %{_datadir}/gimp/gtkrc*
@@ -259,11 +261,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_sitearch}/auto/Gimp
 %dir %{perl_sitearch}/auto/Gimp/Lib
 %dir %{perl_sitearch}/auto/Gimp/Net
+%dir %{perl_sitearch}/auto/Gimp/UI
 %{perl_sitearch}/auto/Gimp/Gimp.bs
 %{perl_sitearch}/auto/Gimp/Lib/Lib.bs
 %{perl_sitearch}/auto/Gimp/Net/Net.bs
+%{perl_sitearch}/auto/Gimp/UI/UI.bs
 %attr(755,root,root) %{perl_sitearch}/auto/Gimp/Lib/Lib.so
 %attr(755,root,root) %{perl_sitearch}/auto/Gimp/Net/Net.so
+%attr(755,root,root) %{perl_sitearch}/auto/Gimp/UI/UI.so
 %attr(755,root,root) %{perl_sitearch}/auto/Gimp/Gimp.so
 
 %files devel
@@ -273,8 +278,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so 
 %{_libdir}/lib*.la
 
-%{_includedir}/gck/*.h 
-%{_includedir}/libgimp/*.h
+%{_includedir}/gck 
+%{_includedir}/libgimp
 /usr/share/aclocal/gimp.m4
 
 %attr(755,root,root) %{_bindir}/embedxpm
