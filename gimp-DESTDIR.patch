@@ -80,3 +80,44 @@ diff -Nur gimp-1.2.2.orig/po-script-fu/Makefile.in.in gimp-1.2.2/po-script-fu/Ma
  	  if test -r "$(MKINSTALLDIRS)"; then \
  	    $(MKINSTALLDIRS) $$dir; \
  	  else \
+--- gimp-1.2.2/gimptool.in.wiget	Wed Feb  6 15:51:03 2002
++++ gimp-1.2.2/gimptool.in	Wed Feb  6 15:51:59 2002
+@@ -1,23 +1,23 @@
+ #! /bin/sh
+ 
+-prefix=@prefix@
+-exec_prefix=@exec_prefix@
++prefix=${DESTDIR}@prefix@
++exec_prefix=${DESTDIR}@exec_prefix@
+ exec_prefix_set=no
+ 
+-bindir=@bindir@
+-sbindir=@sbindir@
+-libexecdir=@libexecdir@
+-datadir=@datadir@
+-sysconfdir=@sysconfdir@
+-sharedstatedir=@sharedstatedir@
+-localstatedir=@localstatedir@
+-libdir=@libdir@
+-infodir=@infodir@
+-mandir=@mandir@
+-includedir=@includedir@
++bindir=${DESTDIR}@bindir@
++sbindir=${DESTDIR}@sbindir@
++libexecdir=${DESTDIR}@libexecdir@
++datadir=${DESTDIR}@datadir@
++sysconfdir=${DESTDIR}@sysconfdir@
++sharedstatedir=${DESTDIR}@sharedstatedir@
++localstatedir=${DESTDIR}@localstatedir@
++libdir=${DESTDIR}@libdir@
++infodir=${DESTDIR}@infodir@
++mandir=${DESTDIR}@mandir@
++includedir=${DESTDIR}@includedir@
+ 
+-gimpplugindir=@gimpplugindir@
+-gimpdatadir=@gimpdatadir@
++gimpplugindir=${DESTDIR}@gimpplugindir@
++gimpdatadir=${DESTDIR}@gimpdatadir@
+ 
+ usage()
+ {
