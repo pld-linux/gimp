@@ -381,6 +381,7 @@ rm -rf $RPM_BUILD_ROOT
 %config %{_sysconfdir}/%{name}/%{mver}/ps-menurc
 %config %{_sysconfdir}/%{name}/%{mver}/sessionrc
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
+%config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 
 %{_pixmapsdir}/*
 
