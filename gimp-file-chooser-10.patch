@@ -1,0 +1,1354 @@
+Index: app/widgets/gimperrorconsole.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/widgets/gimperrorconsole.c,v
+retrieving revision 1.14
+diff -u -p -r1.14 gimperrorconsole.c
+--- app/widgets/gimperrorconsole.c	26 Feb 2004 20:04:19 -0000	1.14
++++ app/widgets/gimperrorconsole.c	15 Mar 2004 22:35:22 -0000
+@@ -338,7 +338,7 @@ gimp_error_console_save_ext_clicked (Gtk
+                                      GdkModifierType   state,
+                                      GimpErrorConsole *console)
+ {
+-  GtkFileSelection *filesel;
++  GtkFileChooser *chooser;
+ 
+   if (! gtk_text_buffer_get_selection_bounds (console->text_buffer,
+                                               NULL, NULL) &&
+@@ -354,32 +354,39 @@ gimp_error_console_save_ext_clicked (Gtk
+       return;
+     }
+ 
+-  console->file_dialog = gtk_file_selection_new (_("Save Error Log to File"));
++  console->file_dialog =
++    gtk_file_chooser_dialog_new (_("Save Error Log to File"), NULL,
++                                 GTK_FILE_CHOOSER_ACTION_SAVE,
++
++                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
++                                 GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
++
++                                 NULL);
+ 
+   console->save_selection = (state & GDK_SHIFT_MASK) ? TRUE : FALSE;
+ 
+   g_object_add_weak_pointer (G_OBJECT (console->file_dialog),
+                              (gpointer *) &console->file_dialog);
+ 
+-  filesel = GTK_FILE_SELECTION (console->file_dialog);
++  chooser = GTK_FILE_CHOOSER (console->file_dialog);
+ 
+-  gtk_window_set_screen (GTK_WINDOW (filesel),
++  gtk_window_set_screen (GTK_WINDOW (chooser),
+                          gtk_window_get_screen (GTK_WINDOW (console)));
+ 
+-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-save-errors");
++  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
++  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-save-errors");
+ 
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
+-
+-  g_signal_connect (filesel, "response",
++  g_signal_connect (chooser, "response",
+ 		    G_CALLBACK (gimp_error_console_save_response),
+ 		    console);
++  g_signal_connect (chooser, "delete_event",
++		    G_CALLBACK (gtk_true),
++		    NULL);
+ 
+-  gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
++  gimp_help_connect (GTK_WIDGET (chooser), gimp_standard_help_func,
+ 		     GIMP_HELP_ERRORS_DIALOG, NULL);
+ 
+-  gtk_widget_show (GTK_WIDGET (filesel));
++  gtk_widget_show (GTK_WIDGET (chooser));
+ }
+ 
+ static void
+@@ -389,17 +396,20 @@ gimp_error_console_save_response (GtkWid
+ {
+   if (response_id == GTK_RESPONSE_OK)
+     {
+-      const gchar *filename;
++      gchar *filename;
+ 
+-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
++      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+ 
+       if (! gimp_error_console_write_file (console->text_buffer, filename,
+                                            console->save_selection))
+         {
+           g_message (_("Error writing file '%s':\n%s"),
+                      gimp_filename_to_utf8 (filename), g_strerror (errno));
++          g_free (filename);
+           return;
+         }
++
++      g_free (filename);
+     }
+ 
+   gtk_widget_destroy (dialog);
+Index: app/widgets/gimpfiledialog.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/widgets/gimpfiledialog.c,v
+retrieving revision 1.7
+diff -u -p -r1.7 gimpfiledialog.c
+--- app/widgets/gimpfiledialog.c	4 Mar 2004 13:48:35 -0000	1.7
++++ app/widgets/gimpfiledialog.c	15 Mar 2004 22:35:22 -0000
+@@ -43,6 +43,9 @@
+ #include "gimpmenufactory.h"
+ #include "gimpthumbbox.h"
+ 
++#include "gimppreviewrendererimagefile.h"
++#include "gimppreview.h"
++
+ #include "gimp-intl.h"
+ 
+ 
+@@ -54,11 +57,13 @@ static void       gimp_file_dialog_destr
+ static gboolean   gimp_file_dialog_delete_event (GtkWidget           *widget,
+                                                  GdkEventAny         *event);
+ 
+-static void  gimp_file_dialog_selection_changed (GtkTreeSelection    *sel,
++static void  gimp_file_dialog_selection_changed (GtkFileChooser      *chooser,
++                                                 GimpFileDialog      *dialog);
++static void  gimp_file_dialog_update_preview    (GtkFileChooser      *chooser,
+                                                  GimpFileDialog      *dialog);
+ 
+ 
+-static GtkFileSelectionClass *parent_class = NULL;
++static GtkFileChooserDialogClass *parent_class = NULL;
+ 
+ 
+ GType
+@@ -81,7 +86,7 @@ gimp_file_dialog_get_type (void)
+         (GInstanceInitFunc) gimp_file_dialog_init,
+       };
+ 
+-      dialog_type = g_type_register_static (GTK_TYPE_FILE_SELECTION,
++      dialog_type = g_type_register_static (GTK_TYPE_FILE_CHOOSER_DIALOG,
+                                             "GimpFileDialog",
+                                             &dialog_info, 0);
+     }
+@@ -105,12 +110,6 @@ gimp_file_dialog_class_init (GimpFileDia
+ static void
+ gimp_file_dialog_init (GimpFileDialog *dialog)
+ {
+-  GtkFileSelection *fs = GTK_FILE_SELECTION (dialog);
+-
+-  gtk_container_set_border_width (GTK_CONTAINER (fs), 6);
+-  gtk_container_set_border_width (GTK_CONTAINER (fs->button_area), 4);
+-
+-  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+ }
+ 
+ static void
+@@ -138,19 +137,22 @@ gimp_file_dialog_delete_event (GtkWidget
+ /*  public functions  */
+ 
+ GtkWidget *
+-gimp_file_dialog_new (Gimp            *gimp,
+-                      GSList          *file_procs,
+-                      GimpMenuFactory *menu_factory,
+-                      const gchar     *menu_identifier,
+-                      const gchar     *title,
+-                      const gchar     *role,
+-                      const gchar     *stock_id,
+-                      const gchar     *help_id)
++gimp_file_dialog_new (Gimp                 *gimp,
++                      GSList               *file_procs,
++                      GtkFileChooserAction  action,
++                      GimpMenuFactory      *menu_factory,
++                      const gchar          *menu_identifier,
++                      const gchar          *title,
++                      const gchar          *role,
++                      const gchar          *stock_id,
++                      const gchar          *help_id)
+ {
+   GimpFileDialog *dialog;
+   GtkWidget      *hbox;
+   GtkWidget      *option_menu;
+   GtkWidget      *label;
++  GtkFileFilter  *filter;
++  GSList         *list;
+ 
+   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+   g_return_val_if_fail (file_procs != NULL, NULL);
+@@ -162,10 +164,17 @@ gimp_file_dialog_new (Gimp            *g
+   g_return_val_if_fail (help_id != NULL, NULL);
+ 
+   dialog = g_object_new (GIMP_TYPE_FILE_DIALOG,
+-                         "title", title,
++                         "title",  title,
++                         "role",   role,
++                         "action", action,
+                          NULL);
+ 
+-  gtk_window_set_role (GTK_WINDOW (dialog), role);
++  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
++                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
++                          stock_id,         GTK_RESPONSE_OK,
++                          NULL);
++
++  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+ 
+   gimp_help_connect (GTK_WIDGET (dialog), gimp_standard_help_func,
+                      help_id, NULL);
+@@ -178,8 +187,7 @@ gimp_file_dialog_new (Gimp            *g
+                                                      FALSE);
+ 
+   hbox = gtk_hbox_new (FALSE, 4);
+-  gtk_box_pack_end (GTK_BOX (GTK_FILE_SELECTION (dialog)->main_vbox), hbox,
+-                    FALSE, FALSE, 0);
++  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), hbox);
+   gtk_widget_show (hbox);
+ 
+   option_menu = gtk_option_menu_new ();
+@@ -195,23 +203,55 @@ gimp_file_dialog_new (Gimp            *g
+ 
+   if (gimp->config->thumbnail_size > 0)
+     {
+-      GtkFileSelection *fs = GTK_FILE_SELECTION (dialog);
+-      GtkTreeSelection *tree_sel;
+-
+-      tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (fs->file_list));
+-
+-      /* Catch file-list clicks so we can update the preview thumbnail */
+-      g_signal_connect (tree_sel, "changed",
++      g_signal_connect (dialog, "selection-changed",
+                         G_CALLBACK (gimp_file_dialog_selection_changed),
+                         dialog);
+-
+-      /* EEK */
+-      for (hbox = fs->dir_list; ! GTK_IS_HBOX (hbox); hbox = hbox->parent);
++      g_signal_connect (dialog, "update-preview",
++                        G_CALLBACK (gimp_file_dialog_update_preview),
++                        dialog);
+ 
+       dialog->thumb_box = gimp_thumb_box_new (gimp);
+       gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
+-      gtk_box_pack_end (GTK_BOX (hbox), dialog->thumb_box, FALSE, FALSE, 0);
++      gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
++                                           dialog->thumb_box);
+       gtk_widget_show (dialog->thumb_box);
++
++#ifdef ENABLE_FILE_SYSTEM_ICONS
++      GIMP_PREVIEW_RENDERER_IMAGEFILE (GIMP_PREVIEW (GIMP_THUMB_BOX (dialog->thumb_box)->preview)->renderer)->file_system = _gtk_file_chooser_get_file_system (GTK_FILE_CHOOSER (dialog));
++#endif
++
++      gtk_file_chooser_set_use_preview_label (GTK_FILE_CHOOSER (dialog), FALSE);
++    }
++
++  filter = gtk_file_filter_new ();
++  gtk_file_filter_set_name (filter, _("All Files"));
++  gtk_file_filter_add_pattern (filter, "*");
++  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
++  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
++
++  for (list = file_procs; list; list = g_slist_next (list))
++    {
++      PlugInProcDef *file_proc = list->data;
++
++      if (file_proc->menu_path && file_proc->extensions_list)
++        {
++          gchar  *name;
++          GSList *ext;
++
++          name = strrchr (file_proc->menu_path, '/') + 1;
++
++          filter = gtk_file_filter_new ();
++          gtk_file_filter_set_name (filter, name);
++
++          for (ext = file_proc->extensions_list; ext; ext = g_slist_next (ext))
++            {
++              gchar *pattern = g_strdup_printf ("*.%s", (gchar *) ext->data);
++              gtk_file_filter_add_pattern (filter, pattern);
++              g_free (pattern);
++            }
++
++          gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
++        }
+     }
+ 
+   return GTK_WIDGET (dialog);
+@@ -221,6 +261,8 @@ void
+ gimp_file_dialog_set_file_proc (GimpFileDialog *dialog,
+                                 PlugInProcDef  *file_proc)
+ {
++  GtkFileChooser *chooser;
++
+   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+ 
+   if (file_proc == dialog->file_proc)
+@@ -228,30 +270,39 @@ gimp_file_dialog_set_file_proc (GimpFile
+ 
+   dialog->file_proc = file_proc;
+ 
+-  if (file_proc && file_proc->extensions_list && dialog->gimage)
++  chooser = GTK_FILE_CHOOSER (dialog);
++
++  if (file_proc && file_proc->extensions_list &&
++      gtk_file_chooser_get_action (chooser) == GTK_FILE_CHOOSER_ACTION_SAVE)
+     {
+-      GtkFileSelection *fs = GTK_FILE_SELECTION (dialog);
+-      const gchar      *text;
+-      gchar            *last_dot;
+-      GString          *s;
++      gchar *uri = gtk_file_chooser_get_uri (chooser);
+ 
+-      text = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
+-      last_dot = strrchr (text, '.');
++      if (uri && strlen (uri))
++        {
++          gchar *last_dot = last_dot = strrchr (uri, '.');
+ 
+-      if (last_dot == text || !text[0])
+-	return;
++          if (last_dot != uri)
++            {
++              GString *s = g_string_new (uri);
++              gchar   *basename;
+ 
+-      s = g_string_new (text);
++              if (last_dot)
++                g_string_truncate (s, last_dot - uri);
+ 
+-      if (last_dot)
+-	g_string_truncate (s, last_dot-text);
++              g_string_append (s, ".");
++              g_string_append (s, (gchar *) file_proc->extensions_list->data);
+ 
+-      g_string_append (s, ".");
+-      g_string_append (s, (gchar *) file_proc->extensions_list->data);
++              gtk_file_chooser_set_uri (chooser, s->str);
+ 
+-      gtk_entry_set_text (GTK_ENTRY (fs->selection_entry), s->str);
++              basename = file_utils_uri_to_utf8_basename (s->str);
++              gtk_file_chooser_set_current_name (chooser, basename);
++              g_free (basename);
+ 
+-      g_string_free (s, TRUE);
++              g_string_free (s, TRUE);
++            }
++        }
++
++      g_free (uri);
+     }
+ }
+ 
+@@ -260,36 +311,49 @@ gimp_file_dialog_set_uri (GimpFileDialog
+                           GimpImage       *gimage,
+                           const gchar     *uri)
+ {
+-  gchar *filename = NULL;
++  gchar    *real_uri  = NULL;
++  gboolean  is_folder = FALSE;
+ 
+   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
+ 
+   if (gimage)
+     {
+-      filename = gimp_image_get_filename (gimage);
++      gchar *filename = gimp_image_get_filename (gimage);
+ 
+       if (filename)
+         {
+-          gchar *dirname;
++          gchar *dirname = g_path_get_dirname (filename);
+ 
+-          dirname = g_path_get_dirname (filename);
+           g_free (filename);
+ 
+-          filename = g_build_filename (dirname, G_DIR_SEPARATOR_S, NULL);
++          real_uri = g_filename_to_uri (dirname, NULL, NULL);
+           g_free (dirname);
++
++          is_folder = TRUE;
+         }
+     }
+   else if (uri)
+     {
+-      filename = g_filename_from_uri (uri, NULL, NULL);
++      real_uri = g_strdup (uri);
+     }
++  else
++    {
++      gchar *current = g_get_current_dir ();
++
++      real_uri = g_filename_to_uri (current, NULL, NULL);
++      g_free (current);
+ 
+-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog),
+-				   filename ?
+-				   filename : "." G_DIR_SEPARATOR_S);
++      is_folder = TRUE;
++    }
+ 
+-  g_free (filename);
++  if (is_folder)
++    gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
++                                             real_uri);
++  else
++    gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), real_uri);
++
++  g_free (real_uri);
+ }
+ 
+ void
+@@ -298,7 +362,7 @@ gimp_file_dialog_set_image (GimpFileDial
+                             gboolean        set_uri_and_proc,
+                             gboolean        set_image_clean)
+ {
+-  gchar *filename;
++  const gchar *uri;
+ 
+   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+@@ -307,14 +371,10 @@ gimp_file_dialog_set_image (GimpFileDial
+   dialog->set_uri_and_proc = set_uri_and_proc;
+   dialog->set_image_clean  = set_image_clean;
+ 
+-  filename = gimp_image_get_filename (gimage);
+-
+-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog),
+-                                   filename ?
+-				   filename :
+-                                   "." G_DIR_SEPARATOR_S);
++  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+ 
+-  g_free (filename);
++  if (uri)
++    gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
+ 
+   gimp_item_factory_update (dialog->item_factory,
+                             gimp_image_active_drawable (gimage));
+@@ -324,59 +384,30 @@ gimp_file_dialog_set_image (GimpFileDial
+ /*  private functions  */
+ 
+ static void
+-selchanged_foreach (GtkTreeModel *model,
+-		    GtkTreePath  *path,
+-		    GtkTreeIter  *iter,
+-		    gpointer      data)
++gimp_file_dialog_selection_changed (GtkFileChooser *chooser,
++                                    GimpFileDialog *dialog)
+ {
+-  gboolean *selected = data;
++  GSList *uris = gtk_file_chooser_get_uris (chooser);
+ 
+-  *selected = TRUE;
+-}
++  g_printerr ("gimp_file_dialog_selection_changed\n");
+ 
+-static void
+-gimp_file_dialog_selection_changed (GtkTreeSelection *sel,
+-                                    GimpFileDialog   *dialog)
+-{
+-  GtkFileSelection *fs       = GTK_FILE_SELECTION (dialog);
+-  const gchar      *fullfname;
+-  gboolean          selected = FALSE;
+-
+-  gtk_tree_selection_selected_foreach (sel,
+-				       selchanged_foreach,
+-				       &selected);
+-
+-  if (selected)
+-    {
+-      gchar *uri;
+-
+-      fullfname = gtk_file_selection_get_filename (fs);
+-
+-      uri = file_utils_filename_to_uri (dialog->gimp->load_procs,
+-                                        fullfname, NULL);
+-      gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uri);
+-      g_free (uri);
+-    }
++  if (uris)
++    gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uris->data);
+   else
+-    {
+-      gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), NULL);
+-    }
+-
+-  {
+-    gchar **selections;
+-    GSList *uris = NULL;
+-    gint    i;
++    gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), NULL);
+ 
+-    selections = gtk_file_selection_get_selections (fs);
++  gimp_thumb_box_set_uris (GIMP_THUMB_BOX (dialog->thumb_box), uris);
++}
+ 
+-    for (i = 0; selections[i] != NULL; i++)
+-      uris = g_slist_prepend (uris, g_filename_to_uri (selections[i],
+-                                                       NULL, NULL));
++static void
++gimp_file_dialog_update_preview (GtkFileChooser *chooser,
++                                 GimpFileDialog *dialog)
++{
++  gchar *uri = gtk_file_chooser_get_preview_uri (chooser);
+ 
+-    g_strfreev (selections);
++  g_printerr ("gimp_file_dialog_update_preview: %s\n", uri);
+ 
+-    uris = g_slist_reverse (uris);
++  gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uri);
+ 
+-    gimp_thumb_box_set_uris (GIMP_THUMB_BOX (dialog->thumb_box), uris);
+-  }
++  g_free (uri);
+ }
+Index: app/widgets/gimpfiledialog.h
+===================================================================
+RCS file: /cvs/gnome/gimp/app/widgets/gimpfiledialog.h,v
+retrieving revision 1.4
+diff -u -p -r1.4 gimpfiledialog.h
+--- app/widgets/gimpfiledialog.h	1 Mar 2004 13:40:45 -0000	1.4
++++ app/widgets/gimpfiledialog.h	15 Mar 2004 22:35:22 -0000
+@@ -37,7 +37,7 @@ typedef struct _GimpFileDialogClass  Gim
+ 
+ struct _GimpFileDialog
+ {
+-  GtkFileSelection  parent_instance;
++  GtkFileChooserDialog  parent_instance;
+ 
+   Gimp             *gimp;
+   GimpItemFactory  *item_factory;
+@@ -52,23 +52,24 @@ struct _GimpFileDialog
+ 
+ struct _GimpFileDialogClass
+ {
+-  GtkFileSelectionClass  parent_class;
++  GtkFileChooserDialogClass  parent_class;
+ };
+ 
+ 
+ GType       gimp_file_dialog_get_type      (void) G_GNUC_CONST;
+ 
+-GtkWidget * gimp_file_dialog_new           (Gimp            *gimp,
+-                                            GSList          *file_procs,
+-                                            GimpMenuFactory *menu_factory,
+-                                            const gchar     *menu_identifier,
+-                                            const gchar     *title,
+-                                            const gchar     *role,
+-                                            const gchar     *stock_id,
+-                                            const gchar     *help_id);
++GtkWidget * gimp_file_dialog_new           (Gimp                 *gimp,
++                                            GSList               *file_procs,
++                                            GtkFileChooserAction  action,
++                                            GimpMenuFactory      *menu_factory,
++                                            const gchar          *menu_identifier,
++                                            const gchar          *title,
++                                            const gchar          *role,
++                                            const gchar          *stock_id,
++                                            const gchar          *help_id);
+ 
+-void        gimp_file_dialog_set_file_proc (GimpFileDialog  *dialog,
+-                                            PlugInProcDef   *file_proc);
++void        gimp_file_dialog_set_file_proc (GimpFileDialog       *dialog,
++                                            PlugInProcDef        *file_proc);
+ 
+ void        gimp_file_dialog_set_uri       (GimpFileDialog  *dialog,
+                                             GimpImage       *gimage,
+Index: app/widgets/gimptexteditor.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/widgets/gimptexteditor.c,v
+retrieving revision 1.18
+diff -u -p -r1.18 gimptexteditor.c
+--- app/widgets/gimptexteditor.c	11 Mar 2004 18:47:34 -0000	1.18
++++ app/widgets/gimptexteditor.c	15 Mar 2004 22:35:23 -0000
+@@ -352,7 +352,7 @@ static void
+ gimp_text_editor_load (GtkWidget      *widget,
+                        GimpTextEditor *editor)
+ {
+-  GtkFileSelection *filesel;
++  GtkFileChooser *chooser;
+ 
+   if (editor->file_dialog)
+     {
+@@ -360,27 +360,33 @@ gimp_text_editor_load (GtkWidget      *w
+       return;
+     }
+ 
+-  filesel =
+-    GTK_FILE_SELECTION (gtk_file_selection_new (_("Open Text File (UTF-8)")));
++  editor->file_dialog =
++    gtk_file_chooser_dialog_new (_("Open Text File (UTF-8)"),
++                                 GTK_WINDOW (editor),
++                                 GTK_FILE_CHOOSER_ACTION_OPEN,
+ 
+-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-text-load-file");
+-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
++                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
++                                 GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+ 
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
++                                 NULL);
+ 
+-  gtk_window_set_transient_for (GTK_WINDOW (filesel), GTK_WINDOW (editor));
+-  gtk_window_set_destroy_with_parent (GTK_WINDOW (filesel), TRUE);
++  chooser = GTK_FILE_CHOOSER (editor->file_dialog);
+ 
+-  g_signal_connect (filesel, "response",
++  g_object_add_weak_pointer (G_OBJECT (chooser),
++                             (gpointer) &editor->file_dialog);
++
++  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-text-load-file");
++  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
++  gtk_window_set_destroy_with_parent (GTK_WINDOW (chooser), TRUE);
++
++  g_signal_connect (chooser, "response",
+                     G_CALLBACK (gimp_text_editor_load_response),
+                     editor);
++  g_signal_connect (chooser, "delete_event",
++                    G_CALLBACK (gtk_true),
++                    NULL);
+ 
+-  editor->file_dialog = GTK_WIDGET (filesel);
+-  g_object_add_weak_pointer (G_OBJECT (filesel),
+-                             (gpointer) &editor->file_dialog);
+-
+-  gtk_widget_show (GTK_WIDGET (filesel));
++  gtk_widget_show (GTK_WIDGET (chooser));
+ }
+ 
+ static void
+@@ -390,12 +396,17 @@ gimp_text_editor_load_response (GtkWidge
+ {
+   if (response_id == GTK_RESPONSE_OK)
+     {
+-      const gchar *filename;
++      gchar *filename;
+ 
+-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
++      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+ 
+       if (! gimp_text_editor_load_file (editor, filename))
+-        return;
++        {
++          g_free (filename);
++          return;
++        }
++
++      g_free (filename);
+     }
+ 
+   gtk_widget_destroy (dialog);
+Index: app/widgets/gimpthumbbox.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/widgets/gimpthumbbox.c,v
+retrieving revision 1.2
+diff -u -p -r1.2 gimpthumbbox.c
+--- app/widgets/gimpthumbbox.c	26 Feb 2004 16:07:20 -0000	1.2
++++ app/widgets/gimpthumbbox.c	15 Mar 2004 22:35:23 -0000
+@@ -248,6 +248,7 @@ gimp_thumb_box_new (Gimp *gimp)
+   box->progress = gtk_progress_bar_new ();
+   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "foo");
+   gtk_box_pack_end (GTK_BOX (vbox2), box->progress, FALSE, FALSE, 0);
++  gtk_widget_set_no_show_all (box->progress, TRUE);
+   /* don't gtk_widget_show (box->progress); */
+ 
+   /* eek */
+Index: app/gui/file-dialog-utils.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/gui/file-dialog-utils.c,v
+retrieving revision 1.31
+diff -u -p -r1.31 file-dialog-utils.c
+--- app/gui/file-dialog-utils.c	1 Mar 2004 13:40:46 -0000	1.31
++++ app/gui/file-dialog-utils.c	15 Mar 2004 22:35:23 -0000
+@@ -37,7 +37,6 @@ file_dialog_show (GtkWidget *dialog,
+   gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", FALSE);
+ 
+   gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (parent));
+-  gtk_widget_grab_focus (GTK_FILE_SELECTION (dialog)->selection_entry);
+   gtk_window_present (GTK_WINDOW (dialog));
+ }
+ 
+Index: app/gui/file-open-dialog.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/gui/file-open-dialog.c,v
+retrieving revision 1.92
+diff -u -p -r1.92 file-open-dialog.c
+--- app/gui/file-open-dialog.c	1 Mar 2004 13:40:46 -0000	1.92
++++ app/gui/file-open-dialog.c	15 Mar 2004 22:35:23 -0000
+@@ -86,8 +86,6 @@ file_open_dialog_show (Gimp            *
+     gtk_window_set_screen (GTK_WINDOW (fileload),
+                            gtk_widget_get_screen (parent));
+ 
+-  gtk_widget_grab_focus (GTK_FILE_SELECTION (fileload)->selection_entry);
+-
+   gtk_window_present (GTK_WINDOW (fileload));
+ }
+ 
+@@ -101,12 +99,13 @@ file_open_dialog_create (Gimp           
+   GtkWidget *dialog;
+ 
+   dialog = gimp_file_dialog_new (gimp, gimp->load_procs,
++                                 GTK_FILE_CHOOSER_ACTION_OPEN,
+                                  menu_factory, "<Load>",
+                                  _("Open Image"), "gimp-file-open",
+                                  GTK_STOCK_OPEN,
+                                  GIMP_HELP_FILE_OPEN);
+ 
+-  gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (dialog), TRUE);
++  gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
+ 
+   gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                    "gimp-file-open-dialog",
+@@ -124,11 +123,8 @@ file_open_dialog_response (GtkWidget *op
+                            gint       response_id,
+                            Gimp      *gimp)
+ {
+-  GtkFileSelection  *fs;
+-  gchar            **selections;
+-  gchar             *uri;
+-  const gchar       *entered_filename;
+-  gint               i;
++  GSList   *uris;
++  GSList   *list;
+ 
+   if (response_id != GTK_RESPONSE_OK)
+     {
+@@ -136,83 +132,33 @@ file_open_dialog_response (GtkWidget *op
+       return;
+     }
+ 
+-  fs = GTK_FILE_SELECTION (open_dialog);
+-
+-  selections = gtk_file_selection_get_selections (fs);
+-
+-  if (selections == NULL)
+-    return;
+-
+-  entered_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
+-
+-  if (g_file_test (selections[0], G_FILE_TEST_IS_DIR))
+-    {
+-      if (selections[0][strlen (selections[0]) - 1] != G_DIR_SEPARATOR)
+-        {
+-          gchar *s = g_strconcat (selections[0], G_DIR_SEPARATOR_S, NULL);
+-          gtk_file_selection_set_filename (fs, s);
+-          g_free (s);
+-        }
+-      else
+-        {
+-          gtk_file_selection_set_filename (fs, selections[0]);
+-        }
+-
+-      g_strfreev (selections);
+-
+-      return;
+-    }
+-
+-  if (strstr (entered_filename, "://"))
+-    {
+-      /* try with the entered filename if it looks like an URI */
+-
+-      uri = g_strdup (entered_filename);
+-    }
+-  else
+-    {
+-      uri = g_filename_to_uri (selections[0], NULL, NULL);
+-    }
++  uris = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (open_dialog));
+ 
+   gtk_widget_set_sensitive (open_dialog, FALSE);
+ 
+-  if (file_open_dialog_open_image (open_dialog,
+-                                   gimp,
+-                                   uri,
+-                                   entered_filename,
+-                                   GIMP_FILE_DIALOG (open_dialog)->file_proc))
++  for (list = uris; list; list = g_slist_next (list))
+     {
+-      gtk_widget_hide (open_dialog);
+-    }
+-
+-  g_free (uri);
+-
+-  /*
+-   * Now deal with multiple selections from the filesel list
+-   */
++      gchar *filename = g_filename_from_uri (list->data, NULL, NULL);
+ 
+-  for (i = 1; selections[i] != NULL; i++)
+-    {
+-      if (g_file_test (selections[i], G_FILE_TEST_IS_REGULAR))
+-	{
+-          uri = g_filename_to_uri (selections[i], NULL, NULL);
+-
+-	  if (file_open_dialog_open_image (open_dialog,
++      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
++        {
++          if (file_open_dialog_open_image (open_dialog,
+                                            gimp,
+-                                           uri,
+-                                           uri,
++                                           list->data,
++                                           list->data,
+                                            GIMP_FILE_DIALOG (open_dialog)->file_proc))
+             {
+               gtk_widget_hide (open_dialog);
+             }
++        }
+ 
+-          g_free (uri);
+-	}
++      g_free (filename);
+     }
+ 
+-  g_strfreev (selections);
+-
+   gtk_widget_set_sensitive (open_dialog, TRUE);
++
++  g_slist_foreach (uris, (GFunc) g_free, NULL);
++  g_slist_free (uris);
+ }
+ 
+ static gboolean
+Index: app/gui/file-save-dialog.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/gui/file-save-dialog.c,v
+retrieving revision 1.64
+diff -u -p -r1.64 file-save-dialog.c
+--- app/gui/file-save-dialog.c	10 Mar 2004 10:21:03 -0000	1.64
++++ app/gui/file-save-dialog.c	15 Mar 2004 22:35:24 -0000
+@@ -147,6 +147,7 @@ file_save_dialog_create (Gimp           
+   GtkWidget *save_dialog;
+ 
+   save_dialog = gimp_file_dialog_new (gimp, gimp->save_procs,
++                                      GTK_FILE_CHOOSER_ACTION_SAVE,
+                                       menu_factory, "<Save>",
+                                       _("Save Image"), "gimp-file-save",
+                                       GTK_STOCK_SAVE,
+@@ -168,10 +169,9 @@ file_save_dialog_response (GtkWidget *sa
+                            gint       response_id,
+                            Gimp      *gimp)
+ {
+-  GtkFileSelection *fs;
+-  const gchar      *filename;
+-  const gchar      *raw_filename;
+-  gchar            *uri;
++  GtkFileChooser *chooser = GTK_FILE_CHOOSER (save_dialog);
++  gchar          *uri;
++  gchar          *filename;
+ 
+   if (response_id != GTK_RESPONSE_OK)
+     {
+@@ -179,34 +179,13 @@ file_save_dialog_response (GtkWidget *sa
+       return;
+     }
+ 
+-  fs = GTK_FILE_SELECTION (save_dialog);
++  uri = gtk_file_chooser_get_uri (chooser);
+ 
+-  filename     = gtk_file_selection_get_filename (fs);
+-  raw_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
+-
+-  g_assert (filename && raw_filename);
+-
+-  uri = g_filename_to_uri (filename, NULL, NULL);
++  filename = g_filename_from_uri (uri, NULL, NULL);
+ 
+   if (g_file_test (filename, G_FILE_TEST_EXISTS))
+     {
+-      if (g_file_test (filename, G_FILE_TEST_IS_DIR))
+-	{
+-	  if (filename[strlen (filename) - 1] != G_DIR_SEPARATOR)
+-	    {
+-	      gchar *s = g_strconcat (filename, G_DIR_SEPARATOR_S, NULL);
+-	      gtk_file_selection_set_filename (fs, s);
+-	      g_free (s);
+-	    }
+-	  else
+-            {
+-              gtk_file_selection_set_filename (fs, filename);
+-            }
+-	}
+-      else
+-	{
+-	  file_save_overwrite (save_dialog, uri, raw_filename);
+-	}
++      file_save_overwrite (save_dialog, uri, uri);
+     }
+   else
+     {
+@@ -217,7 +196,7 @@ file_save_dialog_response (GtkWidget *sa
+       if (file_save_dialog_save_image (save_dialog,
+                                        dialog->gimage,
+                                        uri,
+-                                       raw_filename,
++                                       uri,
+                                        dialog->file_proc,
+                                        dialog->set_uri_and_proc,
+                                        dialog->set_image_clean))
+@@ -229,6 +208,7 @@ file_save_dialog_response (GtkWidget *sa
+     }
+ 
+   g_free (uri);
++  g_free (filename);
+ }
+ 
+ typedef struct _OverwriteData OverwriteData;
+Index: app/gui/gradients-commands.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/gui/gradients-commands.c,v
+retrieving revision 1.23
+diff -u -p -r1.23 gradients-commands.c
+--- app/gui/gradients-commands.c	31 Jan 2004 20:23:52 -0000	1.23
++++ app/gui/gradients-commands.c	15 Mar 2004 22:35:24 -0000
+@@ -61,9 +61,9 @@ gradients_save_as_pov_ray_cmd_callback (
+ static void
+ gradients_save_as_pov_query (GimpContainerEditor *editor)
+ {
+-  GimpGradient     *gradient;
+-  GtkFileSelection *filesel;
+-  gchar            *title;
++  GimpGradient   *gradient;
++  GtkFileChooser *chooser;
++  gchar          *title;
+ 
+   gradient = gimp_context_get_gradient (editor->view->context);
+ 
+@@ -73,34 +73,41 @@ gradients_save_as_pov_query (GimpContain
+   title = g_strdup_printf (_("Save '%s' as POV-Ray"),
+ 			   GIMP_OBJECT (gradient)->name);
+ 
+-  filesel = GTK_FILE_SELECTION (gtk_file_selection_new (title));
++  chooser = GTK_FILE_CHOOSER
++    (gtk_file_chooser_dialog_new (title, NULL,
++                                  GTK_FILE_CHOOSER_ACTION_SAVE,
++
++                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
++                                  GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
++
++                                  NULL));
+ 
+   g_free (title);
+ 
+-  gtk_window_set_screen (GTK_WINDOW (filesel),
++  gtk_window_set_screen (GTK_WINDOW (chooser),
+                          gtk_widget_get_screen (GTK_WIDGET (editor)));
+ 
+-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-gradient-save-pov");
+-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+-
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
++  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-gradient-save-pov");
++  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+ 
+-  g_signal_connect (filesel, "response",
++  g_signal_connect (chooser, "response",
+                     G_CALLBACK (gradients_save_as_pov_response),
+                     gradient);
++  g_signal_connect (chooser, "delete_event",
++                    G_CALLBACK (gtk_true),
++                    NULL);
+ 
+   g_object_ref (gradient);
+ 
+-  g_signal_connect_object (filesel, "destroy",
++  g_signal_connect_object (chooser, "destroy",
+                            G_CALLBACK (g_object_unref),
+                            gradient,
+                            G_CONNECT_SWAPPED);
+ 
+-  gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
++  gimp_help_connect (GTK_WIDGET (chooser), gimp_standard_help_func,
+ 		     GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL);
+ 
+-  gtk_widget_show (GTK_WIDGET (filesel));
++  gtk_widget_show (GTK_WIDGET (chooser));
+ }
+ 
+ static void
+@@ -113,7 +120,7 @@ gradients_save_as_pov_response (GtkWidge
+       const gchar *filename;
+       GError      *error = NULL;
+ 
+-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
++      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+ 
+       if (! gimp_gradient_save_as_pov (gradient, filename, &error))
+         {
+Index: app/gui/vectors-commands.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/gui/vectors-commands.c,v
+retrieving revision 1.65
+diff -u -p -r1.65 vectors-commands.c
+--- app/gui/vectors-commands.c	31 Jan 2004 20:23:53 -0000	1.65
++++ app/gui/vectors-commands.c	15 Mar 2004 22:35:24 -0000
+@@ -645,7 +645,7 @@ vectors_import_response (GtkWidget *dial
+       const gchar *filename;
+       GError      *error = NULL;
+ 
+-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
++      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+ 
+       if (gimp_vectors_import_file (gimage, filename, FALSE, FALSE, &error))
+         {
+@@ -667,34 +667,37 @@ static void
+ vectors_import_query (GimpImage *gimage,
+                       GtkWidget *parent)
+ {
+-  GtkFileSelection *filesel;
++  GtkFileChooser *chooser;
+ 
+-  filesel =
+-    GTK_FILE_SELECTION (gtk_file_selection_new (_("Import Paths from SVG")));
++  chooser = GTK_FILE_CHOOSER
++    (gtk_file_chooser_dialog_new (_("Import Paths from SVG"), NULL,
++                                  GTK_FILE_CHOOSER_ACTION_OPEN,
+ 
+-  g_object_weak_ref (G_OBJECT (gimage),
+-                     (GWeakNotify) gtk_widget_destroy, filesel);
++                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
++                                  GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+ 
+-  gtk_window_set_screen (GTK_WINDOW (filesel),
+-                         gtk_widget_get_screen (parent));
++                                  NULL));
++
++     g_object_weak_ref (G_OBJECT (gimage), (GWeakNotify) gtk_widget_destroy,
++                     chooser);
+ 
+-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-import");
+-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
++  gtk_window_set_screen (GTK_WINDOW (chooser),
++                         gtk_widget_get_screen (parent));
+ 
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
++  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-vectors-import");
++  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+ 
+-  g_signal_connect (filesel, "response",
++  g_signal_connect (chooser, "response",
+                     G_CALLBACK (vectors_import_response),
+                     gimage);
+-  g_signal_connect (filesel, "delete_event",
++  g_signal_connect (chooser, "delete_event",
+                     G_CALLBACK (gtk_true),
+                     NULL);
+ 
+   /*  FIXME: add a proper file selector
+       and controls for merge and scale options  */
+ 
+-  gtk_widget_show (GTK_WIDGET (filesel));
++  gtk_widget_show (GTK_WIDGET (chooser));
+ }
+ 
+ 
+@@ -712,7 +715,7 @@ vectors_export_response (GtkWidget *dial
+       const gchar *filename;
+       GError      *error = NULL;
+ 
+-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
++      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+ 
+       if (! gimp_vectors_export_file (gimage, NULL, filename, &error))
+         {
+@@ -731,29 +734,32 @@ vectors_export_query (GimpImage   *gimag
+                       GimpVectors *vectors,
+                       GtkWidget   *parent)
+ {
+-  GtkFileSelection *filesel;
++  GtkFileChooser *chooser;
+ 
+-  filesel =
+-    GTK_FILE_SELECTION (gtk_file_selection_new (_("Export Path to SVG")));
++  chooser = GTK_FILE_CHOOSER
++    (gtk_file_chooser_dialog_new (_("Export Path to SVG"), NULL,
++                                  GTK_FILE_CHOOSER_ACTION_SAVE,
+ 
+-  g_object_weak_ref (G_OBJECT (gimage),
+-                     (GWeakNotify) gtk_widget_destroy, filesel);
++                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
++                                  GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+ 
+-  gtk_window_set_screen (GTK_WINDOW (filesel),
+-                         gtk_widget_get_screen (parent));
++                                  NULL));
++
++  g_object_weak_ref (G_OBJECT (gimage), (GWeakNotify) gtk_widget_destroy,
++                     chooser);
+ 
+-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-export");
+-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
++  gtk_window_set_screen (GTK_WINDOW (chooser),
++                         gtk_widget_get_screen (parent));
+ 
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
++  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-vectors-export");
++  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+ 
+-  g_signal_connect (filesel, "response",
++  g_signal_connect (chooser, "response",
+                     G_CALLBACK (vectors_export_response),
+                     gimage);
+-  g_signal_connect (filesel, "delete_event",
++  g_signal_connect (chooser, "delete_event",
+                     G_CALLBACK (gtk_true),
+                     NULL);
+ 
+-  gtk_widget_show (GTK_WIDGET (filesel));
++  gtk_widget_show (GTK_WIDGET (chooser));
+ }
+Index: app/tools/gimpimagemaptool.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/tools/gimpimagemaptool.c,v
+retrieving revision 1.42
+diff -u -p -r1.42 gimpimagemaptool.c
+--- app/tools/gimpimagemaptool.c	14 Mar 2004 22:16:11 -0000	1.42
++++ app/tools/gimpimagemaptool.c	15 Mar 2004 22:35:25 -0000
+@@ -533,10 +533,10 @@ settings_dialog_response (GtkWidget     
+ 
+   if (response_id == GTK_RESPONSE_OK)
+     {
+-      const gchar *filename;
+-      FILE        *file;
++      gchar *filename;
++      FILE  *file;
+ 
+-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
++      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+ 
+       file = fopen (filename, save ? "wt" : "rt");
+ 
+@@ -547,6 +547,7 @@ settings_dialog_response (GtkWidget     
+                      _("Could not open '%s' for reading: %s"),
+                      gimp_filename_to_utf8 (filename),
+ 		     g_strerror (errno));
++          g_free (filename);
+           return;
+         }
+ 
+@@ -565,6 +566,7 @@ settings_dialog_response (GtkWidget     
+         }
+ 
+       fclose (file);
++      g_free (filename);
+     }
+ 
+   if (save)
+@@ -601,7 +603,7 @@ gimp_image_map_tool_settings_dialog (Gim
+                                      gboolean          save)
+ {
+   GimpImageMapOptions *options;
+-  GtkFileSelection    *dialog;
++  GtkFileChooser      *chooser;
+ 
+   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
+ 
+@@ -616,34 +618,42 @@ gimp_image_map_tool_settings_dialog (Gim
+   else
+     gtk_widget_set_sensitive (tool->save_button, FALSE);
+ 
+-  tool->settings_dialog = gtk_file_selection_new (title);
++  tool->settings_dialog =
++    gtk_file_chooser_dialog_new (title, GTK_WINDOW (tool->shell),
++                                 save ?
++                                 GTK_FILE_CHOOSER_ACTION_SAVE :
++                                 GTK_FILE_CHOOSER_ACTION_OPEN,
+ 
+-  dialog = GTK_FILE_SELECTION (tool->settings_dialog);
++                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
++                                 save ? GTK_STOCK_SAVE : GTK_STOCK_OPEN,
++                                 GTK_RESPONSE_OK,
+ 
+-  g_object_set_data (G_OBJECT (dialog), "save", GINT_TO_POINTER (save));
++                                 NULL);
+ 
+-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-load-save-settings");
+-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
++  chooser = GTK_FILE_CHOOSER (tool->settings_dialog);
+ 
+-  gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
+-  gtk_container_set_border_width (GTK_CONTAINER (dialog->button_area), 4);
++  g_object_set_data (G_OBJECT (chooser), "save", GINT_TO_POINTER (save));
+ 
+-  g_object_add_weak_pointer (G_OBJECT (dialog),
++  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-load-save-settings");
++  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
++
++  g_object_add_weak_pointer (G_OBJECT (chooser),
+                              (gpointer) &tool->settings_dialog);
+ 
+-  gtk_window_set_transient_for (GTK_WINDOW (dialog),
+-                                GTK_WINDOW (tool->shell));
+-  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
++  gtk_window_set_destroy_with_parent (GTK_WINDOW (chooser), TRUE);
+ 
+-  g_signal_connect (dialog, "response",
++  g_signal_connect (chooser, "response",
+                     G_CALLBACK (settings_dialog_response),
+                     tool);
++  g_signal_connect (chooser, "delete_event",
++                    G_CALLBACK (gtk_true),
++                    NULL);
+ 
+   options = GIMP_IMAGE_MAP_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
+ 
+   if (options->settings)
+     {
+-      gtk_file_selection_set_filename (dialog, options->settings);
++      gtk_file_chooser_set_filename (chooser, options->settings);
+     }
+   else if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name)
+     {
+@@ -654,7 +664,7 @@ gimp_image_map_tool_settings_dialog (Gim
+                               G_DIR_SEPARATOR_S,
+                               NULL);
+ 
+-      gtk_file_selection_set_filename (dialog, tmp);
++      gtk_file_chooser_set_filename (chooser, tmp);
+       g_free (tmp);
+     }
+ 
+Index: libgimpwidgets/gimpfileentry.c
+===================================================================
+RCS file: /cvs/gnome/gimp/libgimpwidgets/gimpfileentry.c,v
+retrieving revision 1.55
+diff -u -p -r1.55 gimpfileentry.c
+--- libgimpwidgets/gimpfileentry.c	27 Feb 2004 22:51:19 -0000	1.55
++++ libgimpwidgets/gimpfileentry.c	15 Mar 2004 22:35:25 -0000
+@@ -288,8 +288,8 @@ gimp_file_entry_entry_activate (GtkWidge
+                                      entry);
+ 
+   if (entry->file_dialog)
+-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_dialog),
+-				     filename);
++    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (entry->file_dialog),
++                                   filename);
+ 
+   g_free (filename);
+   g_free (utf8);
+@@ -313,16 +313,17 @@ gimp_file_entry_entry_focus_out (GtkWidg
+ 
+ /*  local callback of gimp_file_entry_browse_clicked()  */
+ static void
+-gimp_file_entry_filesel_response (GtkWidget     *dialog,
++gimp_file_entry_chooser_response (GtkWidget     *dialog,
+                                   gint           response_id,
+                                   GimpFileEntry *entry)
+ {
+   if (response_id == GTK_RESPONSE_OK)
+     {
+-      const gchar *filename;
++      gchar *filename;
+ 
+-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
++      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+       gimp_file_entry_set_filename (entry, filename);
++      g_free (filename);
+     }
+ 
+   gtk_widget_hide (dialog);
+@@ -332,8 +333,9 @@ static void
+ gimp_file_entry_browse_clicked (GtkWidget     *widget,
+                                 GimpFileEntry *entry)
+ {
+-  gchar *utf8;
+-  gchar *filename;
++  GtkFileChooser *chooser;
++  gchar          *utf8;
++  gchar          *filename;
+ 
+   utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
+   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
+@@ -341,58 +343,55 @@ gimp_file_entry_browse_clicked (GtkWidge
+ 
+   if (! entry->file_dialog)
+     {
+-      GtkFileSelection *filesel;
++      const gchar *title = entry->title;
+ 
+-      if (entry->dir_only)
+-	{
+-          entry->file_dialog = gtk_file_selection_new (entry->title ?
+-                                                       entry->title :
+-                                                       _("Select Folder"));
+-
+-	  /*  hiding these widgets uses internal gtk+ knowledge, but it's
+-	   *  easier than creating my own directory browser -- michael
+-	   */
+-	  gtk_widget_hide
+-	    (GTK_FILE_SELECTION (entry->file_dialog)->fileop_del_file);
+-	  gtk_widget_hide
+-	    (GTK_FILE_SELECTION (entry->file_dialog)->file_list->parent);
+-	}
+-      else
++      if (! title)
+         {
+-          entry->file_dialog = gtk_file_selection_new (entry->title ?
+-                                                       entry->title :
+-                                                       _("Select File"));
++          if (entry->dir_only)
++            title = _("Select Folder");
++          else
++            title = _("Select File");
+         }
+ 
+-      filesel = GTK_FILE_SELECTION (entry->file_dialog);
++      entry->file_dialog =
++        gtk_file_chooser_dialog_new (title, NULL,
++                                     entry->dir_only ?
++                                     GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER :
++                                     GTK_FILE_CHOOSER_ACTION_OPEN,
+ 
+-      gtk_window_set_position (GTK_WINDOW (entry->file_dialog),
+-			       GTK_WIN_POS_MOUSE);
+-      gtk_window_set_role (GTK_WINDOW (entry->file_dialog),
+-                           "gimp-file-entry-file-dialog");
++                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
++                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
++
++                                     NULL);
+ 
+-      gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+-      gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
++      chooser = GTK_FILE_CHOOSER (entry->file_dialog);
++
++      gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
++      gtk_window_set_role (GTK_WINDOW (chooser),
++                           "gimp-file-entry-file-dialog");
+ 
+-      g_signal_connect (filesel, "response",
+-                        G_CALLBACK (gimp_file_entry_filesel_response),
++      g_signal_connect (chooser, "response",
++                        G_CALLBACK (gimp_file_entry_chooser_response),
+                         entry);
+-      g_signal_connect (filesel, "delete_event",
++      g_signal_connect (chooser, "delete_event",
+                         G_CALLBACK (gtk_true),
+                         NULL);
+ 
+       g_signal_connect_swapped (entry, "unmap",
+                                 G_CALLBACK (gtk_widget_hide),
+-                                filesel);
++                                chooser);
++    }
++  else
++    {
++      chooser = GTK_FILE_CHOOSER (entry->file_dialog);
+     }
+ 
+-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_dialog),
+-                                   filename);
++  gtk_file_chooser_set_filename (chooser, filename);
+ 
+-  gtk_window_set_screen (GTK_WINDOW (entry->file_dialog),
+-                         gtk_widget_get_screen (widget));
++  g_free (filename);
+ 
+-  gtk_window_present (GTK_WINDOW (entry->file_dialog));
++  gtk_window_set_screen (GTK_WINDOW (chooser), gtk_widget_get_screen (widget));
++  gtk_window_present (GTK_WINDOW (chooser));
+ }
+ 
+ static void
