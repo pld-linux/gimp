@@ -25,7 +25,7 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[Í¼Ïñ]GNUÍ¼Ïó´¦Àí¹¤¾ß
 Summary(zh_TW):	[¹Ï¹³]GNU¹Ï¶H³B²z¤u¨ã
 Name:		gimp
-Version:	1.3.9
+Version:	1.3.10
 Release:	1
 Epoch:		1
 License:	GPL
@@ -50,6 +50,7 @@ BuildRequires:	libungif-devel
 #BuildRequires:	perl-devel >= 5.6.1
 #BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	pkgconfig
+#BuildRequires:	python-pygtk-devel
 BuildRequires:	rpm-perlprov >= 4.0.2-56
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
@@ -242,6 +243,7 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 %configure \
 	--without-included-gettext \
 	--disable-perl \
+	--disable-python \
 	--with-mp \
 	--with-threads=posix \
 	--with-html-dir=%{_gtkdocdir}
@@ -267,7 +269,7 @@ install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
-\ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/plug-ins/* | \
+ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/plug-ins/* | \
 	egrep -w -v -e "aa|something_else" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 
