@@ -187,10 +187,11 @@ gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
 	TODO MAINTAINERS docs/*.txt
 
 %find_lang %{name}
-%find_lang %{name}-perl
+#%find_lang %{name}-perl
+#%find_lang %{name}-libgimp
 %find_lang %{name}-script-fu
 %find_lang %{name}-std-plugins
-cat %{name}.lang %{name}-perl.lang %{name}-script-fu.lang \
+cat %{name}.lang %{name}-script-fu.lang \
 	%{name}-std-plugins.lang> %{name}.list
 
 echo "%defattr(755,root,root,755)" >> %{name}.list
