@@ -8,7 +8,7 @@ Summary(pt_BR):	Programa de manipulação de imagem GNU
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.3
-Release:	1.5
+Release:	1.6
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -209,7 +209,7 @@ mv -f $RPM_BUILD_ROOT/usr/share/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
-	egrep -w -v -e "aa|mpeg|print" | \
+	egrep -w -v -e "aa|gap_decode_mpeg|mpeg|print" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 
 echo "%defattr(644,root,root,755)" >> %{name}.lang
