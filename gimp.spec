@@ -36,6 +36,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
+BuildRequires:	gnome-vfs2-devel
 BuildRequires:	gtk+2-devel >= 2:2.4.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
