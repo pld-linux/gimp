@@ -59,7 +59,6 @@ Requires:	gtk+2 >= 2:2.4.0
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
-Obsoletes:	gimp-svg
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -256,6 +255,19 @@ Print plugin for Gimp.
 %description print -l pl
 Wtyczka do drukowania dla Gimpa.
 
+%package svg
+Summary:	SVG plugin for Gimp
+Summary(pl):	Wtyczka SVG dla Gimpa
+Group:		X11/Applications/Graphics
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	librsvg >= 2.2.0
+
+%description svg
+SVG plugin for Gimp.
+
+%description svg -l pl
+Wtyczka SVG dla Gimpa.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -358,6 +370,7 @@ umask 022
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
 %{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
 %{?with_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
+%exclude %{_libdir}/gimp/%{mver}/plug-ins/svg
 
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
@@ -429,3 +442,7 @@ umask 022
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/print
 %endif
+
+%files svg
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/svg
