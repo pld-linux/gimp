@@ -41,6 +41,7 @@ BuildRequires:	libgtkhtml-devel >= 1.99.5
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel >= 1.0.8
+BuildRequires:	librsvg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
@@ -273,7 +274,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 #############################################################
 # This is hack indeed, but it is supposed to disappear when #
-# version 1.4 will arrive                                   #
+# version 2.0 will arrive                                   #
 #############################################################
 
 cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
