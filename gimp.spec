@@ -1,5 +1,5 @@
 %include	/usr/lib/rpm/macros.perl
-%define		__find_requires	%{_builddir}/gimp-%{version}/find-perl-requires
+%define		__find_requires %{_builddir}/gimp-%{version}/find-perl-requires
 Summary:	The GNU Image Manipulation Program
 Summary(fr):	Le programme de manipulation d'images de GNU
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
@@ -7,7 +7,7 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.1
-Release: 	1
+Release: 	2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -116,6 +116,7 @@ Biblioteki statyczne do GIMPa.
 %package aa
 Summary:	ASCII Art plugin for Gimp
 Summary(fr):	Plugin d'art ASCII pour Gimp
+Summary(pl):	Wsparcie dla ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
@@ -128,6 +129,9 @@ shared library.
 %description aa -l fr
 Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie
 partagée aalib.
+
+%description aa -l pl
+Ten pakiet zawiera "wtyczkê" do Gimpa ze wsparciem dla ASCII Art.
 
 %package xd
 Summary:	Xdelta plugin for GIMP
