@@ -158,7 +158,7 @@ CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
 	--enable-python \
 	--with-mp \
 	--with-threads=posix 
-make
+%{__make}
 %{__make} -C plug-ins/perl/po update-gmo
 
 %install
