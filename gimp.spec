@@ -6,7 +6,7 @@ Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.2
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -19,7 +19,7 @@ Patch0:		%{name}-perldep.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-croak.patch
 Patch3:		%{name}-i18n.patch
-Patch4:		%{name}-setlocale.patch
+#Patch4:		%{name}-setlocale.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gettext-devel
@@ -166,7 +166,7 @@ partagée xdelta.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#%patch4 -p1
 
 %build
 CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
