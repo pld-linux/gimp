@@ -84,8 +84,8 @@ GIMP static libraries
 %description -l pl static
 Biblioteki statyczne do GIMPa
 
-#%prep
-#%setup -q
+%prep
+%setup -q
 
 %build
 CFLAGS="$RPM_OPT_FLAGS -Wall" \
