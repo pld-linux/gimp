@@ -32,10 +32,10 @@ BuildRequires:	perl-Parse-RecDescent
 BuildRequires:	perl-File-Slurp
 BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
-BuildRequires:	libpng >= 1.0.8
+BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libungif-devel
-BuildRequires:	zlib-devel
 BuildRequires:	aalib-devel
+BuildRequires:	mpeg_lib
 BuildRequires:	rpm-perlprov
 %requires_eq	perl
 Requires:	%{perl_sitearch}
