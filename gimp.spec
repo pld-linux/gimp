@@ -47,6 +47,8 @@ BuildRequires:	libungif-devel
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel}
 BuildRequires:	rpm-build >= 4.1-13
+Requires:	python-pygtk-pango
+Requires:	python-pygth-gtk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
