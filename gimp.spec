@@ -11,6 +11,8 @@ Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
 Source:		ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 Patch:		gimp-perlinst.patch
+Patch1:		gimp-perl-croak.patch
+Patch2:		gimp-noWIN.patch
 URL:		http://www.gimp.org/
 BuildRequires:	gtk+-devel >= 1.2.0
 BuildRequires:	glib-devel >= 1.2.0
@@ -89,14 +91,18 @@ GIMP static libraries.
 Biblioteki statyczne do GIMPa.
 
 %prep
-%setup -q
-%patch -p0
+%setup  -q
+%patch  -p0
+%patch1 -p1
+%patch2 -p1
 
 %build
 LDFLAGS="-s"; export LDFLAGS
+CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
 %configure \
 	--without-included-gettext \
-	--without-xdelta 
+	--without-xdelta \
+	--with-threads=posix 
 make
 
 %install
@@ -109,10 +115,7 @@ install -d $RPM_BUILD_ROOT/{etc/X11,usr/share/aclocal} \
 make install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	mandir=$RPM_BUILD_ROOT%{_mandir} \
-	INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-	INSTALLMAN3DIR=$RPM_BUILD_ROOT/usr/share/man/man3 \
-	PREFIX=$RPM_BUILD_ROOT/usr \
-	INSTALLMAN5DIR=$RPM_BUILD_ROOT%{_mandir}/man5
+	DESTDIR=$RPM_BUILD_ROOT 
 
 mv $RPM_BUILD_ROOT%{_datadir}/aclocal/* $RPM_BUILD_ROOT/usr/share/aclocal
 mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
