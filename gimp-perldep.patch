@@ -19,3 +19,33 @@
  Marc Lehmann <pcg@goof.com>
 +
 +=cut
+--- gimp-1.1.15.pius/plug-ins/perl/Gimp/Util.pm	Thu Jan  6 00:42:19 2000
++++ gimp-1.1.15/plug-ins/perl/Gimp/Util.pm	Sun Jan 16 22:10:29 2000
+@@ -370,3 +370,4 @@
+ of the Gimp-Perl extension (contact him to include new functions) is Marc
+ Lehmann <pcg@goof.com>
+ 
++=cut
+--- gimp-1.1.15.pius/plug-ins/perl/UI/basewidget.pm	Thu Jan  6 00:42:20 2000
++++ gimp-1.1.15/plug-ins/perl/UI/basewidget.pm	Sun Jan 16 22:10:16 2000
+@@ -104,3 +104,4 @@
+ 
+ perl(1), L<Gimp>, L<Gimp::UI>, L<Gtk>.
+ 
++=cut
+--- gimp-1.1.15.pius/find-perl-requires	Thu Jan  1 01:00:00 1970
++++ gimp-1.1.15/find-perl-requires	Sun Jan 16 22:37:56 2000
+@@ -0,0 +1,13 @@
++#!/bin/sh
++ulimit -c 0
++
++filelist=`sed "s/['\"]/\\\&/g"`
++
++requires="`echo $filelist|/usr/lib/rpm/find-requires`"
++# the XSLoader module comes with perl => 5.005_63
++# and we still use the 5.005_03 one, so just skip it now...
++requires_perl="`/usr/lib/rpm/perl.req $filelist|grep -v 'perl(XSLoader)'`"
++requires_mod="`rpm -q --whatprovides --qf "%{NAME}\n"  $requires_perl 2>/dev/null`"
++echo "$requires
++$requires_perl
++$requires_mod"|  sort -u
