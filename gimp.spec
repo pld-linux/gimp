@@ -278,14 +278,7 @@ cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
 	$RPM_BUILD_ROOT%{_desktopdir}/gimp13.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-registry
-install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info/
-
-#cd $RPM_BUILD_ROOT%{_bindir}
-#ln -s gimp-%{mver} gimp
-#ln -s gimp-remote-%{mver} gimp-remote
-#ln -s gimptool-%{mver} gimp-config
-#ln -s gimptool-%{mver} gimptool
-#cd -
+install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 ###################### end hack #############################
 
@@ -366,7 +359,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gimptool-%{mver}
-#%attr(755,root,root) %{_bindir}/gimp-config
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
