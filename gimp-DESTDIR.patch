@@ -1,0 +1,282 @@
+diff -Nru gimp-1.1.16/plug-ins/perl/Makefile.PL gimp-1.1.16.new/plug-ins/perl/Makefile.PL
+--- gimp-1.1.16/plug-ins/perl/Makefile.PL	Mon Jan 31 04:48:26 2000
++++ gimp-1.1.16.new/plug-ins/perl/Makefile.PL	Fri Feb  4 18:47:16 2000
+@@ -205,7 +205,7 @@
+ 	\$(CHMOD) 755 * ; \\
+ 	\$(MY_FIXIN) * ; \\
+ 	for plugin in * ; do \\
+-	   $GT \"\$\$plugin\" $GT2 ; \\
++	   $GT \"\$\$plugin\" \$(DESTDIR)$GT2 ; \\
+ 	done
+ 	\$(RM_RF) inst-temp
+ 
+@@ -228,9 +228,9 @@
+       for (<po/*.po>) {
+          my($po)=m!/(.*)\.po$!; #/# for brainy vim
+          print " $po";
+-         $postamble .= "	\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n";
+-         $postamble .= "	-\$(MSGFMT) -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
+-         $postamble .= "	-\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
++         $postamble .= "	\$(MKPATH) \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES\n";
++         $postamble .= "	-\$(MSGFMT) -o \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
++         $postamble .= "	-\$(CHMOD) 644 \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
+       }
+    } else {
+       print " skipped";
+diff -Nru gimp-1.1.16/po/Makefile.in.in gimp-1.1.16.new/po/Makefile.in.in
+--- gimp-1.1.16/po/Makefile.in.in	Thu Feb  3 03:10:27 2000
++++ gimp-1.1.16.new/po/Makefile.in.in	Fri Feb  4 18:47:57 2000
+@@ -123,7 +123,7 @@
+ 	    *)     destdir=$(localedir);; \
+ 	  esac; \
+ 	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
+-	  dir=$$destdir/$$lang/LC_MESSAGES; \
++	  dir=$(DESTDIR)$$destdir/$$lang/LC_MESSAGES; \
+ 	  if test -r "$(MKINSTALLDIRS)"; then \
+ 	    $(MKINSTALLDIRS) $$dir; \
+ 	  else \
+diff -Nru gimp-1.1.16/po-libgimp/Makefile.in.in gimp-1.1.16.new/po-libgimp/Makefile.in.in
+--- gimp-1.1.16/po-libgimp/Makefile.in.in	Thu Jan 27 11:46:58 2000
++++ gimp-1.1.16.new/po-libgimp/Makefile.in.in	Fri Feb  4 18:48:09 2000
+@@ -123,7 +123,7 @@
+ 	    *)     destdir=$(localedir);; \
+ 	  esac; \
+ 	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
+-	  dir=$$destdir/$$lang/LC_MESSAGES; \
++	  dir=$(DESTDIR)$$destdir/$$lang/LC_MESSAGES; \
+ 	  if test -r "$(MKINSTALLDIRS)"; then \
+ 	    $(MKINSTALLDIRS) $$dir; \
+ 	  else \
+diff -Nru gimp-1.1.16/po-plug-ins/Makefile.in.in gimp-1.1.16.new/po-plug-ins/Makefile.in.in
+--- gimp-1.1.16/po-plug-ins/Makefile.in.in	Sat Jun  5 23:20:18 1999
++++ gimp-1.1.16.new/po-plug-ins/Makefile.in.in	Fri Feb  4 18:48:22 2000
+@@ -123,7 +123,7 @@
+ 	    *)     destdir=$(localedir);; \
+ 	  esac; \
+ 	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
+-	  dir=$$destdir/$$lang/LC_MESSAGES; \
++	  dir=$(DESTDIR)$$destdir/$$lang/LC_MESSAGES; \
+ 	  if test -r "$(MKINSTALLDIRS)"; then \
+ 	    $(MKINSTALLDIRS) $$dir; \
+ 	  else \
+diff -Nru gimp-1.1.16/help/C/channels/Makefile.am gimp-1.1.16.new/help/C/channels/Makefile.am
+--- gimp-1.1.16/help/C/channels/Makefile.am	Mon Jan 17 21:25:48 2000
++++ gimp-1.1.16.new/help/C/channels/Makefile.am	Fri Feb  4 19:33:43 2000
+@@ -21,5 +21,5 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../dialogs/channels $(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../dialogs/channels $(DESTDIR)$(helpdatadir)/dialogs
+diff -Nru gimp-1.1.16/help/C/file/Makefile.am gimp-1.1.16.new/help/C/file/Makefile.am
+--- gimp-1.1.16/help/C/file/Makefile.am	Mon Jan 17 21:25:48 2000
++++ gimp-1.1.16.new/help/C/file/Makefile.am	Fri Feb  4 19:35:27 2000
+@@ -19,11 +19,11 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../dialogs $(helpdatadir)/dialogs
+-	rm -f $(helpdatadir)/filters
+-	$(LN_S) ../filters $(helpdatadir)/filters
+-	rm -f $(helpdatadir)/open
+-	$(LN_S) ../open $(helpdatadir)/open
+-	rm -f $(helpdatadir)/save
+-	$(LN_S) ../save $(helpdatadir)/save
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../dialogs $(DESTDIR)$(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/filters
++	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
++	rm -f $(DESTDIR)$(helpdatadir)/open
++	$(LN_S) ../open $(DESTDIR)$(helpdatadir)/open
++	rm -f $(DESTDIR)$(helpdatadir)/save
++	$(LN_S) ../save $(DESTDIR)$(helpdatadir)/save
+diff -Nru gimp-1.1.16/help/C/image/Makefile.am gimp-1.1.16.new/help/C/image/Makefile.am
+--- gimp-1.1.16/help/C/image/Makefile.am	Mon Jan 17 21:25:49 2000
++++ gimp-1.1.16.new/help/C/image/Makefile.am	Fri Feb  4 19:38:06 2000
+@@ -24,15 +24,15 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../dialogs $(helpdatadir)/dialogs
+-	rm -f $(helpdatadir)/file
+-	$(LN_S) ../file $(helpdatadir)/file
+-	rm -f $(helpdatadir)/filters
+-	$(LN_S) ../filters $(helpdatadir)/filters
+-	rm -f $(helpdatadir)/layers
+-	$(LN_S) ../layers $(helpdatadir)/layers
+-	rm -f $(helpdatadir)/toolbox
+-	$(LN_S) ../toolbox $(helpdatadir)/toolbox
+-	rm -f $(helpdatadir)/tools
+-	$(LN_S) ../tools $(helpdatadir)/tools
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../dialogs $(DESTDIR)$(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/file
++	$(LN_S) ../file $(DESTDIR)$(helpdatadir)/file
++	rm -f $(DESTDIR)$(helpdatadir)/filters
++	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
++	rm -f $(DESTDIR)$(helpdatadir)/layers
++	$(LN_S) ../layers $(DESTDIR)$(helpdatadir)/layers
++	rm -f $(DESTDIR)$(helpdatadir)/toolbox
++	$(LN_S) ../toolbox $(DESTDIR)$(helpdatadir)/toolbox
++	rm -f $(DESTDIR)$(helpdatadir)/tools
++	$(LN_S) ../tools $(DESTDIR)$(helpdatadir)/tools
+diff -Nru gimp-1.1.16/help/C/image/edit/Makefile.am gimp-1.1.16.new/help/C/image/edit/Makefile.am
+--- gimp-1.1.16/help/C/image/edit/Makefile.am	Mon Jan 17 21:25:49 2000
++++ gimp-1.1.16.new/help/C/image/edit/Makefile.am	Fri Feb  4 19:35:47 2000
+@@ -25,5 +25,5 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../../dialogs $(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../../dialogs $(DESTDIR)$(helpdatadir)/dialogs
+diff -Nru gimp-1.1.16/help/C/image/image/Makefile.am gimp-1.1.16.new/help/C/image/image/Makefile.am
+--- gimp-1.1.16/help/C/image/image/Makefile.am	Mon Jan 17 21:25:50 2000
++++ gimp-1.1.16.new/help/C/image/image/Makefile.am	Fri Feb  4 19:36:59 2000
+@@ -24,5 +24,5 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../../dialogs $(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../../dialogs $(DESTDIR)$(helpdatadir)/dialogs
+diff -Nru gimp-1.1.16/help/C/image/image/mode/Makefile.am gimp-1.1.16.new/help/C/image/image/mode/Makefile.am
+--- gimp-1.1.16/help/C/image/image/mode/Makefile.am	Mon Jan 17 21:25:50 2000
++++ gimp-1.1.16.new/help/C/image/image/mode/Makefile.am	Fri Feb  4 19:36:33 2000
+@@ -17,5 +17,5 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../../../dialogs $(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../../../dialogs $(DESTDIR)$(helpdatadir)/dialogs
+diff -Nru gimp-1.1.16/help/C/image/image/transforms/Makefile.am gimp-1.1.16.new/help/C/image/image/transforms/Makefile.am
+--- gimp-1.1.16/help/C/image/image/transforms/Makefile.am	Mon Jan 17 21:25:51 2000
++++ gimp-1.1.16.new/help/C/image/image/transforms/Makefile.am	Fri Feb  4 19:36:46 2000
+@@ -15,5 +15,5 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../../../dialogs $(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../../../dialogs $(DESTDIR)$(helpdatadir)/dialogs
+diff -Nru gimp-1.1.16/help/C/image/select/Makefile.am gimp-1.1.16.new/help/C/image/select/Makefile.am
+--- gimp-1.1.16/help/C/image/select/Makefile.am	Mon Jan 17 21:25:51 2000
++++ gimp-1.1.16.new/help/C/image/select/Makefile.am	Fri Feb  4 19:37:13 2000
+@@ -21,5 +21,5 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../../dialogs $(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../../dialogs $(DESTDIR)$(helpdatadir)/dialogs
+diff -Nru gimp-1.1.16/help/C/image/view/Makefile.am gimp-1.1.16.new/help/C/image/view/Makefile.am
+--- gimp-1.1.16/help/C/image/view/Makefile.am	Mon Jan 17 21:25:52 2000
++++ gimp-1.1.16.new/help/C/image/view/Makefile.am	Fri Feb  4 19:37:25 2000
+@@ -24,5 +24,5 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../../dialogs $(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../../dialogs $(DESTDIR)$(helpdatadir)/dialogs
+diff -Nru gimp-1.1.16/help/C/layers/Makefile.am gimp-1.1.16.new/help/C/layers/Makefile.am
+--- gimp-1.1.16/help/C/layers/Makefile.am	Mon Jan 17 21:25:52 2000
++++ gimp-1.1.16.new/help/C/layers/Makefile.am	Fri Feb  4 19:38:20 2000
+@@ -32,5 +32,5 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../dialogs/layers $(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../dialogs/layers $(DESTDIR)$(helpdatadir)/dialogs
+diff -Nru gimp-1.1.16/help/C/open/Makefile.am gimp-1.1.16.new/help/C/open/Makefile.am
+--- gimp-1.1.16/help/C/open/Makefile.am	Mon Jan 17 21:25:52 2000
++++ gimp-1.1.16.new/help/C/open/Makefile.am	Fri Feb  4 19:38:37 2000
+@@ -16,7 +16,7 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../dialogs $(helpdatadir)/dialogs
+-	rm -f $(helpdatadir)/filters
+-	$(LN_S) ../filters $(helpdatadir)/filters
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../dialogs $(DESTDIR)$(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/filters
++	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
+diff -Nru gimp-1.1.16/help/C/paths/Makefile.am gimp-1.1.16.new/help/C/paths/Makefile.am
+--- gimp-1.1.16/help/C/paths/Makefile.am	Mon Jan 17 21:25:53 2000
++++ gimp-1.1.16.new/help/C/paths/Makefile.am	Fri Feb  4 19:38:54 2000
+@@ -22,7 +22,7 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../dialogs/paths $(helpdatadir)/dialogs
+-	rm -f $(helpdatadir)/filters
+-	$(LN_S) ../filters $(helpdatadir)/filters
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../dialogs/paths $(DESTDIR)$(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/filters
++	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
+diff -Nru gimp-1.1.16/help/C/save/Makefile.am gimp-1.1.16.new/help/C/save/Makefile.am
+--- gimp-1.1.16/help/C/save/Makefile.am	Mon Jan 17 21:25:53 2000
++++ gimp-1.1.16.new/help/C/save/Makefile.am	Fri Feb  4 19:39:11 2000
+@@ -16,7 +16,7 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../dialogs $(helpdatadir)/dialogs
+-	rm -f $(helpdatadir)/filters
+-	$(LN_S) ../filters $(helpdatadir)/filters
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../dialogs $(DESTDIR)$(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/filters
++	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
+diff -Nru gimp-1.1.16/help/C/toolbox/Makefile.am gimp-1.1.16.new/help/C/toolbox/Makefile.am
+--- gimp-1.1.16/help/C/toolbox/Makefile.am	Mon Jan 17 21:25:54 2000
++++ gimp-1.1.16.new/help/C/toolbox/Makefile.am	Fri Feb  4 19:39:49 2000
+@@ -24,9 +24,9 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../dialogs $(helpdatadir)/dialogs
+-	rm -f $(helpdatadir)/file
+-	$(LN_S) ../file $(helpdatadir)/file
+-	rm -f $(helpdatadir)/filters
+-	$(LN_S) ../filters $(helpdatadir)/filters
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../dialogs $(DESTDIR)$(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/file
++	$(LN_S) ../file $(DESTDIR)$(helpdatadir)/file
++	rm -f $(DESTDIR)$(helpdatadir)/filters
++	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
+diff -Nru gimp-1.1.16/help/C/toolbox/help/Makefile.am gimp-1.1.16.new/help/C/toolbox/help/Makefile.am
+--- gimp-1.1.16/help/C/toolbox/help/Makefile.am	Mon Jan 17 21:25:54 2000
++++ gimp-1.1.16.new/help/C/toolbox/help/Makefile.am	Fri Feb  4 19:39:29 2000
+@@ -16,7 +16,7 @@
+ 	done
+ 
+ install-data-local:
+-	rm -f $(helpdatadir)/dialogs
+-	$(LN_S) ../../dialogs $(helpdatadir)/dialogs
+-	rm -f $(helpdatadir)/filters
+-	$(LN_S) ../filters $(helpdatadir)/filters
++	rm -f $(DESTDIR)$(helpdatadir)/dialogs
++	$(LN_S) ../../dialogs $(DESTDIR)$(helpdatadir)/dialogs
++	rm -f $(DESTDIR)$(helpdatadir)/filters
++	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
