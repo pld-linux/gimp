@@ -154,7 +154,7 @@ partagée xdelta.
 chmod +x find-perl-requires
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
+CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -DPERL_POLLUTE"
 %configure \
 	--without-included-gettext \
 	--without-xdelta \
@@ -244,6 +244,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ko) %{_datadir}/gimp/1.1/tips/gimp_tips.ko.txt
 %lang(pl) %{_datadir}/gimp/1.1/tips/gimp_tips.pl.txt
 %lang(ru) %{_datadir}/gimp/1.1/tips/gimp_tips.ru.txt
+%lang(uk) %{_datadir}/gimp/1.1/tips/gimp_tips.uk.txt
 
 %config %verify(not md5 mtime) %{_sysconfdir}/gimp/1.1/gimprc*
 %config %{_sysconfdir}/gimp/1.1/gtkrc*
