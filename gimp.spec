@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.perl
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulación de imagen GNU
@@ -11,42 +10,30 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[Í¼Ïñ]GNUÍ¼Ïó´¦Àí¹¤¾ß
 Summary(zh_TW):	[¹Ï¹³]GNU¹Ï¶H³B²z¤u¨ã
 Name:		gimp
-Version:	1.2.3
-Release:	6
+Version:	1.3.8
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v1.2/v%{version}/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gimp.org/pub/gimp/v1.3/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
-Patch0:		%{name}-perldep.patch
-Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-croak.patch
 URL:		http://www.gimp.org/
-Icon:		gimp.gif
 BuildRequires:	gettext-devel
-BuildRequires:	gnome-libs-devel
-BuildRequires:	gtk+-devel >= 1.2.8-3
-BuildRequires:	perl-devel >= 5.6.1
-BuildRequires:	perl-PDL-Graphics-TriD >= 1.9906
-BuildRequires:	perl-PDL-Graphics-PGPLOT >= 1.9906
-BuildRequires:	perl-gtk >= 0.6123
-BuildRequires:	perl-Parse-RecDescent
-BuildRequires:	perl-File-Slurp
+BuildRequires:	gtk+2-devel
+BuildRequires:	gimp-print-devel
+BuildRequires:	libart_lgpl-devel
+BuildRequires:	pkgconfig
 BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libungif-devel
 BuildRequires:	aalib-devel
-BuildRequires:	rpm-perlprov >= 4.0.2-56
-Requires:	gtk+ >= 1.2.8-3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 
 %define		_prefix		/usr/X11R6
 %define		_mandir		%{_prefix}/man
-
-%define		_noautoreq	"perl(of)"
 
 %description
 The GIMP is an image manipulation program suitable for photo
@@ -229,23 +216,15 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 
 %prep
 %setup	-q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
-if [ -f %{_pkgconfigdir}/libpng12.pc ] ; then
-	CPPFLAGS="`pkg-config libpng12 --cflags`"; export CPPFLAGS
-fi
-CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
-%configure2_13 \
+%configure \
 	--without-included-gettext \
-	--enable-perl \
-	--with-mp \
-	--with-threads=posix
-%{__make}
-%{__make} -C plug-ins/perl/po update-gmo
+	--enable-mp
 
+%{__make}
+
+exit 1
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_pixmapsdir} \
