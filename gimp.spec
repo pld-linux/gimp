@@ -7,11 +7,6 @@
 #   - perl support
 #
 
-# http://bugzilla.gnome.org/show_bug.cgi?id=85249
-%ifarch athlon
-%define optflags -O2 -march=i386
-%endif
-
 %include	/usr/lib/rpm/macros.perl
 
 %define mver 1.3
@@ -52,7 +47,7 @@ BuildRequires:	libungif-devel
 #BuildRequires:	perl-devel >= 5.6.1
 #BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	pkgconfig
-#BuildRequires:	python-pygtk-devel
+BuildRequires:	python-pygtk-devel
 BuildRequires:	rpm-perlprov >= 4.1-10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
@@ -242,7 +237,7 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 	--without-included-gettext \
 	--disable-perl \
 	%{?_without_print: --disable-print} \
-	--disable-python \
+	--enable-python \
 	--with-mp \
 	--with-threads=posix \
 	--with-html-dir=%{_gtkdocdir}
@@ -310,6 +305,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
 %{_libdir}/gimp/%{mver}/environ
+
+%dir %{_libdir}/gimp/%{mver}/python
+%{_libdir}/gimp/%{mver}/python/*.py[co]
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/python/*.so
 
 %dir %{_datadir}/gimp/%{mver}
 %{_datadir}/gimp/%{mver}/brushes
