@@ -154,7 +154,7 @@ partagée xdelta.
 chmod +x find-perl-requires
 
 %build
-CFLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS} -DPERL_POLLUTE"
+CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -DPERL_POLLUTE"
 %configure \
 	--without-included-gettext \
 	--without-xdelta \
