@@ -18,13 +18,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	1.3.16
-Release:	2
+Version:	1.3.17
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	ccee1733b0f36320b248913274b586e2
+# Source0-md5:	d1fe81d77d9860ab47fda6f298cbf89a
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{!?_without_aalib:BuildRequires:	aalib-devel}
@@ -276,12 +276,12 @@ install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-registry
 install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info/
 
-cd $RPM_BUILD_ROOT%{_bindir}
-ln -s gimp-%{mver} gimp
-ln -s gimp-remote-%{mver} gimp-remote
-ln -s gimptool-%{mver} gimp-config
-ln -s gimptool-%{mver} gimptool
-cd -
+#cd $RPM_BUILD_ROOT%{_bindir}
+#ln -s gimp-%{mver} gimp
+#ln -s gimp-remote-%{mver} gimp-remote
+#ln -s gimptool-%{mver} gimp-config
+#ln -s gimptool-%{mver} gimptool
+#cd -
 
 ###################### end hack #############################
 
@@ -360,7 +360,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gimptool-%{mver}
-%attr(755,root,root) %{_bindir}/gimp-config
+#%attr(755,root,root) %{_bindir}/gimp-config
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
@@ -368,7 +368,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_gtkdocdir}/*
 
 %{_includedir}/gimp-%{mver}
-%{_aclocaldir}/gimp-1.4.m4
+%{_aclocaldir}/gimp-2.0.m4
 
 %{_mandir}/man1/gimptool-%{mver}*
 
