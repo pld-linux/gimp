@@ -6,7 +6,7 @@ Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü işleme programı
 Name:		gimp
 Version:	1.2.1
-Release:	6
+Release:	7
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -23,7 +23,7 @@ Icon:		gimp.gif
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	gtk+-devel >= 1.2.8-3
-BuildRequires:	perl >= 1:5.6
+BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	perl-PDL-Graphics-TriD >= 1.9906
 BuildRequires:	perl-PDL-Graphics-PGPLOT >= 1.9906
 BuildRequires:	perl-gtk >= 0.6123
@@ -34,7 +34,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libungif-devel
 BuildRequires:	aalib-devel
-BuildRequires:	mpeg_lib
+BuildRequires:	mpeg_lib-devel
 BuildRequires:	rpm-perlprov
 Requires:	gtk+ >= 1.2.8-3
 Requires:	mpeg_lib
