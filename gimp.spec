@@ -17,8 +17,8 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	1.3.13
-Release:	3
+Version:	1.3.14
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -302,6 +302,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
 %attr(755,root,root) %{_bindir}/gimp-remote
+%dir %{_sysconfdir}/%{name}
+%dir %{_sysconfdir}/%{name}/1.3
+%config(noreplace) %{_sysconfdir}/%{name}/1.3/templaterc
 %{_desktopdir}/gimp13.desktop
 %{_datadir}/application-registry/gimp.applications
 %{_datadir}/mime-info/gimp.keys
