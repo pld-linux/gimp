@@ -26,6 +26,8 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	aalib-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{!?_without_print:BuildRequires:	gimp-print-devel}
 BuildRequires:	gtk+2-devel >= 2.2.0
@@ -34,6 +36,7 @@ BuildRequires:	libgtkhtml-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libtiff-devel
+BuildRequires:	libtool
 BuildRequires:	libungif-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel
