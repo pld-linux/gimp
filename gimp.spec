@@ -22,7 +22,7 @@ Icon:		gimp.gif
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-libs-devel
 BuildRequires:	gtk+-devel >= 1.2.8-3
-BuildRequires:	perl
+BuildRequires:	perl >= 1:5.6
 BuildRequires:	perl-PDL >= 1.9906
 BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	perl-Parse-RecDescent
