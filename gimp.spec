@@ -314,6 +314,7 @@ install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 # Link gimptool to gimptool-2.0
 
 ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
+echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
@@ -401,7 +402,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/gimp-%{mver}
 %{_aclocaldir}/gimp-2.0.m4
 
-%{_mandir}/man1/gimptool-2.0*
+%{_mandir}/man1/gimptool-2.0.1*
+%{_mandir}/man1/gimptool.1*
 
 %files static
 %defattr(644,root,root,755)
