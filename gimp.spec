@@ -345,7 +345,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimptool-%{mver}
 #%%attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
-%attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.la
+%{_libdir}/gimp/%{mver}/modules/*.la
 %{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*
 %{_gtkdocdir}/*
