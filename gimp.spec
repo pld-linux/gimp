@@ -4,8 +4,8 @@
 %bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
 %bcond_without	python		# without python plugins
 #
-%define	mver	2.1
-%define	pre	rc1
+%define	mver	2.0
+%define	pre	pre1
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulaci鏮 de imagen GNU
@@ -18,13 +18,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.1.7
-Release:	1
+Version:	2.2
+Release:	0.%{pre}.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.1/%{name}-%{version}.tar.bz2
-# Source0-md5:	2232fea32780681e56e8aec8f5571e89
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/testing/%{name}-%{version}-%{pre}.tar.bz2
+# Source0-md5:	f88e30b6a11b2d3c81219bc10a6de19a
 # Source0-size:	13847868
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-locale-names.patch
@@ -257,7 +257,7 @@ Print plugin for Gimp.
 Wtyczka do drukowania dla Gimpa.
 
 %prep
-%setup -q
+%setup -qn %{name}-%{version}-%{pre}
 %patch0 -p1
 %patch1 -p1
 
@@ -336,17 +336,16 @@ umask 022
 %doc AUTHORS ChangeLog MAINTAINERS NEWS PLUGIN_MAINTAINERS README
 %doc docs/{*.txt,quick_reference.*,Wilber*}
 
-%attr(755,root,root) %{_bindir}/gimp-%{mver}
+%attr(755,root,root) %{_bindir}/gimp-2.2
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
+%attr(755,root,root) %{_bindir}/gimp-remote-2.2
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
 %{_datadir}/application-registry/gimp.applications
 %{_datadir}/mime-info/gimp.keys
-%{_mandir}/man1/gimp-%{mver}*
-%{_mandir}/man1/gimp-remote-%{mver}*
-%{_mandir}/man1/gimprc-%{mver}*
-%{_mandir}/man5/gimprc-%{mver}*
+%{_mandir}/man1/gimp-2*
+%{_mandir}/man1/gimp-remote-2*
+%{_mandir}/man5/gimprc-2*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir %{_libdir}/gimp
