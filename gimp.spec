@@ -6,7 +6,7 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.17
+Version:	1.1.18
 Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
@@ -187,10 +187,11 @@ gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man[13]/* \
 	TODO MAINTAINERS docs/*.txt
 
 %find_lang %{name}
-%find_lang %{name}-std-plugins
 %find_lang %{name}-perl
-cat %{name}.lang %{name}-std-plugins.lang %{name}-perl.lang \
-	> %{name}.list
+%find_lang %{name}-script-fu
+%find_lang %{name}-std-plugins
+cat %{name}.lang %{name}-perl.lang %{name}-script-fu.lang \
+	%{name}-std-plugins.lang > %{name}.list
 
 echo "%defattr(755,root,root,755)" >> %{name}.list
 
@@ -242,12 +243,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/gimp/tips
 %{_datadir}/gimp/tips/gimp_tips.txt
 %lang(fr) %{_datadir}/gimp/tips/gimp_conseils.fr.txt
+%lang(cs) %{_datadir}/gimp/tips/gimp_tips.cs.txt
 %lang(de) %{_datadir}/gimp/tips/gimp_tips.de.txt
-%lang(ja) %{_datadir}/gimp/tips/gimp_tips.ja.txt
-%lang(ru) %{_datadir}/gimp/tips/gimp_tips.ru.txt
 %lang(it) %{_datadir}/gimp/tips/gimp_tips.it.txt
+%lang(ja) %{_datadir}/gimp/tips/gimp_tips.ja.txt
 %lang(ko) %{_datadir}/gimp/tips/gimp_tips.ko.txt
 %lang(pl) %{_datadir}/gimp/tips/gimp_tips.pl.txt
+%lang(ru) %{_datadir}/gimp/tips/gimp_tips.ru.txt
 
 %config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
 %config %{_datadir}/gimp/gtkrc*
@@ -276,7 +278,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-
+%doc devel-docs/libgimp/html/*
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so 
 %{_libdir}/lib*.la
