@@ -221,7 +221,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp* 
 %{_datadir}/applnk/Graphics/gimp.desktop
 
-%{_mandir}/man1/gimp*.1* 
+%{_mandir}/man1/gimp.1* 
 %{_mandir}/man5/gimprc.5*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
