@@ -167,7 +167,7 @@ Summary(zh_CN):	[¿ª·¢]gimpµÄ¿ª·¢°ü
 Summary(zh_TW):	[¶}µo]gimpªº¶}µo¥]
 License:	LGPL
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 Requires:	gtk-doc-common
 Requires:	gtk+2-devel >= 2.2.0
 
@@ -192,7 +192,7 @@ para o Gimp.
 Summary:	GIMP static libraries
 Summary(pl):	Biblioteki statyczne do GIMPa
 Group:		X11/Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{epoch}:%{version}
 
 %description static
 GIMP static libraries.
@@ -212,7 +212,7 @@ Summary:	ASCII Art plugin for Gimp
 Summary(fr):	Plugin d'art ASCII pour Gimp
 Summary(pl):	Wtyczka do ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description aa
 This package contains the ASCII Art plugin which requires the aalib
@@ -229,7 +229,7 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 Summary:	Print plugin for Gimp
 Summary(pl):	Wtyczka do drukowania dla Gimpa
 Group:		X11/Applications/Graphics
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description print
 Print plugin for Gimp.
