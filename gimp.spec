@@ -19,13 +19,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.0
-Release:	0.%{pre}.1
+Version:	2.0.0
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/testing/%{name}-%{version}%{pre}.tar.bz2
-# Source0-md5:	21bdc4440c2158792aef7a7b36a22f11
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/%{name}-%{version}.tar.bz2
+# Source0-md5:	322cc091da8bbd324b37c60143fa26fa
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-locale-names.patch
 Patch2:		%{name}-gcc34.patch
@@ -260,7 +260,7 @@ Print plugin for Gimp.
 Wtyczka do drukowania dla Gimpa.
 
 %prep
-%setup -q -n %{name}-%{version}%{pre}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -303,7 +303,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
 	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
-	$RPM_BUILD_ROOT%{_desktopdir}/gimp13.desktop
+	$RPM_BUILD_ROOT%{_desktopdir}/gimp.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-registry
 install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
@@ -332,7 +332,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
 %attr(755,root,root) %{_bindir}/gimp-remote
-%{_desktopdir}/gimp13.desktop
+%{_desktopdir}/gimp.desktop
 %{_datadir}/application-registry/gimp.applications
 %{_datadir}/mime-info/gimp.keys
 %{_mandir}/man1/gimp-%{mver}*
