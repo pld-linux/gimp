@@ -1,7 +1,7 @@
-diff -urN gimp-1.1.19/plug-ins/perl/Makefile.PL gimp-1.1.19.new/plug-ins/perl/Makefile.PL
---- gimp-1.1.19/plug-ins/perl/Makefile.PL	Tue Mar 28 15:30:27 2000
-+++ gimp-1.1.19.new/plug-ins/perl/Makefile.PL	Sat Apr  1 22:16:04 2000
-@@ -219,7 +219,7 @@
+diff -urN gimp-1.1.27-orig/plug-ins/perl/Makefile.PL gimp-1.1.27/plug-ins/perl/Makefile.PL
+--- gimp-1.1.27-orig/plug-ins/perl/Makefile.PL	Thu Oct  5 02:15:25 2000
++++ gimp-1.1.27/plug-ins/perl/Makefile.PL	Thu Oct  5 21:05:23 2000
+@@ -231,7 +231,7 @@
  	\$(CHMOD) 755 * ; \\
  	\$(MY_FIXIN) * ; \\
  	for plugin in * ; do \\
@@ -10,27 +10,31 @@ diff -urN gimp-1.1.19/plug-ins/perl/Makefile.PL gimp-1.1.19.new/plug-ins/perl/Ma
  	done
  	\$(RM_RF) inst-temp
  
-diff -urN gimp-1.1.19/plug-ins/perl/po/Makefile.PL gimp-1.1.19.new/plug-ins/perl/po/Makefile.PL
---- gimp-1.1.19/plug-ins/perl/po/Makefile.PL	Thu Mar 30 07:14:14 2000
-+++ gimp-1.1.19.new/plug-ins/perl/po/Makefile.PL	Sat Apr  1 22:18:03 2000
-@@ -7,10 +7,10 @@
-    for (<*.po>) {
-       my ($po) = /(.*)\.po$/;
-       print " $po";
--      $install .= "	@-\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n".
--                  "	-\$(CP) $po.gmo \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n".
--                  "	@-\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
--      $uninstall .= "	\$(RM_F) \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
-+      $install .= "	@-\$(MKPATH) \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES\n".
-+                  "	-\$(CP) $po.gmo \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n".
-+                  "	@-\$(CHMOD) 644 \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
-+      $uninstall .= "	\$(RM_F) \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
-       $mofiles   .= " $po.gmo";
-    }
- } else {
-diff -urN gimp-1.1.19/po/Makefile.in.in gimp-1.1.19.new/po/Makefile.in.in
---- gimp-1.1.19/po/Makefile.in.in	Wed Mar 29 12:55:08 2000
-+++ gimp-1.1.19.new/po/Makefile.in.in	Sat Apr  1 22:16:04 2000
+diff -urN gimp-1.1.27-orig/plug-ins/perl/po/Makefile.in.in gimp-1.1.27/plug-ins/perl/po/Makefile.in.in
+--- gimp-1.1.27-orig/plug-ins/perl/po/Makefile.in.in	Sat Sep 23 23:51:09 2000
++++ gimp-1.1.27/plug-ins/perl/po/Makefile.in.in	Thu Oct  5 22:15:36 2000
+@@ -121,7 +121,7 @@
+ 	    *)     destdir=$(localedir);; \
+ 	  esac; \
+ 	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
+-	  dir=$$destdir/$$lang/LC_MESSAGES; \
++	  dir=$(DESTDIR)$$destdir/$$lang/LC_MESSAGES; \
+ 	  if test -r "$(MKINSTALLDIRS)"; then \
+ 	    $(MKINSTALLDIRS) $$dir; \
+ 	  else \
+@@ -222,6 +222,9 @@
+ 	    mv $$lang.old.po $$lang.po; \
+ 	  fi; \
+ 	done
++
++# Temporary workaround for building under PLD GNU/Linux
++update-gmo:
+ 
+ POTFILES: POTFILES.in
+ 	( if test 'x$(srcdir)' != 'x.'; then \
+diff -urN gimp-1.1.27-orig/po/Makefile.in.in gimp-1.1.27/po/Makefile.in.in
+--- gimp-1.1.27-orig/po/Makefile.in.in	Thu Oct  5 00:50:54 2000
++++ gimp-1.1.27/po/Makefile.in.in	Thu Oct  5 21:08:56 2000
 @@ -123,7 +123,7 @@
  	    *)     destdir=$(localedir);; \
  	  esac; \
@@ -40,21 +44,21 @@ diff -urN gimp-1.1.19/po/Makefile.in.in gimp-1.1.19.new/po/Makefile.in.in
  	  if test -r "$(MKINSTALLDIRS)"; then \
  	    $(MKINSTALLDIRS) $$dir; \
  	  else \
-diff -urN gimp-1.1.19/po-libgimp/Makefile.in.in gimp-1.1.19.new/po-libgimp/Makefile.in.in
---- gimp-1.1.19/po-libgimp/Makefile.in.in	Thu Jan 27 11:46:58 2000
-+++ gimp-1.1.19.new/po-libgimp/Makefile.in.in	Sat Apr  1 22:16:04 2000
+diff -urN gimp-1.1.27-orig/po-libgimp/Makefile.in.in gimp-1.1.27/po-libgimp/Makefile.in.in
+--- gimp-1.1.27-orig/po-libgimp/Makefile.in.in	Thu Jan 27 11:46:58 2000
++++ gimp-1.1.27/po-libgimp/Makefile.in.in	Thu Oct  5 21:09:46 2000
 @@ -123,7 +123,7 @@
  	    *)     destdir=$(localedir);; \
  	  esac; \
  	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
 -	  dir=$$destdir/$$lang/LC_MESSAGES; \
-+	  dir=$(DESTDIR)$$destdir/$$lang/LC_MESSAGES; \
++	  dir=$(DISTDIR)$$destdir/$$lang/LC_MESSAGES; \
  	  if test -r "$(MKINSTALLDIRS)"; then \
  	    $(MKINSTALLDIRS) $$dir; \
  	  else \
-diff -urN gimp-1.1.19/po-script-fu/Makefile.in.in gimp-1.1.19.new/po-script-fu/Makefile.in.in
---- gimp-1.1.19/po-script-fu/Makefile.in.in	Tue Mar 28 23:07:48 2000
-+++ gimp-1.1.19.new/po-script-fu/Makefile.in.in	Sat Apr  1 22:16:04 2000
+diff -urN gimp-1.1.27-orig/po-script-fu/Makefile.in.in gimp-1.1.27/po-script-fu/Makefile.in.in
+--- gimp-1.1.27-orig/po-script-fu/Makefile.in.in	Sun Jun 25 21:28:30 2000
++++ gimp-1.1.27/po-script-fu/Makefile.in.in	Thu Oct  5 21:10:52 2000
 @@ -130,7 +130,7 @@
  	    *)     destdir=$(localedir);; \
  	  esac; \
