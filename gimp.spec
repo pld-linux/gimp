@@ -5,7 +5,7 @@
 %bcond_without python	# without python plugins
 #
 %define mver 1.3
-%define pre  pre1
+%define pre  pre2
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulaci鏮 de imagen GNU
@@ -19,12 +19,12 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.0
-Release:	0.%{pre}.2
+Release:	0.%{pre}.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/testing/%{name}-%{version}%{pre}.tar.bz2
-# Source0-md5:	7862920def4ee411f6417c9372753a6d
+# Source0-md5:	97898e176c5753269fc869cbe9590517
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-am18.patch
 URL:		http://www.gimp.org/
@@ -370,7 +370,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gimptool-%{mver}
+%attr(755,root,root) %{_bindir}/gimptool-2.0
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
@@ -380,7 +380,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/gimp-%{mver}
 %{_aclocaldir}/gimp-2.0.m4
 
-%{_mandir}/man1/gimptool-%{mver}*
+%{_mandir}/man1/gimptool-2.0*
 
 %files static
 %defattr(644,root,root,755)
