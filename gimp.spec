@@ -17,13 +17,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	1.3.18
+Version:	1.3.19
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	562c8208016af5b2995bb83e94056855
+# Source0-md5:	82478d568ac06f0b75005294bbf5b690
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
