@@ -1,14 +1,11 @@
 #
-# TODO - make gtk_file_chooser patch working
-#
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
 %bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
 %bcond_without	python		# without python plugins
-%bcond_with	file_chooser	# use new file chooser introduced in gtk+2 2.4
 #
 %define	mver	2.0
-%define	pre	rc1
+%define	pre	pre2
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulaci髇 de imagen GNU
@@ -21,18 +18,15 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[图像]GNU图象处理工具
 Summary(zh_TW):	[瓜钩]GNU瓜禜矪瞶ㄣ
 Name:		gimp
-Version:	2.0.6
-Release:	4
+Version:	2.2
+Release:	0.%{pre}.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	632b9ec629ba7c48d292069c37a1a6c1
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/testing/%{name}-%{version}-%{pre}.tar.bz2
+# Source0-md5:	ebf7e6ecfd8140933ba8def721df49cd
 Patch0:		%{name}-home_etc.patch
-# Patch1 comes from http://mitch.gimp.org/filechooser/
-Patch1:		%{name}-file-chooser-10.patch
-Patch2:		%{name}-desktop.patch
-Patch3:		%{name}-segv_bmp.patch
+Patch1:		%{name}-desktop.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -41,8 +35,8 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-%{?with_file_chooser:BuildRequires:	gtk+2-devel >= 2:2.4.0}
-%{!?with_file_chooser:BuildRequires:	gtk+2-devel >= 1:2.2.2}
+BuildRequires:	gnome-vfs2-devel
+BuildRequires:	gtk+2-devel >= 2:2.4.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
@@ -60,8 +54,7 @@ BuildRequires:	libwmf-devel >= 0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 BuildRequires:	rpm-build >= 4.1-13
-%{?with_file_chooser:Requires:	gtk+2 >= 2:2.4.0}
-%{!?with_file_chooser:Requires:	gtk+2 >= 1:2.2.2}
+Requires:	gtk+2 >= 2:2.4.0
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
@@ -190,6 +183,7 @@ Summary(zh_CN):	[开发]gimp的开发包
 Summary(zh_TW):	[秨祇]gimp秨祇
 License:	LGPL
 Group:		X11/Development/Libraries
+Requires(post,postun):	/sbin/ldconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gtk-doc-common
 Requires:	gtk+2-devel >= 1:2.2.2
@@ -262,11 +256,9 @@ Print plugin for Gimp.
 Wtyczka do drukowania dla Gimpa.
 
 %prep
-%setup -q
+%setup -qn %{name}-%{version}-%{pre}
 %patch0 -p1
-%{?with_file_chooser:%patch1 -p0}
-%patch2 -p1
-%patch3 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -310,18 +302,13 @@ install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 # Link gimptool to gimptool-2.0
 
-ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
-echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
+ln -s gimptool-%{mver} $RPM_BUILD_ROOT%{_bindir}/gimptool
+echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
 rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,keys}
-
-#for dir in po po-libgimp po-plug-ins po-script-fu; do
-#	rm $dir/no.po
-#done
-
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --all-name
@@ -329,24 +316,31 @@ rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post
+umask 022
+/sbin/ldconfig
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+
+%postun
+umask 022
+/sbin/ldconfig
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog MAINTAINERS NEWS PLUGIN_MAINTAINERS README
+%doc AUTHORS ChangeLog NEWS README
 %doc docs/{*.txt,quick_reference.*,Wilber*}
 
-%attr(755,root,root) %{_bindir}/gimp-%{mver}
+%attr(755,root,root) %{_bindir}/gimp-2.2
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
+%attr(755,root,root) %{_bindir}/gimp-remote-2.2
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
 %{_datadir}/application-registry/gimp.applications
 %{_datadir}/mime-info/gimp.keys
-%{_mandir}/man1/gimp-%{mver}*
-%{_mandir}/man1/gimp-remote-%{mver}*
-%{_mandir}/man5/gimprc-%{mver}*
+%{_mandir}/man1/gimp-2*
+%{_mandir}/man1/gimp-remote-2*
+%{_mandir}/man5/gimprc-2*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir %{_libdir}/gimp
@@ -375,6 +369,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/%{mver}/gimpressionist
 %{_datadir}/gimp/%{mver}/gradients
 %{_datadir}/gimp/%{mver}/images
+%{_datadir}/gimp/%{mver}/menus
 %{_datadir}/gimp/%{mver}/palettes
 %{_datadir}/gimp/%{mver}/patterns
 %{_datadir}/gimp/%{mver}/scripts
@@ -390,22 +385,23 @@ rm -rf $RPM_BUILD_ROOT
 %config %{_sysconfdir}/%{name}/%{mver}/ps-menurc
 %config %{_sysconfdir}/%{name}/%{mver}/sessionrc
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
+%config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 
 %{_pixmapsdir}/*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gimptool-2.0
+%attr(755,root,root) %{_bindir}/gimptool-%{mver}
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_pkgconfigdir}/*
 %{_gtkdocdir}/*
 
-%{_includedir}/gimp-%{mver}
+%{_includedir}/gimp-2.0
 %{_aclocaldir}/gimp-2.0.m4
 
-%{_mandir}/man1/gimptool-2.0.1*
+%{_mandir}/man1/gimptool-%{mver}*
 %{_mandir}/man1/gimptool.1*
 
 %files static
