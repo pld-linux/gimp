@@ -14,6 +14,8 @@ URL:		http://www.gimp.org/
 BuildRequires:	gtk+-devel >= 1.2.0
 BuildRequires:	glib-devel >= 1.2.0
 BuildRequires:	perl
+BuildRequires:	perl-PDL >= 1.9906
+BuildRequires:	perl-gtk >= 0.5120
 BuildRequires:	XFree86-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
@@ -22,6 +24,7 @@ BuildRequires:	libungif-devel
 BuildRequires:	xpm-devel
 BuildRequires:	zlib-devel
 %requires_eq	perl
+BuildConflicts:	gimp
 Requires:	%{perl_sitearch}
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
@@ -166,6 +169,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/palettes
 %{_datadir}/gimp/patterns
 %{_datadir}/gimp/scripts
+%{_datadir}/gimp/fractalexplorer
+%{_datadir}/gimp/help
 %{_datadir}/gimp/*.ppm
 
 %dir %{_datadir}/gimp/tips
@@ -176,6 +181,7 @@ rm -rf $RPM_BUILD_ROOT
 %config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
 %config %{_datadir}/gimp/gtkrc*
 %config %{_datadir}/gimp/ps-menurc
+%config %{_datadir}/gimp/unitrc
 
 %attr(755,root,root) %{_datadir}/gimp/user_install
 
