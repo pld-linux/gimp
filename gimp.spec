@@ -188,21 +188,15 @@ gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
 	ChangeLog NEWS README README.i18n README.perl \
 	TODO MAINTAINERS docs/*.txt
 
-%find_lang %{name}
-%find_lang %{name}-perl
-#%find_lang %{name}-libgimp
-%find_lang %{name}-script-fu
-%find_lang %{name}-std-plugins
-cat %{name}.lang %{name}-perl.lang %{name}-script-fu.lang \
-	%{name}-std-plugins.lang> %{name}.list
+%find_lang %{name} --all-name
 
-echo "%defattr(755,root,root,755)" >> %{name}.list
+echo "%defattr(755,root,root,755)" >> %{name}.lang
 
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.1/plug-ins/* | \
 	egrep -w -v -e "aa|xd" | \
-	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.list
+	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 	
-echo "%defattr(644,root,root,755)" >> %{name}.list
+echo "%defattr(644,root,root,755)" >> %{name}.lang
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -210,7 +204,7 @@ echo "%defattr(644,root,root,755)" >> %{name}.list
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}.list
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS,README,README.i18n,README.perl,MAINTAINERS}.gz
 %doc docs/*.gz docs/*README docs/*.eps docs/script-fu.tex 
