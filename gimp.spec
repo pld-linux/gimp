@@ -298,7 +298,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/embedxpm.1*
 %{_mandir}/man1/scm2perl.1*
 %{_mandir}/man1/scm2scm.1*
-%{_mandir}/man1/xcftopnmm.1*
+%{_mandir}/man1/xcftopnm.1*
 /usr/share/man/man3/*
 
 %files static
