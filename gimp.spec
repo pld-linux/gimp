@@ -11,16 +11,16 @@ Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
 Source:		ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 URL:		http://www.gimp.org/
-BuildPrereq:	gtk+-devel >= 1.2.0
-BuildPrereq:	glib-devel >= 1.2.0
-BuildPrereq:	perl
-BuildPrereq:	XFree86-devel
-BuildPrereq:	libtiff-devel
-BuildPrereq:	libjpeg-devel
-BuildPrereq:	libpng-devel
-BuildPrereq:	libungif-devel
-BuildPrereq:	xpm-devel
-BuildPrereq:	zlib-devel
+BuildRequires:	gtk+-devel >= 1.2.0
+BuildRequires:	glib-devel >= 1.2.0
+BuildRequires:	perl
+BuildRequires:	XFree86-devel
+BuildRequires:	libtiff-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libungif-devel
+BuildRequires:	xpm-devel
+BuildRequires:	zlib-devel
 %requires_eq	perl
 Requires:	%{perl_sitearch}
 BuildRoot:	/tmp/%{name}-%{version}-root
