@@ -1,11 +1,11 @@
-diff -urN gimp-2.0.6.orig/data/misc/gimp.desktop.in.in gimp-2.0.6/data/misc/gimp.desktop.in.in
---- gimp-2.0.6.orig/data/misc/gimp.desktop.in.in	2004-11-17 12:57:39.774841136 +0100
-+++ gimp-2.0.6/data/misc/gimp.desktop.in.in	2004-11-17 13:10:53.398192048 +0100
-@@ -7,7 +7,7 @@
+diff -ruN gimp-2.2-pre2./data/misc/gimp.desktop.in.in gimp-2.2-pre2/data/misc/gimp.desktop.in.in
+--- gimp-2.2-pre2./data/misc/gimp.desktop.in.in	2004-11-26 19:30:03.000000000 +0100
++++ gimp-2.2-pre2/data/misc/gimp.desktop.in.in	2004-11-26 19:36:28.124479016 +0100
+@@ -9,7 +9,7 @@
+ TryExec=gimp-@GIMP_APP_VERSION@
  Icon=@gimpdatadir@/images/@GIMP_DESKTOP_ICON@
  Terminal=false
- Type=Application
--Categories=Application;Graphics;RasterGraphics;
+-Categories=Application;Graphics;2DGraphics;RasterGraphics;
 +Categories=GTK;GNOME;Graphics;RasterGraphics;
  X-GNOME-Bugzilla-Bugzilla=GNOME
  X-GNOME-Bugzilla-Product=GIMP
