@@ -4,12 +4,13 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.8
+Version:	1.1.9
 Release:	0.1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
-Source:		ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
+Source1:	gimp.desktop
 Patch:		gimp-perlinst.patch
 Patch1:		gimp-perl-croak.patch
 Patch2:		gimp-noWIN.patch
@@ -110,7 +111,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/X11,usr/share/aclocal} \
 	$RPM_BUILD_ROOT%{_datadir}/icons \
 	$RPM_BUILD_ROOT%{perl_sitearch} \
-	$RPM_BUILD_ROOT%{_libdir}/gimp/1.1/{modules,plug-ins}
+	$RPM_BUILD_ROOT%{_libdir}/gimp/1.1/{modules,plug-ins} \
+	$RPM_BUILD_ROOT%{_datadir}/applnk/Graphics
 
 make install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
@@ -122,6 +124,8 @@ mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
 
 install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/applnk/Graphics
 
 strip $RPM_BUILD_ROOT{%{_bindir}/gimp,%{_libdir}/gimp/*/plug-ins/*} ||: 
 strip --strip-unneeded \
@@ -154,6 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_bindir}/gimp 
 %attr(755,root,root) %{_bindir}/gimpdoc 
+%{_datadir}/applnk/Graphics/gimp.desktop
 
 %{_mandir}/man1/gimp.1* 
 %{_mandir}/man5/gimprc.5*
