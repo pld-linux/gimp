@@ -7,7 +7,7 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.24
-Release:	2
+Release: 3
 License:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
@@ -28,7 +28,7 @@ BuildRequires:	perl-Parse-RecDescent
 BuildRequires:	perl-File-Slurp
 BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel
+BuildRequires:	libpng >= 1.0.8
 BuildRequires:	libungif-devel
 BuildRequires:	xpm-devel
 BuildRequires:	zlib-devel
