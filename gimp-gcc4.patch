@@ -1,0 +1,11 @@
+--- gimp-2.2.4/app/actions/dialogs-actions.h.orig	2004-04-27 15:55:26.000000000 +0200
++++ gimp-2.2.4/app/actions/dialogs-actions.h	2005-03-12 21:47:08.443575392 +0100
+@@ -19,6 +19,8 @@
+ #ifndef __DIALOGS_ACTIONS_H__
+ #define __DIALOGS_ACTIONS_H__
+ 
++#include <widgets/gimpactiongroup.h>
++#include <widgets/widgets-types.h>
+ 
+ extern GimpStringActionEntry dialogs_dockable_actions[];
+ extern gint                  n_dialogs_dockable_actions;

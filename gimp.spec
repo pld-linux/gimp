@@ -28,6 +28,7 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/%{name}-%{version}.tar.bz2
 # missing in tarball:
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-gcc4.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -272,6 +273,7 @@ Wtyczka SVG dla Gimpa.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 cp /usr/share/automake/py-compile plug-ins/pygimp
 
