@@ -50,7 +50,7 @@ BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
-BuildRequires:	libwmf-devel >= 0.2.8
+BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 BuildRequires:	rpm-build >= 4.1-13
