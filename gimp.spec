@@ -8,7 +8,7 @@ Summary(pt_BR):	Programa de manipulação de imagem GNU
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.2
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -204,26 +204,6 @@ partagée aalib.
 %description aa -l pl
 Ten pakiet zawiera "wtyczkê" do Gimpa ze wsparciem dla ASCII Art.
 
-%package xd
-Summary:	Xdelta plugin for GIMP
-Summary(fr):	Plugin Xdelta pour GIMP
-Group:		X11/Applications/Graphics
-Group(de):	X11/Applikationen/Grafik
-Group(es):	X11/Aplicaciones/Gráficos
-Group(fr):	X11/Applications/Graphiques
-Group(pl):	X11/Aplikacje/Grafika
-Group(pt):	X11/Aplicações/Gráficos
-Group(ru):	X11/ðÒÉÌÏÖÅÎÉÑ/çÒÁÆÉËÁ
-Requires:	%{name} = %{version}
-
-%description xd
-This package contains the Xdelta plugin which requires the xdelta
-shared library.
-
-%description -l fr xd
-Ce paquet contient le plugin Xdelta qui nécéssite la librairie
-partagée xdelta.
-
 %prep
 %setup  -q
 %patch0 -p1
@@ -236,9 +216,7 @@ partagée xdelta.
 CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
 %configure2_13 \
 	--without-included-gettext \
-	--without-xdelta \
 	--enable-perl \
-	--enable-python \
 	--with-mp \
 	--with-threads=posix 
 %{__make}
@@ -267,7 +245,7 @@ gzip -9nf ChangeLog NEWS README README.i18n README.perl \
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
-	egrep -w -v -e "aa|xd" | \
+	egrep -w -v -e "aa|print" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 	
 echo "%defattr(644,root,root,755)" >> %{name}.lang
@@ -388,6 +366,3 @@ rm -rf $RPM_BUILD_ROOT
 %files aa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/aa
-
-#%files xd
-#%attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/xd
