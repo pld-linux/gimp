@@ -6,7 +6,7 @@ Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.1
-Release:	5
+Release:	6
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -107,7 +107,10 @@ Pliki nag³ówkowe dla GIMP.
 %package static
 Summary:	GIMP static libraries
 Summary(pl):	Biblioteki statyczne do GIMPa
-Group:		Libraries
+Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -183,8 +186,8 @@ install -d $RPM_BUILD_ROOT%{_pixmapsdir} \
 install pixmaps/*.xpm plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
-mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
-mv $RPM_BUILD_ROOT/usr/share/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
+mv -f $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
+mv -f $RPM_BUILD_ROOT/usr/share/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 
 gzip -9nf ChangeLog NEWS README README.i18n README.perl \
 	TODO MAINTAINERS docs/*.txt

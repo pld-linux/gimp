@@ -52,7 +52,7 @@ diff -urN gimp-1.1.27-orig/po-libgimp/Makefile.in.in gimp-1.1.27/po-libgimp/Make
  	  esac; \
  	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
 -	  dir=$$destdir/$$lang/LC_MESSAGES; \
-+	  dir=$(DISTDIR)$$destdir/$$lang/LC_MESSAGES; \
++	  dir=$(DESTDIR)$$destdir/$$lang/LC_MESSAGES; \
  	  if test -r "$(MKINSTALLDIRS)"; then \
  	    $(MKINSTALLDIRS) $$dir; \
  	  else \
