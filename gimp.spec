@@ -12,7 +12,7 @@ Summary(zh_CN):	[Í¼Ïñ]GNUÍ¼Ïó´¦Àí¹¤¾ß
 Summary(zh_TW):	[¹Ï¹³]GNU¹Ï¶H³B²z¤u¨ã
 Name:		gimp
 Version:	1.2.3
-Release:	6
+Release:	7
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -23,20 +23,21 @@ Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-croak.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
+BuildRequires:	aalib-devel
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-libs-devel
+BuildRequires:	gtk-doc
 BuildRequires:	gtk+-devel >= 1.2.8-3
-BuildRequires:	perl-devel >= 5.6.1
-BuildRequires:	perl-PDL-Graphics-TriD >= 1.9906
-BuildRequires:	perl-PDL-Graphics-PGPLOT >= 1.9906
-BuildRequires:	perl-gtk >= 0.6123
-BuildRequires:	perl-Parse-RecDescent
-BuildRequires:	perl-File-Slurp
-BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
+BuildRequires:	libtiff-devel
 BuildRequires:	libungif-devel
-BuildRequires:	aalib-devel
+BuildRequires:	perl-File-Slurp
+BuildRequires:	perl-PDL-Graphics-PGPLOT >= 1.9906
+BuildRequires:	perl-PDL-Graphics-TriD >= 1.9906
+BuildRequires:	perl-Parse-RecDescent
+BuildRequires:	perl-devel >= 5.6.1
+BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	rpm-perlprov >= 4.0.2-56
 Requires:	gtk+ >= 1.2.8-3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -45,6 +46,7 @@ Obsoletes:	gimp-libgimp
 
 %define		_prefix		/usr/X11R6
 %define		_mandir		%{_prefix}/man
+%define		_gtkdocdir	%{_defaultdocdir}/gtk-doc/html
 
 %define		_noautoreq	"perl(of)"
 
@@ -167,6 +169,7 @@ Summary(zh_TW):	[¶}µo]gimpªº¶}µo¥]
 License:	LGPL
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}
+Requires:	gtk-doc-common
 Requires:	gtk+-devel >= 1.2.0
 
 %description devel
@@ -185,10 +188,6 @@ Pliki nag³ówkowe dla GIMP.
 %description devel -l pt_BR
 Bibliotecas e arquivos de inclusão para escrever extensões e plugins
 para o Gimp.
-
-%description devel -l es
-Bibliotecas y archivos de inclusión para escribir extensiones y
-plugins para Gimp.
 
 %package static
 Summary:	GIMP static libraries
@@ -234,15 +233,13 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 %patch2 -p1
 
 %build
-if [ -f %{_pkgconfigdir}/libpng12.pc ] ; then
-	CPPFLAGS="`pkg-config libpng12 --cflags`"; export CPPFLAGS
-fi
 CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
 %configure2_13 \
 	--without-included-gettext \
 	--enable-perl \
 	--with-mp \
-	--with-threads=posix
+	--with-threads=posix \
+	--with-html-dir=%{_gtkdocdir}
 %{__make}
 %{__make} -C plug-ins/perl/po update-gmo
 
@@ -253,9 +250,11 @@ install -d $RPM_BUILD_ROOT%{_pixmapsdir} \
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	m4datadir=%{_aclocaldir}
+	m4datadir=%{_aclocaldir} \
+	HTML_DIR=%{_gtkdocdir}
 
-install pixmaps/*.xpm plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
+install pixmaps/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
+install plug-ins/[^M]*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
 mv -f $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
@@ -274,11 +273,11 @@ echo "%defattr(644,root,root,755)" >> %{name}.lang
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/yes.xpm
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/no.xpm
 
-%post	-p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	-p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -366,7 +365,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc devel-docs/libgimp/html/*
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_bindir}/gimptool-1.2
 %attr(755,root,root) %{_bindir}/gimp-config
@@ -389,6 +387,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/scm2scm.1*
 %{_mandir}/man1/xcftopnm.1*
 /usr/share/man/man3/*
+%{_gtkdocdir}/*
 
 %files static
 %defattr(644,root,root,755)
