@@ -42,7 +42,7 @@ Obsoletes:	gimp-libgimp
 %define		_prefix		/usr/X11R6
 %define		_mandir		%{_prefix}/man
 
-%define               _noautoreq      "perl(of)"
+%define		_noautoreq	"perl(of)"
 
 %description
 The GIMP is an image manipulation program suitable for photo
@@ -179,6 +179,9 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 %patch2 -p1
 
 %build
+if [ -f %{_pkgconfigdir}/libpng12.pc ] ; then
+	CPPFLAGS="`pkg-config libpng12 --cflags`"; export CPPFLAGS
+fi
 CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
 %configure2_13 \
 	--without-included-gettext \
