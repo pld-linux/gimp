@@ -122,21 +122,21 @@ Requires:	gtk+-devel >= 1.2.0
 %description devel
 Header files for writing GIMP plugins and extensions.
 
-%description -l de devel
+%description devel -l de
 Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen.
 
-%description -l es devel
+%description devel -l es
 Bibliotecas y archivos de inclusión para escribir extensiones y
 plugins para Gimp.
 
-%description -l pl devel
+%description devel -l pl
 Pliki nag³ówkowe dla GIMP.
 
-%description -l pt_BR devel
+%description devel -l pt_BR
 Bibliotecas e arquivos de inclusão para escrever extensões e plugins
 para o Gimp.
 
-%description -l es devel
+%description devel -l es
 Bibliotecas y archivos de inclusión para escribir extensiones y
 plugins para Gimp.
 
@@ -149,13 +149,13 @@ Requires:	%{name}-devel = %{version}
 %description static
 GIMP static libraries.
 
-%description -l es static
+%description static -l es
 Bibliotecas estáticas para escribir extensiones y plugins para Gimp.
 
-%description -l pl static
+%description static -l pl
 Biblioteki statyczne do GIMPa.
 
-%description -l pt_BR static
+%description static -l pt_BR
 Bibliotecas estáticas para desenvolvimento de plugins e extensões do
 GIMP.
 
