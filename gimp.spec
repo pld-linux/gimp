@@ -1,8 +1,12 @@
 #
 # Conditional build:
-# _without_aalib
-# _without_print - no need for gimp-print
+# aalib
+# print - no need for gimp-print
+# python
 #
+%bcond_without aalib
+%bcond_without print
+%bcond_without python
 
 %define mver 1.3
 
@@ -27,11 +31,11 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar
 # Source0-md5:	d1fe81d77d9860ab47fda6f298cbf89a
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
-%{!?_without_aalib:BuildRequires:	aalib-devel}
+%{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-%{!?_without_print:BuildRequires:	gimp-print-devel}
+%{?with_print:BuildRequires:	gimp-print-devel}
 BuildRequires:	gtk+2-devel >= 2.2.0
 BuildRequires:	intltool
 BuildRequires:	libart_lgpl-devel
@@ -44,7 +48,7 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool
 BuildRequires:	libungif-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-pygtk-devel
+%{?with_python:BuildRequires:	python-pygtk-devel}
 BuildRequires:	rpm-build >= 4.1-13
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
@@ -248,8 +252,8 @@ Wtyczka do drukowania dla Gimpa.
 %{__autoconf}
 %configure \
 	--disable-rpath \
-	%{?_without_print: --disable-print} \
-	--enable-python \
+	%{?without_print: --disable-print} \
+	%{?with_python: --enable-python} \
 	--with-mp \
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-default-binary
@@ -319,16 +323,18 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp/%{mver}
 %dir %{_libdir}/gimp/%{mver}/plug-ins
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
-%{!?_without_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
-%{!?_without_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
+%{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
+%{?with_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
 
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
 %{_libdir}/gimp/%{mver}/environ
 
+%if %{with python}
 %dir %{_libdir}/gimp/%{mver}/python
 %{_libdir}/gimp/%{mver}/python/*.py[co]
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/python/*.so
+%endif
 
 %dir %{_datadir}/gimp
 %dir %{_datadir}/gimp/%{mver}
@@ -376,13 +382,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
 
-%if %{!?_without_aalib:1}0
+%if %{with aalib}
 %files aa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/aa
 %endif
 
-%if 0%{!?_without_print:1}
+%if %{with print}
 %files print
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/print
