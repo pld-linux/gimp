@@ -20,6 +20,7 @@ BuildRequires:	glib-devel >= 1.2.0
 BuildRequires:	perl
 BuildRequires:	perl-PDL >= 1.9906
 BuildRequires:	perl-gtk >= 0.5120
+BuildRequires:	perl-Parse-RecDescent
 BuildRequires:	XFree86-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
@@ -30,6 +31,7 @@ BuildRequires:	zlib-devel
 BuildRequires:	aalib-devel
 %requires_eq	perl
 Requires:	%{perl_sitearch}
+Requires:	perl-Parse-RecDescent
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -93,7 +95,7 @@ Biblioteki statyczne do GIMPa.
 
 %prep
 %setup  -q
-%patch  -p0
+%patch0 -p0
 %patch1 -p1
 %patch2 -p1
 
@@ -103,6 +105,9 @@ CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
 %configure \
 	--without-included-gettext \
 	--without-xdelta \
+	--enable-perl \
+	--enable-python \
+	--with-mp \
 	--with-threads=posix 
 make
 
