@@ -299,6 +299,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 #############################################################
 # This is hack indeed, but it is supposed to disappear when #
 # version 2.0 will arrive                                   #
+# but it doesn't :(
 #############################################################
 
 cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
@@ -309,6 +310,10 @@ install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-regis
 install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 ###################### end hack #############################
+
+# Link gimptool to gimptool-2.0
+
+ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
@@ -387,7 +392,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gimptool-2.0
-#%attr(755,root,root) %{_bindir}/gimptool
+%attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_pkgconfigdir}/*
