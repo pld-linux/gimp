@@ -159,6 +159,7 @@ CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
 	--with-mp \
 	--with-threads=posix 
 make
+make -C plug-ins/perl/po update-gmo
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -167,7 +168,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/icons \
 
 make install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	m4datadir=/usr/share/aclocal
+	m4datadir=%{_aclocaldir}
 
 install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
@@ -191,7 +192,7 @@ gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man[13]/* \
 %find_lang %{name}-script-fu
 %find_lang %{name}-std-plugins
 cat %{name}.lang %{name}-perl.lang %{name}-script-fu.lang \
-	%{name}-std-plugins.lang > %{name}.list
+	%{name}-std-plugins.lang> %{name}.list
 
 echo "%defattr(755,root,root,755)" >> %{name}.list
 
@@ -285,7 +286,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_includedir}/gck 
 %{_includedir}/libgimp
-/usr/share/aclocal/gimp.m4
+%{_aclocaldir}/gimp.m4
 
 %attr(755,root,root) %{_bindir}/embedxpm
 %attr(755,root,root) %{_bindir}/gimpdoc
