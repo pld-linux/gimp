@@ -18,6 +18,7 @@ Source1:	gimp.desktop
 Patch0:		gimp-perldep.patch
 Patch1:		gimp-DESTDIR.patch
 Patch2:		gimp-croak.patch
+Patch3:		gimp-i18n.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gettext-devel
@@ -148,6 +149,7 @@ partagée xdelta.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 chmod +x find-perl-requires
 
