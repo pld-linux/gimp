@@ -252,7 +252,7 @@ Wtyczka do drukowania dla Gimpa.
 %{__autoconf}
 %configure \
 	--disable-rpath \
-	%{?without_print: --disable-print} \
+	%{!?with_print: --disable-print} \
 	%{?with_python: --enable-python} \
 	--with-mp \
 	--with-html-dir=%{_gtkdocdir} \
