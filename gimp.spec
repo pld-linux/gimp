@@ -136,13 +136,15 @@ gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
 %find_lang %{name}
 %find_lang %{name}-std-plugins
 
+cat %{name}-std-plugins.lang >> %{name}.lang
+
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}.lang -f %{name}-std-plugins.lang
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS,README,README.i18n,README.perl,MAINTAINERS}.gz
 %doc docs/*.gz docs/*README docs/*.eps docs/script-fu.tex 
