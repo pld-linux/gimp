@@ -24,6 +24,7 @@ Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
+# Source0-md5:	8fa594f7527a37662722728bb55d40a6
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{!?_without_aalib:BuildRequires:	aalib-devel}
