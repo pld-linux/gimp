@@ -5,18 +5,18 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.3
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
-#######		ftp://ftp.gimp.org/pub/gimp/unstable/v1.1/
-Source:		%{name}-%{version}.tar.bz2
+Source:		ftp://ftp.gimp.org/pub/gimp/unstable/v1.1/%{name}-%{version}.tar.bz2
 Patch0:		gimp-perl.patch
-Patch1:		gimp-perlsh.patch
 URL:		http://www.gimp.org/
-Requires:	gtk+ = 1.2.0
-Requires:	glib = 1.2.0
-Requires:	perl >= 5.005
+BuildPrereq:	gtk+-devel
+BuildPrereq:	glib-devel
+%requires_pkg	gtk+
+%requires_pkg	glib
+#%requires_pkg	perl
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -57,7 +57,7 @@ Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
 Copyright:	LGPL
 Requires:	%{name} = %{version}
-Requires:	gtk+-devel = 1.2.0
+%requires_pkg	gtk+-devel
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -81,27 +81,28 @@ GIMP static libraries
 Biblioteki statyczne do GIMPa
 
 %prep
-%setup -q
+%setup  -q
 %patch0 -p1
-#%patch1 -p1
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure \
 	--prefix=/usr/X11R6 \
 	--without-included-gettext \
+	--disable-perl \
 	--with-xdelta
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/X11/wmconfig,usr/share/aclocal}
-install -d $RPM_BUILD_ROOT/usr/X11R6/share/icons \
-    $RPM_BUILD_ROOT/usr/lib/perl5/5.00502/$RPM_ARCH-linux-thread
+install -d $RPM_BUILD_ROOT/usr/X11R6/share/icons 
+#    $RPM_BUILD_ROOT/usr/lib/perl5/5.00502/$RPM_ARCH-linux-thread
 
 make install \
 	prefix=$RPM_BUILD_ROOT/usr/X11R6 \
 	INSTALLMAN3DIR=$RPM_BUILD_ROOT/usr/man/man3 \
+	INSTALLMAN1DIR=$RPM_BUILD_ROOT/usr/man/man1 \
 	PREFIX=$RPM_BUILD_ROOT/usr
 
 mv $RPM_BUILD_ROOT/usr/X11R6/share/aclocal/* $RPM_BUILD_ROOT/usr/share/aclocal
@@ -112,9 +113,9 @@ install plug-ins/*/*.xpm $RPM_BUILD_ROOT/usr/X11R6/share/icons/
 
 strip $RPM_BUILD_ROOT/usr/X11R6/{lib/lib*.so.*.*,bin/gimp,lib/gimp/*/plug-ins/*} ||:
 
-gzip -9 $RPM_BUILD_ROOT/usr/{X11R6/man/man[13]/*,man/man3/*}
-
-bzip2 -9 ChangeLog NEWS README docs/*.txt
+#gzip -9nf $RPM_BUILD_ROOT/usr/{X11R6/man/man*/*,man/man*/*} \
+gzip -9nf $RPM_BUILD_ROOT/usr/X11R6/man/man*/* \
+	  ChangeLog NEWS README docs/*.txt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -122,18 +123,26 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
+# Poprawiæ .packlist z perl'a
+
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog.bz2 NEWS.bz2 README.bz2 docs/*.bz2 docs/*.eps
+%doc {ChangeLog,NEWS,README,docs/*}.gz docs/*.eps
 
 #%config /etc/X11/wmconfig/gimp
 
 %attr(755,root,root) /usr/X11R6/bin/gimp
-%attr(644,root, man) /usr/X11R6/man/man1/gimp.1*
+/usr/X11R6/man/man1/gimp.1*
+/usr/X11R6/man/man5/*
 
-%attr(755,root,root) /usr/X11R6/lib/lib*.so.*
+%attr(755,root,root) /usr/X11R6/lib/lib*.so.*.*
 
-%attr(755,root,root,755) /usr/X11R6/lib/gimp
+%dir /usr/X11R6/lib/gimp
+%dir /usr/X11R6/lib/gimp/*
+%dir /usr/X11R6/lib/gimp/*/modules
+
+%attr(755,root,root) /usr/X11R6/lib/gimp/*/plug-ins
+%attr(755,root,root) /usr/X11R6/lib/gimp/*/modules/lib*.so
 
 %dir /usr/X11R6/share/gimp
 /usr/X11R6/share/gimp/brushes
@@ -144,7 +153,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/X11R6/share/gimp/scripts
 /usr/X11R6/share/gimp/*.ppm
 
-%config %verify(not md5 mtime) /usr/X11R6/share/gimp/gimprc*
+%config %verify(not md5 mtime) /usr/X11R6/share/gimp/gimprc
+%config %verify(not md5 mtime) /usr/X11R6/share/gimp/gimprc_user
 %config /usr/X11R6/share/gimp/gtkrc*
 %config /usr/X11R6/share/gimp/ps-menurc
 
@@ -154,33 +164,41 @@ rm -rf $RPM_BUILD_ROOT
 
 /usr/X11R6/share/icons/*.xpm
 
-%attr(-,root,root,755) /usr/lib/perl5/site_perl/*
+#%attr(-,root,root,755) /usr/lib/perl5/site_perl/*/*/Gimp*
+#%attr(-,root,root,755) /usr/lib/perl5/site_perl/*/*/auto/*
 
-%lang(de) /usr/X11R6/share/locale/de/LC_MESSAGES/gimp.mo
-%lang(fi) /usr/X11R6/share/locale/fi/LC_MESSAGES/gimp.mo
-%lang(fr) /usr/X11R6/share/locale/fr/LC_MESSAGES/gimp.mo
-%lang(hu) /usr/X11R6/share/locale/hu/LC_MESSAGES/gimp.mo
-%lang(it) /usr/X11R6/share/locale/it/LC_MESSAGES/gimp.mo
-%lang(ja) /usr/X11R6/share/locale/ja/LC_MESSAGES/gimp.mo
-%lang(ko) /usr/X11R6/share/locale/ko/LC_MESSAGES/gimp.mo
-%lang(sv) /usr/X11R6/share/locale/sv/LC_MESSAGES/gimp.mo
+%lang(de) /usr/X11R6/share/locale/de/LC_MESSAGES/*
+%lang(fi) /usr/X11R6/share/locale/fi/LC_MESSAGES/*
+%lang(fr) /usr/X11R6/share/locale/fr/LC_MESSAGES/*
+%lang(hu) /usr/X11R6/share/locale/hu/LC_MESSAGES/*
+%lang(it) /usr/X11R6/share/locale/it/LC_MESSAGES/*
+%lang(ja) /usr/X11R6/share/locale/ja/LC_MESSAGES/*
+%lang(ko) /usr/X11R6/share/locale/ko/LC_MESSAGES/*
+%lang(nl) /usr/X11R6/share/locale/nl/LC_MESSAGES/*
+#%lang(pl) /usr/X11R6/share/locale/pl/LC_MESSAGES/*
+%lang(ru) /usr/X11R6/share/locale/ru/LC_MESSAGES/*
+%lang(sv) /usr/X11R6/share/locale/sv/LC_MESSAGES/*
 
 %files devel
 %defattr(644,root,root,755)
 
 %attr(755,root,root) /usr/X11R6/lib/lib*.so
+#%attr(755,root,root) /usr/bin/*
 
 /usr/X11R6/include/*
 /usr/share/aclocal/*
 
 %attr(755,root,root) /usr/X11R6/bin/gimptool
 
-%attr(644,root, man) /usr/X11R6/man/man1/gimptool.1.gz
-%attr(644,root, man) /usr/X11R6/man/man3/*
-%attr(644,root, man) /usr/man/man3/*
+/usr/X11R6/man/man1/gimptool.1*
+#/usr/man/man1/*
+/usr/X11R6/man/man3/*
+#/usr/man/man3/*
 
 %files static
-%attr(644,root,root) /usr/X11R6/lib/lib*.a
+%defattr(644,root,root,755)
+%attr(755,root,root) /usr/X11R6/lib/gimp/*/modules/lib*.a
+/usr/X11R6/lib/lib*.a
 
 %changelog
 * Fri Feb 05 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
