@@ -1,15 +1,10 @@
 #
 # Conditional build:
-# aalib
-# print - no need for gimp-print
-# python
+%bcond_without aalib	# without aa plugin (which requires aalib)
+%bcond_without print	# without print plugin (which requires gimp-print 4.2.x)
+%bcond_without python	# without python plugins
 #
-%bcond_without aalib
-%bcond_without print
-%bcond_without python
-
 %define mver 1.3
-
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulación de imagen GNU
@@ -93,6 +88,15 @@ GIMP fournit une boite à outil permettant de gérer plusieurs calques,
 de nombreux effets, l'anti-aliasing, les conversions de fichiers ainsi
 qu'un grand nombre de niveaux d'annulation.
 
+%description -l pl
+Program GIMP jest przeznaczony do obróbki i tworzenia plików w ró¿nych
+formatach graficznych. Przy jego u¿yciu mo¿na tworzyæ grafikê dla
+stron WWW, retuszowaæ zdjêcia, czy stworzyæ w³asne logo.
+
+GIMP dostarcza du¿y zestaw narzêdzi do obróbki obrazów, w tym do
+operowania na kana³ach i warstwach, efektów, antyaliasingu oraz
+konwersji, a to wszystko z wielopoziomowym cofaniem operacji.
+
 %description -l pt_BR
 O GIMP é um programa de manipulação de imagens adequado para retoque
 de fotos, composição e editoração de imagens. Muitas pessoas o acham
@@ -105,11 +109,6 @@ O GIMP fornece uma extensa caixa de ferramentas de manipulação de
 imagem, incluindo camadas, efeitos, formação de imagem subpíxel e
 anti-aliasing, conversões, todos com desfazimento em vários níveis
 (multi-level undo).
-
-%description -l pl
-Program Gimp jest przeznaczony do obróbki i tworzenia plików w ró¿nych
-formatach graficznych. Dziêki niemu bêdziesz móg³ stworzyæ grafikê dla
-stron WWW, przerobiæ zdjêcia, czy stworzyæ w³asne logo.
 
 %description -l ru
 GIMP - ÜÔÏ ĞÒÏÇÒÁÍÍÁ ÄÌÑ ÓÏÚÄÁÎÉÑ É ÏÂÒÁÂÏÔËÉ ÉÚÏÂÒÁÖÅÎÉÊ. åÅ ÓŞÉÔÁÀÔ
@@ -163,7 +162,7 @@ Summary:	GIMP plugin and extension development kit
 Summary(de):	GIMP-Plugin und Extension Development Kit
 Summary(es):	Kit de desarrollo de "plugins" extensiones para GIMP
 Summary(fr):	Plugin GIMP et kit de développement d'extensions
-Summary(pl):	Pliki do budowania modu³ów i rozszerzeñ dla Gimp
+Summary(pl):	Pliki do budowania modu³ów i rozszerzeñ dla Gimpa
 Summary(pt_BR):	Kit de desenvolvimento de "plugins" extensões para o GIMP
 Summary(ru):	éÎÓÔÒÕÍÅÎÔÁÒÉÊ ÄÌÑ ÒÁÚÒÁÂÏÔËÉ ĞÌÁÇÉÎÏ× É ÒÁÓÛÉÒÅÎÉÊ GIMP
 Summary(tr):	GIMP plugin ve uzantı geliştirme araçları
@@ -187,7 +186,7 @@ Bibliotecas y archivos de inclusión para escribir extensiones y
 plugins para Gimp.
 
 %description devel -l pl
-Pliki nag³ówkowe dla GIMP.
+Pliki nag³ówkowe do tworzenia wtyczek i rozszerzeñ dla Gimpa.
 
 %description devel -l pt_BR
 Bibliotecas e arquivos de inclusão para escrever extensões e plugins
@@ -195,7 +194,7 @@ para o Gimp.
 
 %package static
 Summary:	GIMP static libraries
-Summary(pl):	Biblioteki statyczne do GIMPa
+Summary(pl):	Biblioteki statyczne Gimpa
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}
 
@@ -206,7 +205,7 @@ GIMP static libraries.
 Bibliotecas estáticas para escribir extensiones y plugins para Gimp.
 
 %description static -l pl
-Biblioteki statyczne do GIMPa.
+Biblioteki statyczne Gimpa.
 
 %description static -l pt_BR
 Bibliotecas estáticas para desenvolvimento de plugins e extensões do
