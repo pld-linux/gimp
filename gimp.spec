@@ -5,8 +5,8 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.2.1
-Release:	8
+Version:	1.2.2
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -170,7 +170,7 @@ partagée xdelta.
 
 %build
 CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
-%configure \
+%configure2_13 \
 	--without-included-gettext \
 	--without-xdelta \
 	--enable-perl \
