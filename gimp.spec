@@ -13,16 +13,18 @@ Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Group(de):	X11/Applikationen/Grafik
-Group(fr):	X11/Applications/Graphismes
+Group(es):	X11/Aplicaciones/Gr·ficos
+Group(fr):	X11/Applications/Graphiques
 Group(pl):	X11/Aplikacje/Grafika
 Group(pt):	X11/AplicaÁıes/Gr·ficos
+Group(ru):	X11/“…Ãœ÷≈Œ…—/Á“¡∆…À¡
 Source0:	ftp://ftp.gimp.org/pub/gimp/v1.2/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
 Patch0:		%{name}-perldep.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-croak.patch
 Patch3:		%{name}-i18n.patch
-Patch4:	%{name}-setlocale.patch
+Patch4:		%{name}-setlocale.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gettext-devel
@@ -122,7 +124,7 @@ Summary(pt_BR):	Kit de desenvolvimento de "plugins" extensıes para o GIMP
 Summary(tr):	GIMP plugin ve uzant˝ geli˛tirme araÁlar˝
 License:	LGPL
 Group:		X11/Development/Libraries
-Group(de):	X11/Entwicklung/Libraries
+Group(de):	X11/Entwicklung/Bibliotheken
 Group(es):	X11/Desarrollo/Bibliotecas
 Group(fr):	X11/Development/Librairies
 Group(pl):	X11/Programowanie/Biblioteki
@@ -156,7 +158,7 @@ plugins para Gimp.
 Summary:	GIMP static libraries
 Summary(pl):	Biblioteki statyczne do GIMPa
 Group:		X11/Development/Libraries
-Group(de):	X11/Entwicklung/Libraries
+Group(de):	X11/Entwicklung/Bibliotheken
 Group(es):	X11/Desarrollo/Bibliotecas
 Group(fr):	X11/Development/Librairies
 Group(pl):	X11/Programowanie/Biblioteki
@@ -184,9 +186,11 @@ Summary(fr):	Plugin d'art ASCII pour Gimp
 Summary(pl):	Wsparcie dla ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
 Group(de):	X11/Applikationen/Grafik
-Group(fr):	X11/Applications/Graphismes
+Group(es):	X11/Aplicaciones/Gr·ficos
+Group(fr):	X11/Applications/Graphiques
 Group(pl):	X11/Aplikacje/Grafika
 Group(pt):	X11/AplicaÁıes/Gr·ficos
+Group(ru):	X11/“…Ãœ÷≈Œ…—/Á“¡∆…À¡
 Requires:	%{name} = %{version}
 
 %description aa
@@ -205,9 +209,11 @@ Summary:	Xdelta plugin for GIMP
 Summary(fr):	Plugin Xdelta pour GIMP
 Group:		X11/Applications/Graphics
 Group(de):	X11/Applikationen/Grafik
-Group(fr):	X11/Applications/Graphismes
+Group(es):	X11/Aplicaciones/Gr·ficos
+Group(fr):	X11/Applications/Graphiques
 Group(pl):	X11/Aplikacje/Grafika
 Group(pt):	X11/AplicaÁıes/Gr·ficos
+Group(ru):	X11/“…Ãœ÷≈Œ…—/Á“¡∆…À¡
 Requires:	%{name} = %{version}
 
 %description xd
