@@ -149,7 +149,6 @@ partagée xdelta.
 chmod +x find-perl-requires
 
 %build
-LDFLAGS="-s"; export LDFLAGS
 CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
 %configure \
 	--without-included-gettext \
@@ -177,15 +176,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
 mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
 mv $RPM_BUILD_ROOT/usr/share/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 
-strip --strip-unneeded \
-	$RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* \
-	$RPM_BUILD_ROOT%{_libdir}/gimp/1.1/modules/lib*.so \
-	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*.so \
-	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*/*.so
-
-gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
-	$RPM_BUILD_ROOT%{_mandir}/man[15]/* \
-	ChangeLog NEWS README README.i18n README.perl \
+gzip -9nf ChangeLog NEWS README README.i18n README.perl \
 	TODO MAINTAINERS docs/*.txt
 
 %find_lang %{name} --all-name
