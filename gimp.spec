@@ -16,6 +16,7 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar
 Source1:	gimp.desktop
 Patch0:		gimp-perldep.patch
 Patch1:		gimp-DESTDIR.patch
+Patch2:		gimp-resize.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gtk+-devel >= 1.2.0
@@ -145,6 +146,7 @@ aalib.
 %setup  -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 chmod +x find-perl-requires
 
