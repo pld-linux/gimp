@@ -44,7 +44,6 @@ BuildRequires:	libart_lgpl-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libtiff-devel
-BuildRequires:	libtiff-devel
 BuildRequires:	libungif-devel
 #BuildRequires:	perl-File-Slurp
 #BuildRequires:	perl-PDL-Graphics-PGPLOT >= 1.9906
