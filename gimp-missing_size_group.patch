@@ -1,0 +1,12 @@
+diff -aurN gimp-2.1.0.orig/app/gui/preferences-dialog.c gimp-2.1.0/app/gui/preferences-dialog.c
+--- gimp-2.1.0.orig/app/gui/preferences-dialog.c	2004-06-02 19:54:00.000000000 +0200
++++ gimp-2.1.0/app/gui/preferences-dialog.c	2004-06-05 21:38:57.975215352 +0200
+@@ -1898,7 +1898,7 @@
+ #ifdef ENABLE_MP
+   prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
+                          _("Number of Processors to Use:"),
+-                         GTK_TABLE (table), 3);
++                         GTK_TABLE (table), 3, size_group);
+ #endif /* ENABLE_MP */
+ 
+   /*  Resource Consumption  */
