@@ -3,12 +3,6 @@
 # _without_print - no need for gimp-print
 #
 
-# TODO:
-#   - perl support
-#
-
-%include	/usr/lib/rpm/macros.perl
-
 %define mver 1.3
 
 Summary:	The GNU Image Manipulation Program
@@ -24,7 +18,7 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	1.3.13
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -34,22 +28,16 @@ Icon:		gimp.gif
 BuildRequires:	aalib-devel
 BuildRequires:	gettext-devel
 %{!?_without_print:BuildRequires:	gimp-print-devel}
-BuildRequires:	gtk+2-devel
+BuildRequires:	gtk+2-devel >= 2.2.0
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libgtkhtml-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libtiff-devel
 BuildRequires:	libungif-devel
-#BuildRequires:	perl-File-Slurp
-#BuildRequires:	perl-PDL-Graphics-PGPLOT >= 1.9906
-#BuildRequires:	perl-PDL-Graphics-TriD >= 1.9906
-#BuildRequires:	perl-Parse-RecDescent
-#BuildRequires:	perl-devel >= 5.6.1
-#BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel
-#BuildRequires:	rpm-perlprov >= 4.1-10
+BuildRequires:	rpm-build >= 4.1-13
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -174,7 +162,7 @@ License:	LGPL
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	gtk-doc-common
-Requires:	gtk+-devel >= 1.2.0
+Requires:	gtk+2-devel >= 2.2.0
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -251,44 +239,34 @@ Wtyczka do drukowania dla Gimpa.
 %{__automake}
 %{__autoconf}
 %configure \
-	--without-included-gettext \
-	--disable-perl \
 	--disable-rpath \
 	%{?_without_print: --disable-print} \
 	--enable-python \
 	--with-mp \
-	--with-threads=posix \
-	--with-html-dir=%{_gtkdocdir}
+	--with-html-dir=%{_gtkdocdir} \
+	--enable-default-binary
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_datadir}/applications}
+install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
+install -d $RPM_BUILD_ROOT%{_datadir}/application-registry
+install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	m4datadir=%{_aclocaldir} \
-	HTML_DIR=%{_gtkdocdir}
+	DESTDIR=$RPM_BUILD_ROOT 
 
-#install pixmaps/*.xpm plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
+#############################################################
+# This is hack indeed, but it is supposed to disappear when #
+# version 1.4 will arrive                                   #
+#############################################################
 
 cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
 	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
 	$RPM_BUILD_ROOT%{_datadir}/applications/gimp13.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
-
-%find_lang %{name} --all-name
-
-echo "%defattr(755,root,root,755)" >> %{name}.lang
-
-ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/plug-ins/* | \
-	egrep -w -v -e "aa|print" | \
-	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
-
-echo "%defattr(644,root,root,755)" >> %{name}.lang
-
-rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/yes.xpm
-rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/no.xpm
+install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-registry
+install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info/
 
 cd $RPM_BUILD_ROOT%{_bindir}
 ln -s gimp-%{mver} gimp
@@ -296,6 +274,15 @@ ln -s gimp-remote-%{mver} gimp-remote
 ln -s gimptool-%{mver} gimp-config
 ln -s gimptool-%{mver} gimptool
 cd -
+
+###################### end hack #############################
+
+# Remove obsolete files 
+rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
+rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
+rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,keys}
+
+%find_lang %{name} --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -312,8 +299,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
 %attr(755,root,root) %{_bindir}/gimp-remote
-%{_datadir}/applications/gimp13.desktop
-
+%{_desktopdir}/gimp13.desktop
+%{_datadir}/application-registry/gimp.applications
+%{_datadir}/mime-info/gimp.keys
 %{_mandir}/man1/gimp-%{mver}*
 %{_mandir}/man1/gimp-remote-%{mver}*
 %{_mandir}/man5/gimprc-%{mver}*
@@ -322,6 +310,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
 %dir %{_libdir}/gimp/%{mver}/plug-ins
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
+%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa
+%exclude %{_libdir}/gimp/%{mver}/plug-ins/print
+
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
 %{_libdir}/gimp/%{mver}/environ
@@ -345,7 +337,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/%{mver}/themes
 %{_datadir}/gimp/%{mver}/tips
 %dir %{_datadir}/gimp/%{mver}/misc
-#%attr(755,root,root) %{_datadir}/gimp/%{mver}/misc/user_install
 
 %dir %{_sysconfdir}/gimp
 %dir %{_sysconfdir}/gimp/%{mver}
