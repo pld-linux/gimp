@@ -7,24 +7,31 @@ Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
 Summary(pt_BR):	Programa de manipulação de imagem GNU
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.2.2
-Release:	5
+Version:	1.2.3
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
+Group(cs):	X11/Aplikace/Grafika
+Group(da):	X11/Programmer/Grafik
 Group(de):	X11/Applikationen/Grafik
 Group(es):	X11/Aplicaciones/Gráficos
 Group(fr):	X11/Applications/Graphiques
+Group(id):	X11/Aplikasi/Grafik
+Group(is):	X11/Forrit/Myndvinnsla
+Group(it):	X11/Applicazioni/Immagini
+Group(ja):	X11/¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥°¥é¥Õ¥£¥Ã¥¯¥¹
+Group(no):	X11/Applikasjoner/Grafikk
 Group(pl):	X11/Aplikacje/Grafika
 Group(pt):	X11/Aplicações/Gráficos
 Group(ru):	X11/ðÒÉÌÏÖÅÎÉÑ/çÒÁÆÉËÁ
+Group(sl):	X11/Programi/Grafika
+Group(sv):	X11/Tillämpningar/Grafik
 Source0:	ftp://ftp.gimp.org/pub/gimp/v1.2/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
 Patch0:		%{name}-perldep.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-croak.patch
-Patch3:		%{name}-i18n.patch
-Patch4:		%{name}-setlocale.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gettext-devel
@@ -124,12 +131,21 @@ Summary(pt_BR):	Kit de desenvolvimento de "plugins" extensões para o GIMP
 Summary(tr):	GIMP plugin ve uzantý geliþtirme araçlarý
 License:	LGPL
 Group:		X11/Development/Libraries
+Group(cs):	X11/Vývojové prostøedky/Knihovny
+Group(da):	X11/Udvikling/Biblioteker
 Group(de):	X11/Entwicklung/Bibliotheken
 Group(es):	X11/Desarrollo/Bibliotecas
 Group(fr):	X11/Development/Librairies
+Group(is):	X11/Þróunartól/Aðgerðasöfn
+Group(it):	X11/Sviluppo/Librerie
+Group(ja):	X11/³«È¯/¥é¥¤¥Ö¥é¥ê
+Group(no):	X11/Applikasjoner/Biblioteker
 Group(pl):	X11/Programowanie/Biblioteki
 Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
+Group(pt):	X11/Desenvolvimento/Bibliotecas
 Group(ru):	X11/òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(sl):	X11/Razvoj/Knji¾nice
+Group(sv):	X11/Utveckling/Bibliotek
 Group(uk):	X11/òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 Requires:	gtk+-devel >= 1.2.0
@@ -154,16 +170,26 @@ para o Gimp.
 %description -l es devel
 Bibliotecas y archivos de inclusión para escribir extensiones y
 plugins para Gimp.
+
 %package static
 Summary:	GIMP static libraries
 Summary(pl):	Biblioteki statyczne do GIMPa
 Group:		X11/Development/Libraries
+Group(cs):	X11/Vývojové prostøedky/Knihovny
+Group(da):	X11/Udvikling/Biblioteker
 Group(de):	X11/Entwicklung/Bibliotheken
 Group(es):	X11/Desarrollo/Bibliotecas
 Group(fr):	X11/Development/Librairies
+Group(is):	X11/Þróunartól/Aðgerðasöfn
+Group(it):	X11/Sviluppo/Librerie
+Group(ja):	X11/³«È¯/¥é¥¤¥Ö¥é¥ê
+Group(no):	X11/Applikasjoner/Biblioteker
 Group(pl):	X11/Programowanie/Biblioteki
 Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
+Group(pt):	X11/Desenvolvimento/Bibliotecas
 Group(ru):	X11/òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
+Group(sl):	X11/Razvoj/Knji¾nice
+Group(sv):	X11/Utveckling/Bibliotek
 Group(uk):	X11/òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name}-devel = %{version}
 
@@ -183,14 +209,23 @@ GIMP.
 %package aa
 Summary:	ASCII Art plugin for Gimp
 Summary(fr):	Plugin d'art ASCII pour Gimp
-Summary(pl):	Wsparcie dla ASCII Art do Gimpa
+Summary(pl):	Wtyczka do ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
+Group(cs):	X11/Aplikace/Grafika
+Group(da):	X11/Programmer/Grafik
 Group(de):	X11/Applikationen/Grafik
 Group(es):	X11/Aplicaciones/Gráficos
 Group(fr):	X11/Applications/Graphiques
+Group(id):	X11/Aplikasi/Grafik
+Group(is):	X11/Forrit/Myndvinnsla
+Group(it):	X11/Applicazioni/Immagini
+Group(ja):	X11/¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥°¥é¥Õ¥£¥Ã¥¯¥¹
+Group(no):	X11/Applikasjoner/Grafikk
 Group(pl):	X11/Aplikacje/Grafika
 Group(pt):	X11/Aplicações/Gráficos
 Group(ru):	X11/ðÒÉÌÏÖÅÎÉÑ/çÒÁÆÉËÁ
+Group(sl):	X11/Programi/Grafika
+Group(sv):	X11/Tillämpningar/Grafik
 Requires:	%{name} = %{version}
 
 %description aa
@@ -202,15 +237,40 @@ Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie
 partagée aalib.
 
 %description aa -l pl
-Ten pakiet zawiera "wtyczkê" do Gimpa ze wsparciem dla ASCII Art.
+Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
+
+%package mpeg
+Summary:	MPEG plugin for Gimp
+Summary(pl):	Wtyczka do MPEG Gimpa
+Group:		X11/Applications/Graphics
+Group(cs):	X11/Aplikace/Grafika
+Group(da):	X11/Programmer/Grafik
+Group(de):	X11/Applikationen/Grafik
+Group(es):	X11/Aplicaciones/Gráficos
+Group(fr):	X11/Applications/Graphiques
+Group(id):	X11/Aplikasi/Grafik
+Group(is):	X11/Forrit/Myndvinnsla
+Group(it):	X11/Applicazioni/Immagini
+Group(ja):	X11/¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥°¥é¥Õ¥£¥Ã¥¯¥¹
+Group(no):	X11/Applikasjoner/Grafikk
+Group(pl):	X11/Aplikacje/Grafika
+Group(pt):	X11/Aplicações/Gráficos
+Group(ru):	X11/ðÒÉÌÏÖÅÎÉÑ/çÒÁÆÉËÁ
+Group(sl):	X11/Programi/Grafika
+Group(sv):	X11/Tillämpningar/Grafik
+Requires:	%{name} = %{version}
+
+%description mpeg
+This package contains the MPEG plugin.
+
+%description mpeg -l pl
+Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do MPEG.
 
 %prep
 %setup	-q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-#%patch4 -p1
 
 %build
 CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
@@ -245,7 +305,7 @@ gzip -9nf ChangeLog NEWS README README.i18n README.perl \
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
-	egrep -w -v -e "aa|print" | \
+	egrep -w -v -e "aa|mpeg|print" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 
 echo "%defattr(644,root,root,755)" >> %{name}.lang
@@ -270,8 +330,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimpdoc
 %{_applnkdir}/Graphics/gimp.desktop
 
-%{_mandir}/man1/gimp.1*
-%{_mandir}/man5/gimprc.5*
+%{_mandir}/man1/gimp-1.2.1*
+%{_mandir}/man5/gimp-remote-1.2.1*
+%{_mandir}/man5/gimprc-1.2.5*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir %{_libdir}/gimp
@@ -352,8 +413,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/scm2scm
 %attr(755,root,root) %{_bindir}/xcftopnm
 
-%{_mandir}/man1/gimptool.1*
+%{_mandir}/man1/gimptool-1.2.1*
 %{_mandir}/man1/embedxpm.1*
+%{_mandir}/man1/escputil-1.2.1*
 %{_mandir}/man1/scm2perl.1*
 %{_mandir}/man1/scm2scm.1*
 %{_mandir}/man1/xcftopnm.1*
@@ -366,3 +428,7 @@ rm -rf $RPM_BUILD_ROOT
 %files aa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/aa
+
+%files mpeg
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/mpeg
