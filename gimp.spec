@@ -19,7 +19,7 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	1.3.16
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -351,6 +351,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/%{name}/%{mver}/templaterc
 %config %{_sysconfdir}/%{name}/%{mver}/gtkrc*
 %config %{_sysconfdir}/%{name}/%{mver}/ps-menurc
+%config %{_sysconfdir}/%{name}/%{mver}/sessionrc
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
 
 %{_pixmapsdir}/*
