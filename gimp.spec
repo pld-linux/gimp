@@ -209,7 +209,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS,README,README.i18n,README.perl,MAINTAINERS}.gz
 %doc docs/*.gz docs/*README
-%doc docs/white-paper/gimp-white-paper.tex docs/quick_reference.*
+%doc docs/quick_reference.*
 
 %attr(755,root,root) %{_bindir}/gimp* 
 %{_applnkdir}/Graphics/gimp.desktop
