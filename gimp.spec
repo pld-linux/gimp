@@ -1,13 +1,12 @@
 %include	/usr/lib/rpm/macros.perl
-%define		__find_requires %{_builddir}/gimp-%{version}/find-perl-requires
 Summary:	The GNU Image Manipulation Program
 Summary(fr):	Le programme de manipulation d'images de GNU
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
-Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
+Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.1
-Release: 	3
+Release: 	4
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -40,12 +39,18 @@ BuildRequires:	rpm-perlprov
 %requires_eq	perl
 Requires:	%{perl_sitearch}
 Requires:	gtk+ >= 1.2.8-3
+Requires:	mpeg_lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 
 %define		_prefix		/usr/X11R6
 %define		_mandir		%{_prefix}/man
+
+# need libmpeg.so from mpeg_lib (xmps has other libmpeg.so)
+%define		_noautoreqdep	libmpeg.so
+# workaround for find-perl-requires
+%define		_noautoreq	"perl(of)"
 
 %description
 The GIMP is an image manipulation program suitable for photo
@@ -84,7 +89,7 @@ stron WWW, przerobiæ zdjêcia, czy stworzyæ w³asne logo.
 Summary:	GIMP plugin and extension development kit
 Summary(fr):	Plugin GIMP et kit de développement d'extensions
 Summary(de):	GIMP-Plugin und Extension Development Kit
-Summary(pl):	Dodatkowe moduly i rozszerzenia dla Gimp
+Summary(pl):	Pliki do budowania modu³ów i rozszerzeñ dla Gimp
 Summary(tr):	GIMP plugin ve uzantý geliþtirme araçlarý
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
@@ -156,10 +161,8 @@ partagée xdelta.
 %patch2 -p1
 %patch3 -p1
 
-chmod +x find-perl-requires
-
 %build
-CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -DPERL_POLLUTE"
+CFLAGS="%{rpmcflags} -DPERL_POLLUTE"
 %configure \
 	--without-included-gettext \
 	--without-xdelta \
@@ -172,15 +175,14 @@ CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -DPERL_POLLUTE"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_datadir}/icons \
+install -d $RPM_BUILD_ROOT%{_pixmapsdir} \
 	$RPM_BUILD_ROOT%{_applnkdir}/Graphics
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	m4datadir=%{_aclocaldir}
 
-install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
-install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
+install pixmaps/*.xpm plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
 mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
@@ -211,7 +213,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/*.gz docs/*README
 %doc docs/quick_reference.*
 
-%attr(755,root,root) %{_bindir}/gimp* 
+%attr(755,root,root) %{_bindir}/gimp 
+%attr(755,root,root) %{_bindir}/gimp-remote 
+%attr(755,root,root) %{_bindir}/gimpdoc
 %{_applnkdir}/Graphics/gimp.desktop
 
 %{_mandir}/man1/gimp.1* 
@@ -222,8 +226,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp/1.2
 %dir %{_libdir}/gimp/1.2/plug-ins
 %dir %{_libdir}/gimp/1.2/modules
-%attr(755,root,root) %{_libdir}/gimp/1.2/modules/*la
-%attr(755,root,root) %{_libdir}/gimp/1.2/modules/*so
+%attr(755,root,root) %{_libdir}/gimp/1.2/modules/*.so
 
 %dir %{_datadir}/gimp
 %dir %{_datadir}/gimp/1.2
@@ -260,7 +263,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_datadir}/gimp/1.2/user_install
 
-%{_datadir}/icons/*.xpm 
+%{_pixmapsdir}/*.xpm 
 
 ## perl stuff
 %{perl_sitearch}/Gimp
@@ -282,8 +285,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc devel-docs/libgimp/html/*
 %attr(755,root,root) %{_bindir}/gimptool
+%attr(755,root,root) %{_bindir}/gimp-config
 %attr(755,root,root) %{_libdir}/lib*.so 
 %{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/gimp/1.2/modules/*.la
 
 %{_includedir}/gck 
 %{_includedir}/libgimp
