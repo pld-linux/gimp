@@ -38,7 +38,6 @@ Comment[pl]=Zaawansowany edytor grafiki bitmapowej na licencji GNU
 Comment[pt]=Programa de EdiГЦo de Imagens GNU 
 Comment[ru]=Программа манипуляции изображения GNU
 Comment[sv]=GNU Image Manipulation Program
-TryExec=gimp
 Exec=gimp
 Icon=gnome-gimp.png
 Terminal=0
