@@ -79,7 +79,7 @@ anti-aliasing, and conversions, all with multi-level undo.
 
 This version of The GIMP includes a scripting facility, but many of
 the included scripts rely on fonts that we cannot distribute. The GIMP
-ftp site has a package of fonts that you can install by yourself,
+FTP site has a package of fonts that you can install by yourself,
 which includes all the fonts needed to run the included scripts.
 
 %description -l es
@@ -141,7 +141,7 @@ GIMP предоставляет большой набор инструментов для работы с графикой,
 GIMP включает поддержку создания сценариев (scripting facility),
 однако многие из поставляемых с программой сценариев предполагают
 наличие шрифтов, которые не могут быть включены в дистрибутив.
-ftp-сайт GIMP содержит пакет шрифтов, которые вы можете поставить
+FTP-сайт GIMP содержит пакет шрифтов, которые вы можете поставить
 самостоятельно, включающий все шрифты, необходимые для работы входящих
 в комплект сценариев. Некоторые из шрифтов имеют весьма необычные
 лицензионные требования; все лицензии включены в упомянутый пакет.
@@ -164,7 +164,7 @@ imaging ╕ антиал╕асинг, р╕зноман╕тн╕ конвертори ╕ все це з
 
 GIMP ма╓ п╕дтримку сценар╕╖в (scripting facility), проте багато з
 включених до поставки сценар╕╖в припускають наявн╕сть шрифт╕в, як╕ не
-можуть бути включен╕ в дистрибутив. ftp-сайт GIMP м╕стить пакет
+можуть бути включен╕ в дистрибутив. FTP-сайт GIMP м╕стить пакет
 шрифт╕в, котр╕ ви можете встановити самост╕йно, в який входять вс╕
 шрифти, необх╕дн╕ для роботи сценар╕╖в з поставки GIMP. Деяк╕ з
 шрифт╕в мають вельми незвичайн╕ л╕ценз╕йн╕ умови; вс╕ л╕ценз╕╖
