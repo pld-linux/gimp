@@ -95,4 +95,5 @@ Icon=gnome-gimp.png
 Terminal=false
 Type=Application
 Encoding=UTF-8
+Categories=Graphics;RasterGraphics;
 # vi: encoding=utf-8
