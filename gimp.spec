@@ -3,9 +3,8 @@
 %bcond_without	aalib		# without aa plugin (which requires aalib)
 %bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
 %bcond_without	python		# without python plugins
-%bcond_with	file_chooser	# use new file chooser introduced in gtk+2 2.4
 #
-%define	mver	2.0
+%define	mver	2.1
 %define	pre	rc1
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
@@ -19,18 +18,16 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.0.1
+Version:	2.1.0
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	fb7f0d3dcde6c77dc7960c0986a6e0f5
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.1/%{name}-%{version}.tar.bz2
+# Source0-md5:	395c319d778415546c58a19455b7dc86
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-locale-names.patch
-Patch2:		%{name}-gcc34.patch
-# Patch3 comes from http://mitch.gimp.org/filechooser/
-Patch3:		%{name}-file-chooser-10.patch
+Patch2:		%{name}-missing_size_group.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -39,8 +36,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-%{?with_file_chooser:BuildRequires:	gtk+2-devel >= 2:2.4.0}
-%{!?with_file_chooser:BuildRequires:	gtk+2-devel >= 1:2.2.2}
+BuildRequires:	gtk+2-devel >= 2:2.4.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
@@ -58,8 +54,7 @@ BuildRequires:	libwmf-devel >= 0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 BuildRequires:	rpm-build >= 4.1-13
-%{?with_file_chooser:Requires:	gtk+2 >= 2:2.4.0}
-%{!?with_file_chooser:Requires:	gtk+2 >= 1:2.2.2}
+Requires:	gtk+2 >= 2:2.4.0
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
@@ -264,7 +259,6 @@ Wtyczka do drukowania dla Gimpa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%{?with_file_chooser:%patch3 -p0}
 
 for dir in po po-libgimp po-plug-ins po-script-fu; do
 	mv $dir/{no,nb}.po
@@ -313,8 +307,8 @@ install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 # Link gimptool to gimptool-2.0
 
-ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
-echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
+ln -s gimptool-%{mver} $RPM_BUILD_ROOT%{_bindir}/gimptool
+echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
@@ -343,6 +337,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mime-info/gimp.keys
 %{_mandir}/man1/gimp-%{mver}*
 %{_mandir}/man1/gimp-remote-%{mver}*
+%{_mandir}/man1/gimprc-%{mver}*
 %{_mandir}/man5/gimprc-%{mver}*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
@@ -372,6 +367,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/%{mver}/gimpressionist
 %{_datadir}/gimp/%{mver}/gradients
 %{_datadir}/gimp/%{mver}/images
+%{_datadir}/gimp/%{mver}/menus
 %{_datadir}/gimp/%{mver}/palettes
 %{_datadir}/gimp/%{mver}/patterns
 %{_datadir}/gimp/%{mver}/scripts
@@ -392,17 +388,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gimptool-2.0
+%attr(755,root,root) %{_bindir}/gimptool-%{mver}
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_pkgconfigdir}/*
 %{_gtkdocdir}/*
 
-%{_includedir}/gimp-%{mver}
+%{_includedir}/gimp-2.0
 %{_aclocaldir}/gimp-2.0.m4
 
-%{_mandir}/man1/gimptool-2.0.1*
+%{_mandir}/man1/gimptool-%{mver}*
 %{_mandir}/man1/gimptool.1*
 
 %files static
