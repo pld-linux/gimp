@@ -1,3 +1,9 @@
+
+#
+# todo:
+#   - perl support
+#
+
 %include	/usr/lib/rpm/macros.perl
 
 # http://bugzilla.gnome.org/show_bug.cgi?id=85249
@@ -5,10 +11,7 @@
 %define optflags -O2 -march=i386
 %endif
 
-#
-# todo:
-#   - perl support
-#
+%define mver 1.3
 
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
@@ -27,7 +30,7 @@ Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v1.3/v%{version}/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	aalib-devel
@@ -255,8 +258,8 @@ install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}/Graphics}
 
 #install pixmaps/*.xpm plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
 
-cat $RPM_BUILD_ROOT%{_datadir}/gimp/1.3/misc/gimp.desktop | \
-	sed 's@/usr/X11R6/share/gimp/1.3/images/@@' > \
+cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
+	sed 's@/usr/X11R6/share/gimp/%{mver}/images/@@' > \
 	$RPM_BUILD_ROOT%{_applnkdir}/Graphics/gimp13.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
@@ -264,7 +267,7 @@ install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
-\ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.3/plug-ins/* | \
+\ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/plug-ins/* | \
 	egrep -w -v -e "aa|something_else" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 
@@ -284,45 +287,43 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog MAINTAINERS NEWS PLUGIN_MAINTAINERS README TODO
 %doc docs/{*.txt,quick_reference.*,Wilber*}
 
-%attr(755,root,root) %{_bindir}/gimp-1.3
-%attr(755,root,root) %{_bindir}/gimp-remote-1.3
+%attr(755,root,root) %{_bindir}/gimp-%{mver}
+%attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
 %{_applnkdir}/Graphics/gimp13.desktop
 
-%{_mandir}/man1/gimp-1.3.1*
-%{_mandir}/man1/gimp-remote-1.3.1*
-%{_mandir}/man5/gimprc-1.3.5*
+%{_mandir}/man1/gimp-%{mver}.1*
+%{_mandir}/man1/gimp-remote-%{mver}.1*
+%{_mandir}/man5/gimprc-%{mver}.5*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-# 1.2 own it
-#%dir %{_libdir}/gimp
-%dir %{_libdir}/gimp/1.3
-%dir %{_libdir}/gimp/1.3/plug-ins
-%dir %{_libdir}/gimp/1.3/modules
-%attr(755,root,root) %{_libdir}/gimp/1.3/modules/*.so
+%dir %{_libdir}/gimp
+%dir %{_libdir}/gimp/%{mver}
+%dir %{_libdir}/gimp/%{mver}/plug-ins
+%dir %{_libdir}/gimp/%{mver}/modules
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
 
-%dir %{_datadir}/gimp/1.3
-%{_datadir}/gimp/1.3/brushes
-%{_datadir}/gimp/1.3/fractalexplorer
-%{_datadir}/gimp/1.3/gfig
-%{_datadir}/gimp/1.3/gflare
-%{_datadir}/gimp/1.3/gimpressionist
-%{_datadir}/gimp/1.3/gradients
-%{_datadir}/gimp/1.3/images
-%{_datadir}/gimp/1.3/palettes
-%{_datadir}/gimp/1.3/patterns
-%{_datadir}/gimp/1.3/scripts
-%{_datadir}/gimp/1.3/themes
-%{_datadir}/gimp/1.3/tips
-%dir %{_datadir}/gimp/1.3/misc
-%attr(755,root,root) %{_datadir}/gimp/1.3/misc/user_install
+%dir %{_datadir}/gimp/%{mver}
+%{_datadir}/gimp/%{mver}/brushes
+%{_datadir}/gimp/%{mver}/fractalexplorer
+%{_datadir}/gimp/%{mver}/gfig
+%{_datadir}/gimp/%{mver}/gflare
+%{_datadir}/gimp/%{mver}/gimpressionist
+%{_datadir}/gimp/%{mver}/gradients
+%{_datadir}/gimp/%{mver}/images
+%{_datadir}/gimp/%{mver}/palettes
+%{_datadir}/gimp/%{mver}/patterns
+%{_datadir}/gimp/%{mver}/scripts
+%{_datadir}/gimp/%{mver}/themes
+%{_datadir}/gimp/%{mver}/tips
+%dir %{_datadir}/gimp/%{mver}/misc
+%attr(755,root,root) %{_datadir}/gimp/%{mver}/misc/user_install
 
-# 1.2 own it
-#%dir %{_sysconfdir}/gimp
-%dir %{_sysconfdir}/gimp/1.3
-%config %verify(not md5 mtime) %{_sysconfdir}/gimp/1.3/gimprc*
-%config %{_sysconfdir}/gimp/1.3/gtkrc*
-%config %{_sysconfdir}/gimp/1.3/ps-menurc
-%config %{_sysconfdir}/gimp/1.3/unitrc
+%dir %{_sysconfdir}/gimp
+%dir %{_sysconfdir}/gimp/%{mver}
+%config %verify(not md5 mtime) %{_sysconfdir}/gimp/%{mver}/gimprc*
+%config %{_sysconfdir}/gimp/%{mver}/gtkrc*
+%config %{_sysconfdir}/gimp/%{mver}/ps-menurc
+%config %{_sysconfdir}/gimp/%{mver}/unitrc
 
 %{_pixmapsdir}/*
 
@@ -330,17 +331,17 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc %{_datadir}/gtk-doc/html/*
 %attr(755,root,root) %{_bindir}/gimptool
-%attr(755,root,root) %{_bindir}/gimptool-1.3
+%attr(755,root,root) %{_bindir}/gimptool-%{mver}
 %attr(755,root,root) %{_bindir}/gimp-config
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*
-%attr(755,root,root) %{_libdir}/gimp/1.3/modules/*.la
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.la
 
-%{_includedir}/gimp-1.3
+%{_includedir}/gimp-%{mver}
 %{_aclocaldir}/gimp-1.4.m4
 
-%{_mandir}/man1/gimptool-1.3.1*
+%{_mandir}/man1/gimptool-%{mver}.1*
 
 %files static
 %defattr(644,root,root,755)
@@ -348,4 +349,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files aa
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gimp/1.3/plug-ins/aa
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/aa
