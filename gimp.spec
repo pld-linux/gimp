@@ -33,7 +33,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libungif-devel
 BuildRequires:	aalib-devel
-BuildRequires:	mpeg_lib-devel
+BuildRequires:	mpeg_lib-devel >= 1.3.1-2
 BuildRequires:	rpm-perlprov
 Requires:	gtk+ >= 1.2.8-3
 Requires:	mpeg_lib
