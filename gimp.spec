@@ -49,9 +49,9 @@ BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 0.2.8
 BuildRequires:	pkgconfig
-%{?with_python:	BuildRequires:	python-pygtk-devel}
+%{?with_python:BuildRequires:	python-pygtk-devel}
 BuildRequires:	rpm-build >= 4.1-13
-%{?with_python:	Requires:	python-pygtk-gtk}
+%{?with_python:Requires:	python-pygtk-gtk}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
