@@ -4,8 +4,8 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.7
-Release:	1
+Version:	1.1.8
+Release:	0.1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
@@ -24,19 +24,20 @@ BuildRequires:	libpng-devel
 BuildRequires:	libungif-devel
 BuildRequires:	xpm-devel
 BuildRequires:	zlib-devel
+BuildRequires:	aalib-devel
 %requires_eq	perl
 Requires:	%{perl_sitearch}
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 
-%define	_prefix	/usr/X11R6
-%define	_mandir	%{_prefix}/man
+%define		_prefix		/usr/X11R6
+%define		_mandir		%{_prefix}/man
 
 %description
 The GIMP is an image manipulation program suitable for photo retouching,
-image composition and image authoring.  Many people find it extremely useful
-in creating logos and other graphics for web pages.  The GIMP has many of the
+image composition and image authoring. Many people find it extremely useful
+in creating logos and other graphics for web pages. The GIMP has many of the
 tools and filters you would expect to find in similar commercial offerings,
 and some interesting extras as well.
 
@@ -45,14 +46,9 @@ operations and layers, effects, sub-pixel imaging and anti-aliasing,
 and conversions, all with multi-level undo.
 
 This version of The GIMP includes a scripting facility, but many of the
-included scripts rely on fonts that we cannot distribute.  The GIMP ftp
+included scripts rely on fonts that we cannot distribute. The GIMP ftp
 site has a package of fonts that you can install by yourself, which
-includes all the fonts needed to run the included scripts.  Some of the
-fonts have unusual licensing requirements; all the licenses are documented
-in the package. Get ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz
-and ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz if you are so
-inclined. Alternatively, choose fonts which exist on your system before
-running the scripts.
+includes all the fonts needed to run the included scripts.
 
 %description -l pl
 Program Gimp jest przeznaczony do obróbki i tworzenia plików w ró¿nych
@@ -97,10 +93,8 @@ Biblioteki statyczne do GIMPa.
 %patch -p0
 
 %build
-CFLAGS="$RPM_OPT_FLAGS -Wall" \
-LDFLAGS="-s" \
-./configure %{_target_platform} \
-	--prefix=%{_prefix} \
+LDFLAGS="-s"; export LDFLAGS
+%configure \
 	--without-included-gettext \
 	--without-xdelta 
 make
@@ -129,6 +123,7 @@ install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 strip $RPM_BUILD_ROOT{%{_bindir}/gimp,%{_libdir}/gimp/*/plug-ins/*} ||: 
 strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* \
+	$RPM_BUILD_ROOT%{_libdir}/gimp/modules/lib*.so \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*.so \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/{Lib,Net}/*.so
 
@@ -161,7 +156,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/gimprc.5*
 
 %attr(755,root,root) %{_libdir}/lib*.so.* 
-%attr(755,root,root) %{_libdir}/gimp 
+%dir %{_libdir}/gimp
+%dir %{_libdir}/gimp/plug-ins
+%attr(755,root,root) %{_libdir}/gimp/plug-ins/*
+%dir %{_libdir}/gimp/modules
+%attr(755,root,root) %{_libdir}/gimp/modules/*la
+%attr(755,root,root) %{_libdir}/gimp/modules/*so
 
 %dir %{_datadir}/gimp
 %{_datadir}/gimp/brushes
@@ -178,6 +178,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/tips/gimp_tips.txt
 %lang(fr) %{_datadir}/gimp/tips/gimp_conseils.fr.txt
 %lang(de) %{_datadir}/gimp/tips/gimp_tips.de.txt
+%lang(ja) %{_datadir}/gimp/tips/gimp_tips.ja.txt
+%lang(ru) %{_datadir}/gimp/tips/gimp_tips.ru.txt
 
 %config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
 %config %{_datadir}/gimp/gtkrc*
@@ -200,11 +202,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{perl_sitearch}/auto/Gimp/Lib/Lib.so
 %attr(755,root,root) %{perl_sitearch}/auto/Gimp/Net/Net.so
 %attr(755,root,root) %{perl_sitearch}/auto/Gimp/Gimp.so
-/usr/share/man/man3/Gimp*
 
 %files devel
 %defattr(644,root,root,755)
 
+%attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so 
 %{_libdir}/lib*.la
 
@@ -212,12 +214,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libgimp/*.h
 /usr/share/aclocal/gimp.m4
 
-%attr(755,root,root) %{_bindir}/gimptool
-%attr(755,root,root) %{_bindir}/scm2*
+%attr(755,root,root) %{_bindir}/embedxpm
+%attr(755,root,root) %{_bindir}/gimpdoc
+%attr(755,root,root) %{_bindir}/scm2perl
+%attr(755,root,root) %{_bindir}/scm2scm
+%attr(755,root,root) %{_bindir}/xcftopnm
 
 %{_mandir}/man1/gimptool.1*
 %{_mandir}/man1/scm2*.1*
 %{_mandir}/man3/gpc.3*
+/usr/share/man/man3/*
 
 %files static
 %attr(644,root,root) %{_libdir}/lib*.a
