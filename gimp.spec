@@ -124,8 +124,7 @@ mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/site_perl/5.005/* \
 gzip -9 $RPM_BUILD_ROOT/usr/X11R6/man/man[135]/*
 gzip -9 $RPM_BUILD_ROOT/usr/share/man/man[13]/*
 
-bzip2 -9 ChangeLog NEWS README README.i18n README.perl TODO \
-	MAINTAINERS docs/*.tex docs/*.txt
+bzip2 -9 ChangeLog NEWS README README.i18n README.perl TODO MAINTAINERS docs/*.tex docs/*.txt
 
 %find_lang	gimp
 %find_lang	gimp-std-plugins
@@ -138,8 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f gimp.lang -f gimp-std-plugins.lang
 %defattr(644,root,root,755)
-%doc ChangeLog.bz2 NEWS.bz2 README.bz2 README.i18n.bz2 README.perl.bz2 \
-	docs/*.bz2 docs/*.eps docs/*.tex docs/quick_reference.*
+%doc ChangeLog.bz2 NEWS.bz2 README.bz2 README.i18n.bz2 README.perl.bz2 docs/*.bz2 docs/*.eps docs/*.tex docs/quick_reference.*
 
 %attr(755,root,root) %{_bindir}/gimp 
 %attr(755,root,root) %{_bindir}/gimpdoc 
