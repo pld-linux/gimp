@@ -1,4 +1,6 @@
 #
+# TODO - make gtk_file_chooser patch working
+#
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
 %bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
@@ -19,17 +21,16 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.0.4
-Release:	3
+Version:	2.0.5
+Release:	0.5
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	731198e0f46cca833243c43197681c66
+# Source0-md5:	b24d069b9d670d92fc75ba7035e9300d
 Patch0:		%{name}-home_etc.patch
-Patch1:		%{name}-locale-names.patch
-# Patch3 comes from http://mitch.gimp.org/filechooser/
-Patch3:		%{name}-file-chooser-10.patch
+# Patch1 comes from http://mitch.gimp.org/filechooser/
+Patch1:		%{name}-file-chooser-10.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -261,12 +262,7 @@ Wtyczka do drukowania dla Gimpa.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%{?with_file_chooser:%patch3 -p0}
-
-for dir in po po-libgimp po-plug-ins po-script-fu; do
-	mv $dir/{no,nb}.po
-done
+%{?with_file_chooser:%patch1 -p0}
 
 %build
 %{__libtoolize}
@@ -318,6 +314,12 @@ echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
 rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,keys}
+
+#for dir in po po-libgimp po-plug-ins po-script-fu; do
+#	rm $dir/no.po
+#done
+
+rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --all-name
 
