@@ -90,7 +90,7 @@ Biblioteki statyczne do GIMPa
 %build
 CFLAGS="$RPM_OPT_FLAGS -Wall" \
 LDFLAGS="-s" \
-./configure %{_target}\
+./configure %{_target_platform}\
 	--prefix=%{_prefix} \
 	--without-included-gettext \
 	--without-xdelta 
