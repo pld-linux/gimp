@@ -12,14 +12,18 @@ Group(pl):	X11/Aplikacje/Grafika
 #######		ftp://ftp.gimp.org/pub/gimp/unstable/v1.1.5/
 Source:		%{name}-%{version}.tar.bz2
 URL:		http://www.gimp.org/
-Requires:	gtk+ >= 1.1.15
-Requires:	glib >= 1.1.15
-Requires:	perl >= 5.005
+BuildPrereq:	gtk+-devel
+BuildPrereq:	glib-devel
+BuildPrereq:	perl
+Requires:	gtk+ >= 1.2.0
+Requires:	glib >= 1.2.0
+%requires_eq	perl
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 
 %define	_prefix	/usr/X11R6
+%define	_mandir	%{_prefix}/man
 
 %description
 The GIMP is an image manipulation program suitable for photo retouching,
@@ -57,7 +61,7 @@ Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
 Copyright:	LGPL
 Requires:	%{name} = %{version}
-Requires:	gtk+-devel >= 1.1.15
+Requires:	gtk+-devel >= 1.2.0
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -66,7 +70,7 @@ Header files for writing GIMP plugins and extensions.
 Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen
 
 %descriptions -l pl devel
-Pliki nag³ówowe dla GIMP.
+Pliki nag³ówkowe dla GIMP.
 
 %package static
 Summary:     GIMP static libraries
@@ -80,13 +84,13 @@ GIMP static libraries
 %description -l pl static
 Biblioteki statyczne do GIMPa
 
-%prep
-%setup -q
+#%prep
+#%setup -q
 
 %build
 CFLAGS="$RPM_OPT_FLAGS -Wall" \
 LDFLAGS="-s" \
-./configure %{_target}\
+./configure %{_target_platform} \
 	--prefix=%{_prefix} \
 	--without-included-gettext \
 	--without-xdelta 
@@ -94,37 +98,42 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/X11
-install -d $RPM_BUILD_ROOT/usr/share/aclocal
-install -d $RPM_BUILD_ROOT/usr/X11R6/share/icons 
-install -d $RPM_BUILD_ROOT/usr/lib/perl5/5.00502/$RPM_ARCH-linux-thread
-install -d $RPM_BUILD_ROOT/usr/X11R6/lib/gimp/1.1/modules
+install -d $RPM_BUILD_ROOT/{etc/X11,usr/share/aclocal} \
+	$RPM_BUILD_ROOT%{_datadir}/icons \
+	$RPM_BUILD_ROOT%{perl_sitearch} \
+	$RPM_BUILD_ROOT%{_libdir}/gimp/1.1/{modules,plug-ins}
 
 make install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
-	INSTALLMAN1DIR=$RPM_BUILD_ROOT/usr/share/man/man1 \
+	mandir=$RPM_BUILD_ROOT%{_mandir} \
+	INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
 	INSTALLMAN3DIR=$RPM_BUILD_ROOT/usr/share/man/man3 \
-	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
-	INSTALLMAN5DIR=$RPM_BUILD_ROOT/usr/share/man/man5
+	PREFIX=$RPM_BUILD_ROOT/usr \
+	INSTALLMAN5DIR=$RPM_BUILD_ROOT%{_mandir}/man5
 
 mv $RPM_BUILD_ROOT%{_datadir}/aclocal/* $RPM_BUILD_ROOT/usr/share/aclocal
+mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
 
-install pixmaps/*.xpm $RPM_BUILD_ROOT/usr/X11R6/share/icons/
-install plug-ins/*/*.xpm $RPM_BUILD_ROOT/usr/X11R6/share/icons/
+install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
+install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 
-strip $RPM_BUILD_ROOT/usr/X11R6/{lib/lib*.so.*.*,bin/gimp,lib/gimp/*/plug-ins/*} ||:
+strip $RPM_BUILD_ROOT{%{_bindir}/gimp,%{_libdir}/gimp/*/plug-ins/*} ||: 
+strip --strip-unneeded \
+	$RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* \
+	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*.so \
+	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/{Lib,Net}/*.so
 
-mv $RPM_BUILD_ROOT/usr/share/aclocal/gimp* $RPM_BUILD_ROOT/%{_datadir}/aclocal
+#mv $RPM_BUILD_ROOT/usr/share/aclocal/gimp* $RPM_BUILD_ROOT/%{_datadir}/aclocal
 
-mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/5.* $RPM_BUILD_ROOT/usr/lib/perl5/
-install -d $RPM_BUILD_ROOT/usr/lib/perl5/site_perl/5.005
-mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/site_perl/5.005/* \
-	$RPM_BUILD_ROOT/usr/lib/perl5/site_perl/5.005/
+#mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/5.* $RPM_BUILD_ROOT/usr/lib/perl5/
+#install -d $RPM_BUILD_ROOT/usr/lib/perl5/site_perl/5.005
+#mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/site_perl/5.005/* \
+#	$RPM_BUILD_ROOT/usr/lib/perl5/site_perl/5.005/
 
-gzip -9 $RPM_BUILD_ROOT/usr/X11R6/man/man[135]/*
-gzip -9 $RPM_BUILD_ROOT/usr/share/man/man[13]/*
-
-bzip2 -9 ChangeLog NEWS README README.i18n README.perl TODO MAINTAINERS docs/*.tex docs/*.txt
+gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
+	$RPM_BUILD_ROOT%{_mandir}/man[135]/* \
+	ChangeLog NEWS README README.i18n README.perl \
+	TODO MAINTAINERS docs/*.txt
 
 %find_lang %{name}
 %find_lang %{name}-std-plugins
@@ -137,15 +146,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang -f %{name}-std-plugins.lang
 %defattr(644,root,root,755)
-%doc ChangeLog.bz2 NEWS.bz2 README.bz2 README.i18n.bz2 README.perl.bz2 docs/*.bz2 docs/*.eps docs/*.tex docs/quick_reference.*
+%doc {ChangeLog,NEWS,README,README.i18n,README.perl,MAINTAINERS}.gz
+%doc docs/*.gz docs/*README docs/*.eps docs/script-fu.tex 
+%doc docs/white-paper/gimp-white-paper.tex docs/quick_reference.*
 
 %attr(755,root,root) %{_bindir}/gimp 
 %attr(755,root,root) %{_bindir}/gimpdoc 
 
-%attr(644,root, man) /usr/X11R6/man/man1/gimp.1* 
+%{_mandir}/man1/gimp.1* 
+%{_mandir}/man5/gimprc.5*
 
 %attr(755,root,root) %{_libdir}/lib*.so.* 
-
 %attr(755,root,root) %{_libdir}/gimp 
 
 %dir %{_datadir}/gimp
@@ -156,43 +167,48 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/patterns
 %{_datadir}/gimp/scripts
 %{_datadir}/gimp/*.ppm
+%{_datadir}/gimp/tips
 
-%config %verify(not md5 mtime) /usr/X11R6/share/gimp/gimprc*
-%config /usr/X11R6/share/gimp/gtkrc*
-%config /usr/X11R6/share/gimp/ps-menurc
+%config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
+%config %{_datadir}/gimp/gtkrc*
+%config %{_datadir}/gimp/ps-menurc
 
-##/usr/X11R6/share/gimp/gimp_tips.txt
+%attr(755,root,root) %{_datadir}/gimp/user_install
 
-%attr(755,root,root) /usr/X11R6/share/gimp/user_install
-
-##/usr/X11R6/share/icons/*.xpm
 %{_datadir}/icons/*.xpm 
 
-%attr(-,root,root) /usr/lib/perl5/* 
-#%attr(-,root,root) /usr/lib/perl5/*
+## perl stuff
+%{perl_sitearch}/Gimp
+%dir %{perl_sitearch}/auto/Gimp
+%dir %{perl_sitearch}/auto/Gimp/Lib
+%dir %{perl_sitearch}/auto/Gimp/Net
+%{perl_sitearch}/auto/Gimp/Gimp.bs
+%{perl_sitearch}/auto/Gimp/Lib/Lib.bs
+%{perl_sitearch}/auto/Gimp/Net/Net.bs
+%attr(755,root,root) %{perl_sitearch}/auto/Gimp/Lib/Lib.so
+%attr(755,root,root) %{perl_sitearch}/auto/Gimp/Net/Net.so
+%attr(755,root,root) %{perl_sitearch}/auto/Gimp/Gimp.so
+/usr/share/man/man3/Gimp*
 
 %files devel
 %defattr(644,root,root,755)
 
-%attr(755,root,root) /usr/X11R6/lib/lib*.so 
+%attr(755,root,root) %{_libdir}/lib*.so 
+%{_libdir}/lib*.la
 
-%attr(644,root,root) %{_includedir}/gck/*.h 
-%attr(644,root,root) %{_includedir}/libgimp/*.h
-%attr(644,root,root)%{_datadir}/aclocal/gimp.m4
+%{_includedir}/gck/*.h 
+%{_includedir}/libgimp/*.h
+/usr/share/aclocal/gimp.m4
 
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_bindir}/scm2*
 
-%attr(644,root, man) /usr/X11R6/man/man1/gimptool.1*
-%attr(644,root, man) /usr/X11R6/man/man3/gpc.3*
-%attr(644,root, man) /usr/X11R6/man/man5/gimprc.5*
-
-%attr(644,root, man) /usr/share/man/man1/*
-%attr(644,root, man) /usr/share/man/man3/*
+%{_mandir}/man1/gimptool.1*
+%{_mandir}/man1/scm2*.1*
+%{_mandir}/man3/gpc.3*
 
 %files static
 %attr(644,root,root) %{_libdir}/lib*.a
-%attr(644,root,root) %{_libdir}/lib*.la
 
 %changelog
 * Tue Jun 15 1999 Wojciech "Sas" Ciêciwa <cieciwa@alpha.zarz.agh.edu.pl>
