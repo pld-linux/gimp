@@ -172,7 +172,7 @@ install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
-mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
+mv $RPM_BUILD_ROOT%{_bindir}/* $RPM_BUILD_ROOT%{_bindir}
 
 strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* \
@@ -180,7 +180,7 @@ strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*.so \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*/*.so
 
-gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man[13]/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[13]/* \
 	$RPM_BUILD_ROOT%{_mandir}/man[15]/* \
 	ChangeLog NEWS README README.i18n README.perl \
 	TODO MAINTAINERS docs/*.txt
@@ -293,8 +293,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/xcftopnm
 
 %{_mandir}/man1/gimptool.1*
-/usr/share/man/man1/*
-/usr/share/man/man3/*
+%{_mandir}/man1/*
+%{_mandir}/man3/*
 
 %files static
 %attr(644,root,root) %{_libdir}/lib*.a
