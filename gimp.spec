@@ -18,13 +18,14 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	1.3.23
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	1f30a6979d62241915964db034c4f306
 Patch0:		%{name}-home_etc.patch
+Patch1:		%{name}-am18.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -250,14 +251,16 @@ Print plugin for Gimp.
 Wtyczka do drukowania dla Gimpa.
 
 %prep
-%setup	-q
+%setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
 %{__aclocal}
-%{__automake}
 %{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--disable-rpath \
 	%{!?with_print: --disable-print} \
