@@ -97,7 +97,7 @@ diff -Nur gimp-1.2.2.orig/po-script-fu/Makefile.in.in gimp-1.2.2/po-script-fu/Ma
          --*install-admin-bin)
            install_cmd="@INSTALL_PROGRAM@"
 -          install_dir="$gimpplugindir/plug-ins"
-+          install_dir="${DESTDIR}$(gimpplugindir)/plug-ins"
++          install_dir="${DESTDIR}${gimpplugindir}/plug-ins"
            ;;
          --install-admin-bin-strip)
            install_cmd="@INSTALL_PROGRAM@ -s"
