@@ -68,3 +68,26 @@ diff -urN gimp-1.1.27-orig/po-script-fu/Makefile.in.in gimp-1.1.27/po-script-fu/
  	  if test -r "$(MKINSTALLDIRS)"; then \
  	    $(MKINSTALLDIRS) $$dir; \
  	  else \
+diff -Nru gimp-1.1.32/data/brushes/Makefile.am gimp-1.1.32.new/data/brushes/Makefile.am
+--- gimp-1.1.32/data/brushes/Makefile.am	Mon Dec 18 21:37:21 2000
++++ gimp-1.1.32.new/data/brushes/Makefile.am	Thu Dec 21 21:58:30 2000
+@@ -56,7 +56,3 @@
+ 	SketchBrush-32.gih	\
+ 	SketchBrush-64.gih	\
+ 	xcf.gbr
+-
+-install-data-local:
+-	rm -f $(brushdatadir)/round1.vbr $(brushdatadir)/pepper.gpb
+-
+--- gimp-1.1.32/data/brushes/Makefile.in	Wed Dec 20 20:05:04 2000
++++ gimp-1.1.32.new/data/brushes/Makefile.in	Thu Dec 21 23:08:18 2000
+@@ -311,9 +311,6 @@
+ 
+ .PHONY: files
+ 
+-install-data-local:
+-	rm -f $(brushdatadir)/round1.vbr $(brushdatadir)/pepper.gpb
+-
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
