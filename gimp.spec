@@ -6,14 +6,14 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.32
+Version:	1.2.0
 Release: 	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
-Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gimp.org/pub/gimp/stable/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	gimp.desktop
 Patch0:		gimp-perldep.patch
 Patch1:		gimp-DESTDIR.patch
@@ -188,7 +188,7 @@ gzip -9nf ChangeLog NEWS README README.i18n README.perl \
 
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
-ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.1/plug-ins/* | \
+ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
 	egrep -w -v -e "aa|xd" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 	
@@ -214,44 +214,44 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir %{_libdir}/gimp
-%dir %{_libdir}/gimp/1.1
-%dir %{_libdir}/gimp/1.1/plug-ins
-%dir %{_libdir}/gimp/1.1/modules
-%attr(755,root,root) %{_libdir}/gimp/1.1/modules/*la
-%attr(755,root,root) %{_libdir}/gimp/1.1/modules/*so
+%dir %{_libdir}/gimp/1.2
+%dir %{_libdir}/gimp/1.2/plug-ins
+%dir %{_libdir}/gimp/1.2/modules
+%attr(755,root,root) %{_libdir}/gimp/1.2/modules/*la
+%attr(755,root,root) %{_libdir}/gimp/1.2/modules/*so
 
 %dir %{_datadir}/gimp
-%dir %{_datadir}/gimp/1.1
-%{_datadir}/gimp/1.1/brushes
-%{_datadir}/gimp/1.1/fractalexplorer
-%{_datadir}/gimp/1.1/gfig
-%{_datadir}/gimp/1.1/gflare
-%{_datadir}/gimp/1.1/gimpressionist
-%{_datadir}/gimp/1.1/gradients
-%{_datadir}/gimp/1.1/help
-%{_datadir}/gimp/1.1/palettes
-%{_datadir}/gimp/1.1/patterns
-%{_datadir}/gimp/1.1/scripts
-%{_datadir}/gimp/1.1/*.ppm
+%dir %{_datadir}/gimp/1.2
+%{_datadir}/gimp/1.2/brushes
+%{_datadir}/gimp/1.2/fractalexplorer
+%{_datadir}/gimp/1.2/gfig
+%{_datadir}/gimp/1.2/gflare
+%{_datadir}/gimp/1.2/gimpressionist
+%{_datadir}/gimp/1.2/gradients
+%{_datadir}/gimp/1.2/help
+%{_datadir}/gimp/1.2/palettes
+%{_datadir}/gimp/1.2/patterns
+%{_datadir}/gimp/1.2/scripts
+%{_datadir}/gimp/1.2/*.ppm
 
-%dir %{_datadir}/gimp/1.1/tips
-%{_datadir}/gimp/1.1/tips/gimp_tips.txt
-%lang(fr) %{_datadir}/gimp/1.1/tips/gimp_conseils.fr.txt
-%lang(cs) %{_datadir}/gimp/1.1/tips/gimp_tips.cs.txt
-%lang(de) %{_datadir}/gimp/1.1/tips/gimp_tips.de.txt
-%lang(it) %{_datadir}/gimp/1.1/tips/gimp_tips.it.txt
-%lang(ja) %{_datadir}/gimp/1.1/tips/gimp_tips.ja.txt
-%lang(ko) %{_datadir}/gimp/1.1/tips/gimp_tips.ko.txt
-%lang(pl) %{_datadir}/gimp/1.1/tips/gimp_tips.pl.txt
-%lang(ru) %{_datadir}/gimp/1.1/tips/gimp_tips.ru.txt
-%lang(uk) %{_datadir}/gimp/1.1/tips/gimp_tips.uk.txt
+%dir %{_datadir}/gimp/1.2/tips
+%{_datadir}/gimp/1.2/tips/gimp_tips.txt
+%lang(fr) %{_datadir}/gimp/1.2/tips/gimp_conseils.fr.txt
+%lang(cs) %{_datadir}/gimp/1.2/tips/gimp_tips.cs.txt
+%lang(de) %{_datadir}/gimp/1.2/tips/gimp_tips.de.txt
+%lang(it) %{_datadir}/gimp/1.2/tips/gimp_tips.it.txt
+%lang(ja) %{_datadir}/gimp/1.2/tips/gimp_tips.ja.txt
+%lang(ko) %{_datadir}/gimp/1.2/tips/gimp_tips.ko.txt
+%lang(pl) %{_datadir}/gimp/1.2/tips/gimp_tips.pl.txt
+%lang(ru) %{_datadir}/gimp/1.2/tips/gimp_tips.ru.txt
+%lang(uk) %{_datadir}/gimp/1.2/tips/gimp_tips.uk.txt
 
-%config %verify(not md5 mtime) %{_sysconfdir}/gimp/1.1/gimprc*
-%config %{_sysconfdir}/gimp/1.1/gtkrc*
-%config %{_sysconfdir}/gimp/1.1/ps-menurc
-%config %{_sysconfdir}/gimp/1.1/unitrc
+%config %verify(not md5 mtime) %{_sysconfdir}/gimp/1.2/gimprc*
+%config %{_sysconfdir}/gimp/1.2/gtkrc*
+%config %{_sysconfdir}/gimp/1.2/ps-menurc
+%config %{_sysconfdir}/gimp/1.2/unitrc
 
-%attr(755,root,root) %{_datadir}/gimp/1.1/user_install
+%attr(755,root,root) %{_datadir}/gimp/1.2/user_install
 
 %{_datadir}/icons/*.xpm 
 
@@ -301,7 +301,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files aa
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gimp/1.1/plug-ins/aa
+%attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/aa
 
 #%files xd
-#%attr(755,root,root) %{_libdir}/gimp/1.1/plug-ins/xd
+#%attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/xd
