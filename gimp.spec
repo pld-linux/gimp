@@ -126,16 +126,16 @@ gzip -9 $RPM_BUILD_ROOT/usr/share/man/man[13]/*
 
 bzip2 -9 ChangeLog NEWS README README.i18n README.perl TODO MAINTAINERS docs/*.tex docs/*.txt
 
-%find_lang	gimp
-%find_lang	gimp-std-plugins
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+%find_lang %{name}
+%find_lang %{name}-std-plugins
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%files -f gimp.lang -f gimp-std-plugins.lang
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files -f %{name}.lang -f %{name}-std-plugins.lang
 %defattr(644,root,root,755)
 %doc ChangeLog.bz2 NEWS.bz2 README.bz2 README.i18n.bz2 README.perl.bz2 docs/*.bz2 docs/*.eps docs/*.tex docs/quick_reference.*
 
