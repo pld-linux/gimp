@@ -1,11 +1,11 @@
 Summary:	The GNU Image Manipulation Program
-Summary(fr):	Le programme de manipulation d'images de GNU.
+Summary(fr):	Le programme de manipulation d'images de GNU
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.9
-Release:	0.1
+Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
@@ -54,6 +54,18 @@ This version of The GIMP includes a scripting facility, but many of the
 included scripts rely on fonts that we cannot distribute. The GIMP ftp
 site has a package of fonts that you can install by yourself, which
 includes all the fonts needed to run the included scripts.
+
+%description -l fr
+Le Programme de Manipulation d'Image de GNU permet de retoucher des photos,
+de réaliser des compositions.  Beaucoup de gens l'apprécient pour la
+création de logos et de graphismes pour les pages web.  GIMP dispose d'un
+grand nombre de filtres et de plug-ins que l'on ne trouve que dans les
+logiciels commerciaux haut de gamme ainsi que de nombreuses fonctionnalité
+inédites.
+
+GIMP fournit une boite à outil permettant de gérer plusieurs calques, de
+nombreux effets, l'anti-aliasing, les conversions de fichiers ainsi qu'un
+grand nombre de niveaux d'annulation.
 
 %description -l pl
 Program Gimp jest przeznaczony do obróbki i tworzenia plików w ró¿nych
@@ -113,29 +125,31 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{etc/X11,usr/share/aclocal} \
-	$RPM_BUILD_ROOT%{_datadir}/icons \
-	$RPM_BUILD_ROOT%{perl_sitearch} \
-	$RPM_BUILD_ROOT%{_libdir}/gimp/1.1/{modules,plug-ins} \
+install -d $RPM_BUILD_ROOT%{_datadir}/icons \
 	$RPM_BUILD_ROOT%{_datadir}/applnk/Graphics
 
 make install \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
+	libdir=$RPM_BUILD_ROOT%{_libdir} \
+	bindir=$RPM_BUILD_ROOT%{_bindir} \
+	includedir=$RPM_BUILD_ROOT%{_includedir} \
 	mandir=$RPM_BUILD_ROOT%{_mandir} \
-	DESTDIR=$RPM_BUILD_ROOT 
-
-mv $RPM_BUILD_ROOT%{_datadir}/aclocal/* $RPM_BUILD_ROOT/usr/share/aclocal
-mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
+	gimpplugindir=$RPM_BUILD_ROOT%{_libdir}/gimp/1.1 \
+	gimpdatadir=$RPM_BUILD_ROOT%{_datadir}/gimp \
+	m4datadir=$RPM_BUILD_ROOT/usr/share/aclocal \
+	PREFIX=$RPM_BUILD_ROOT/usr \
+	INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
+	INSTALLMAN3DIR=$RPM_BUILD_ROOT/usr/share/man/man3
 
 install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/applnk/Graphics
+mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
 
-strip $RPM_BUILD_ROOT{%{_bindir}/gimp,%{_libdir}/gimp/*/plug-ins/*} ||: 
 strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* \
-	$RPM_BUILD_ROOT%{_libdir}/gimp/modules/lib*.so \
+	$RPM_BUILD_ROOT%{_libdir}/gimp/1.1/modules/lib*.so \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*.so \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/{Lib,Net}/*.so
 
@@ -162,7 +176,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/white-paper/gimp-white-paper.tex docs/quick_reference.*
 
 %attr(755,root,root) %{_bindir}/gimp 
-%attr(755,root,root) %{_bindir}/gimpdoc 
 %{_datadir}/applnk/Graphics/gimp.desktop
 
 %{_mandir}/man1/gimp.1* 
@@ -170,21 +183,24 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_libdir}/lib*.so.* 
 %dir %{_libdir}/gimp
-%dir %{_libdir}/gimp/plug-ins
-%attr(755,root,root) %{_libdir}/gimp/plug-ins/*
-%dir %{_libdir}/gimp/modules
-%attr(755,root,root) %{_libdir}/gimp/modules/*la
-%attr(755,root,root) %{_libdir}/gimp/modules/*so
+%dir %{_libdir}/gimp/1.1
+%dir %{_libdir}/gimp/1.1/plug-ins
+%attr(755,root,root) %{_libdir}/gimp/1.1/plug-ins/*
+%dir %{_libdir}/gimp/1.1/modules
+%attr(755,root,root) %{_libdir}/gimp/1.1/modules/*la
+%attr(755,root,root) %{_libdir}/gimp/1.1/modules/*so
 
 %dir %{_datadir}/gimp
 %{_datadir}/gimp/brushes
+%{_datadir}/gimp/fractalexplorer
 %{_datadir}/gimp/gfig
+%{_datadir}/gimp/gflare
+%{_datadir}/gimp/gimpressionist
 %{_datadir}/gimp/gradients
+%{_datadir}/gimp/help
 %{_datadir}/gimp/palettes
 %{_datadir}/gimp/patterns
 %{_datadir}/gimp/scripts
-%{_datadir}/gimp/fractalexplorer
-%{_datadir}/gimp/help
 %{_datadir}/gimp/*.ppm
 
 %dir %{_datadir}/gimp/tips
@@ -235,7 +251,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man1/gimptool.1*
 %{_mandir}/man1/scm2*.1*
-%{_mandir}/man3/gpc.3*
+%{_mandir}/man3/*
 /usr/share/man/man3/*
 
 %files static
