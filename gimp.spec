@@ -6,7 +6,7 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.18
+Version:	1.1.19
 Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
@@ -228,35 +228,35 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/gimp/1.1/modules/*so
 
 %dir %{_datadir}/gimp
-%{_datadir}/gimp/brushes
-%{_datadir}/gimp/fractalexplorer
-%{_datadir}/gimp/gfig
-%{_datadir}/gimp/gflare
-%{_datadir}/gimp/gimpressionist
-%{_datadir}/gimp/gradients
-%{_datadir}/gimp/help
-%{_datadir}/gimp/palettes
-%{_datadir}/gimp/patterns
-%{_datadir}/gimp/scripts
-%{_datadir}/gimp/*.ppm
+%{_datadir}/gimp/1.1/brushes
+%{_datadir}/gimp/1.1/fractalexplorer
+%{_datadir}/gimp/1.1/gfig
+%{_datadir}/gimp/1.1/gflare
+%{_datadir}/gimp/1.1/gimpressionist
+%{_datadir}/gimp/1.1/gradients
+%{_datadir}/gimp/1.1/help
+%{_datadir}/gimp/1.1/palettes
+%{_datadir}/gimp/1.1/patterns
+%{_datadir}/gimp/1.1/scripts
+%{_datadir}/gimp/1.1/*.ppm
 
-%dir %{_datadir}/gimp/tips
-%{_datadir}/gimp/tips/gimp_tips.txt
-%lang(fr) %{_datadir}/gimp/tips/gimp_conseils.fr.txt
-%lang(cs) %{_datadir}/gimp/tips/gimp_tips.cs.txt
-%lang(de) %{_datadir}/gimp/tips/gimp_tips.de.txt
-%lang(it) %{_datadir}/gimp/tips/gimp_tips.it.txt
-%lang(ja) %{_datadir}/gimp/tips/gimp_tips.ja.txt
-%lang(ko) %{_datadir}/gimp/tips/gimp_tips.ko.txt
-%lang(pl) %{_datadir}/gimp/tips/gimp_tips.pl.txt
-%lang(ru) %{_datadir}/gimp/tips/gimp_tips.ru.txt
+%dir %{_datadir}/gimp/1.1/tips
+%{_datadir}/gimp/1.1/tips/gimp_tips.txt
+%lang(fr) %{_datadir}/gimp/1.1/tips/gimp_conseils.fr.txt
+%lang(cs) %{_datadir}/gimp/1.1/tips/gimp_tips.cs.txt
+%lang(de) %{_datadir}/gimp/1.1/tips/gimp_tips.de.txt
+%lang(it) %{_datadir}/gimp/1.1/tips/gimp_tips.it.txt
+%lang(ja) %{_datadir}/gimp/1.1/tips/gimp_tips.ja.txt
+%lang(ko) %{_datadir}/gimp/1.1/tips/gimp_tips.ko.txt
+%lang(pl) %{_datadir}/gimp/1.1/tips/gimp_tips.pl.txt
+%lang(ru) %{_datadir}/gimp/1.1/tips/gimp_tips.ru.txt
 
-%config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
-%config %{_datadir}/gimp/gtkrc*
-%config %{_datadir}/gimp/ps-menurc
-%config %{_datadir}/gimp/unitrc
+%config %verify(not md5 mtime) %{_datadir}/gimp/1.1/gimprc*
+%config %{_datadir}/gimp/1.1/gtkrc*
+%config %{_datadir}/gimp/1.1/ps-menurc
+%config %{_datadir}/gimp/1.1/unitrc
 
-%attr(755,root,root) %{_datadir}/gimp/user_install
+%attr(755,root,root) %{_datadir}/gimp/1.1/user_install
 
 %{_datadir}/icons/*.xpm 
 
