@@ -1,25 +1,28 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	The GNU Image Manipulation Program
-Summary(fr):	Le programme de manipulation d'images de GNU
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
+Summary(es):	Programa de manipulaciÛn de imagen GNU
+Summary(fr):	Le programme de manipulation d'images de GNU
 Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
+Summary(pt_BR):	Programa de manipulaÁ„o de imagem GNU
 Summary(tr):	«izim, boyama ve gˆr¸nt¸ i˛leme program˝
 Name:		gimp
 Version:	1.2.2
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Group(de):	X11/Applikationen/Grafik
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
+Group(pt):	X11/AplicaÁıes/Gr·ficos
 Source0:	ftp://ftp.gimp.org/pub/gimp/v1.2/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
 Patch0:		%{name}-perldep.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-croak.patch
 Patch3:		%{name}-i18n.patch
-#Patch4:		%{name}-setlocale.patch
+Patch4:	%{name}-setlocale.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gettext-devel
@@ -68,6 +71,17 @@ the included scripts rely on fonts that we cannot distribute. The GIMP
 ftp site has a package of fonts that you can install by yourself,
 which includes all the fonts needed to run the included scripts.
 
+%description -l es
+GIMP es un programa de manejo de im·genes adecuado para retoque de
+fotos, composiciÛn y editoraciÛn de im·genes. Muchas personas lo
+encuentran extremamente ˙til en la creaciÛn de logos y otros gr·ficos
+para p·ginas web. GIMP tiene muchas herramientas y filtros normalmente
+encontrados en aplicaciones comerciales similares, adem·s de
+caracterÌsticas extras bien interesantes. GIMP ofrece una extensa caja
+de herramientas de manejo de imagen, incluyendo camadas, efectos,
+formaciÛn de imagen subpÌxel y antialiasing, conversiones, todos con
+deshacer en varios niveles (multi-level undo).
+
 %description -l fr
 Le Programme de Manipulation d'Image de GNU permet de retoucher des
 photos, de rÈaliser des compositions. Beaucoup de gens l'apprÈcient
@@ -80,6 +94,19 @@ GIMP fournit une boite ‡ outil permettant de gÈrer plusieurs calques,
 de nombreux effets, l'anti-aliasing, les conversions de fichiers ainsi
 qu'un grand nombre de niveaux d'annulation.
 
+%description -l pt_BR
+O GIMP È um programa de manipulaÁ„o de imagens adequado para retoque
+de fotos, composiÁ„o e editoraÁ„o de imagens. Muitas pessoas o acham
+extremamente ˙til na criaÁ„o de logos e outros gr·ficos para p·ginas
+web. O GIMP tem muitas ferramentas e filtros normalmente encontrados
+em aplicaÁıes comerciais similares, alÈm de caracterÌsticas extras bem
+interessantes.
+
+O GIMP fornece uma extensa caixa de ferramentas de manipulaÁ„o de
+imagem, incluindo camadas, efeitos, formaÁ„o de imagem subpÌxel e
+anti-aliasing, conversıes, todos com desfazimento em v·rios nÌveis
+(multi-level undo).
+
 %description -l pl
 Program Gimp jest przeznaczony do obrÛbki i tworzenia plikÛw w rÛønych
 formatach graficznych. DziÍki niemu bÍdziesz mÛg≥ stworzyÊ grafikÍ dla
@@ -87,14 +114,21 @@ stron WWW, przerobiÊ zdjÍcia, czy stworzyÊ w≥asne logo.
 
 %package devel
 Summary:	GIMP plugin and extension development kit
-Summary(fr):	Plugin GIMP et kit de dÈveloppement d'extensions
 Summary(de):	GIMP-Plugin und Extension Development Kit
+Summary(es):	Kit de desarrollo de "plugins" extensiones para GIMP
+Summary(fr):	Plugin GIMP et kit de dÈveloppement d'extensions
 Summary(pl):	Pliki do budowania modu≥Ûw i rozszerzeÒ dla Gimp
+Summary(pt_BR):	Kit de desenvolvimento de "plugins" extensıes para o GIMP
 Summary(tr):	GIMP plugin ve uzant˝ geli˛tirme araÁlar˝
-Group:		X11/Applications/Graphics
-Group(de):	X11/Applikationen/Grafik
-Group(pl):	X11/Aplikacje/Grafika
 License:	LGPL
+Group:		X11/Development/Libraries
+Group(de):	X11/Entwicklung/Libraries
+Group(es):	X11/Desarrollo/Bibliotecas
+Group(fr):	X11/Development/Librairies
+Group(pl):	X11/Programowanie/Biblioteki
+Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
+Group(ru):	X11/Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
 Requires:	%{name} = %{version}
 Requires:	gtk+-devel >= 1.2.0
 
@@ -104,23 +138,45 @@ Header files for writing GIMP plugins and extensions.
 %description -l de devel
 Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen.
 
+%description -l es devel
+Bibliotecas y archivos de inclusiÛn para escribir extensiones y
+plugins para Gimp.
+
 %descriptions -l pl devel
 Pliki nag≥Ûwkowe dla GIMP.
 
+%description -l pt_BR devel
+Bibliotecas e arquivos de inclus„o para escrever extensıes e plugins
+para o Gimp.
+
+%description -l es devel
+Bibliotecas y archivos de inclusiÛn para escribir extensiones y
+plugins para Gimp.
 %package static
 Summary:	GIMP static libraries
 Summary(pl):	Biblioteki statyczne do GIMPa
-Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
+Group:		X11/Development/Libraries
+Group(de):	X11/Entwicklung/Libraries
+Group(es):	X11/Desarrollo/Bibliotecas
+Group(fr):	X11/Development/Librairies
+Group(pl):	X11/Programowanie/Biblioteki
+Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
+Group(ru):	X11/Ú¡⁄“¡¬œ‘À¡/‚…¬Ã…œ‘≈À…
+Group(uk):	X11/Úœ⁄“œ¬À¡/‚¶¬Ã¶œ‘≈À…
 Requires:	%{name}-devel = %{version}
 
 %description static
 GIMP static libraries.
 
+%description -l es static
+Bibliotecas est·ticas para escribir extensiones y plugins para Gimp.
+
 %description -l pl static
 Biblioteki statyczne do GIMPa.
+
+%description -l pt_BR static
+Bibliotecas est·ticas para desenvolvimento de plugins e extensıes do
+GIMP.
 
 %package aa
 Summary:	ASCII Art plugin for Gimp
@@ -130,6 +186,7 @@ Group:		X11/Applications/Graphics
 Group(de):	X11/Applikationen/Grafik
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
+Group(pt):	X11/AplicaÁıes/Gr·ficos
 Requires:	%{name} = %{version}
 
 %description aa
@@ -150,6 +207,7 @@ Group:		X11/Applications/Graphics
 Group(de):	X11/Applikationen/Grafik
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
+Group(pt):	X11/AplicaÁıes/Gr·ficos
 Requires:	%{name} = %{version}
 
 %description xd
