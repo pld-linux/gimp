@@ -32,12 +32,13 @@ Patch2:		%{name}-makefile.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
+BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gtk+2-devel >= 2:2.4.0
+BuildRequires:	gtk+2-devel >= 2:2.4.4
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
@@ -55,7 +56,7 @@ BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 BuildRequires:	rpm-build >= 4.1-13
-Requires:	gtk+2 >= 2:2.4.0
+Requires:	gtk+2 >= 2:2.4.4
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -186,7 +187,7 @@ Group:		X11/Development/Libraries
 Requires(post,postun):	/sbin/ldconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gtk-doc-common
-Requires:	gtk+2-devel >= 1:2.2.2
+Requires:	gtk+2-devel >= 2:2.4.4
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -342,7 +343,6 @@ umask 022
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
 %postun
-
 umask 022
 /sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
