@@ -28,7 +28,7 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[Í¼Ïñ]GNUÍ¼Ïó´¦Àí¹¤¾ß
 Summary(zh_TW):	[¹Ï¹³]GNU¹Ï¶H³B²z¤u¨ã
 Name:		gimp
-Version:	1.3.10
+Version:	1.3.11
 Release:	1
 Epoch:		1
 License:	GPL
@@ -53,14 +53,10 @@ BuildRequires:	libungif-devel
 #BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	pkgconfig
 #BuildRequires:	python-pygtk-devel
-BuildRequires:	rpm-perlprov >= 4.0.2-56
+BuildRequires:	rpm-perlprov >= 4.1-10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
-
-%define		_prefix		/usr/X11R6
-%define		_mandir		%{_prefix}/man
-%define		_gtkdocdir	%{_defaultdocdir}/gtk-doc/html
 
 %description
 The GIMP is an image manipulation program suitable for photo
@@ -254,7 +250,7 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}/Graphics}
+install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_datadir}/applications}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -264,8 +260,8 @@ install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}/Graphics}
 #install pixmaps/*.xpm plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
 
 cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
-	sed 's@/usr/X11R6/share/gimp/%{mver}/images/@@' > \
-	$RPM_BUILD_ROOT%{_applnkdir}/Graphics/gimp13.desktop
+	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
+	$RPM_BUILD_ROOT%{_datadir}/applications/gimp13.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %find_lang %{name} --all-name
@@ -301,7 +297,7 @@ rm -rf $RPM_BUILD_ROOT
 #%%attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
 #%%attr(755,root,root) %{_bindir}/gimp-remote
-%{_applnkdir}/Graphics/gimp13.desktop
+%{_datadir}/applications/gimp13.desktop
 
 %{_mandir}/man1/gimp-%{mver}*
 %{_mandir}/man1/gimp-remote-%{mver}*
@@ -313,6 +309,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp/%{mver}/plug-ins
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
+%{_libdir}/gimp/%{mver}/environ
 
 %dir %{_datadir}/gimp/%{mver}
 %{_datadir}/gimp/%{mver}/brushes
@@ -328,7 +325,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/%{mver}/themes
 %{_datadir}/gimp/%{mver}/tips
 %dir %{_datadir}/gimp/%{mver}/misc
-%attr(755,root,root) %{_datadir}/gimp/%{mver}/misc/user_install
+#%attr(755,root,root) %{_datadir}/gimp/%{mver}/misc/user_install
 
 %dir %{_sysconfdir}/gimp
 %dir %{_sysconfdir}/gimp/%{mver}
