@@ -14,6 +14,7 @@ Source1:	gimp.wmconfig
 Patch0:		gimp-perl.patch
 Patch1:		gimp-DESTDIR.patch
 URL:		http://www.gimp.org/
+Icon:		gimp.xpm
 Requires:	gtk+ = 1.2.1
 Requires:	glib = 1.2.1
 Requires:	perl >= 5.005
