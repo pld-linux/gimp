@@ -12,7 +12,7 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	1.2.3
-Release:	7
+Release:	8
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -25,9 +25,9 @@ URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	aalib-devel
 BuildRequires:	gettext-devel
-BuildRequires:	gnome-libs-devel
 BuildRequires:	gtk-doc
 BuildRequires:	gtk+-devel >= 1.2.8-3
+BuildRequires:	gtkxmhtml-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libtiff-devel
