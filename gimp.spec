@@ -23,7 +23,7 @@ Release:	0.%{pre}.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/testing/%{name}-%{version}%{pre}.tar.bz2
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/testing/%{name}-%{version}%{pre}.tar.bz2
 # Source0-md5:	7862920def4ee411f6417c9372753a6d
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-am18.patch
