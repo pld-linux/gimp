@@ -6,7 +6,7 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.21
+Version:	1.1.22
 Release:	1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -42,32 +42,32 @@ Obsoletes:	gimp-libgimp
 %define		_mandir		%{_prefix}/man
 
 %description
-The GIMP is an image manipulation program suitable for photo retouching,
-image composition and image authoring. Many people find it extremely useful
-in creating logos and other graphics for web pages. The GIMP has many of
-the tools and filters you would expect to find in similar commercial
-offerings, and some interesting extras as well.
+The GIMP is an image manipulation program suitable for photo
+retouching, image composition and image authoring. Many people find it
+extremely useful in creating logos and other graphics for web pages.
+The GIMP has many of the tools and filters you would expect to find in
+similar commercial offerings, and some interesting extras as well.
 
-The GIMP provides a large image manipulation toolbox, including channel
-operations and layers, effects, sub-pixel imaging and anti-aliasing, and
-conversions, all with multi-level undo.
+The GIMP provides a large image manipulation toolbox, including
+channel operations and layers, effects, sub-pixel imaging and
+anti-aliasing, and conversions, all with multi-level undo.
 
-This version of The GIMP includes a scripting facility, but many of the
-included scripts rely on fonts that we cannot distribute. The GIMP ftp site
-has a package of fonts that you can install by yourself, which includes all
-the fonts needed to run the included scripts.
+This version of The GIMP includes a scripting facility, but many of
+the included scripts rely on fonts that we cannot distribute. The GIMP
+ftp site has a package of fonts that you can install by yourself,
+which includes all the fonts needed to run the included scripts.
 
 %description -l fr
-Le Programme de Manipulation d'Image de GNU permet de retoucher des photos,
-de réaliser des compositions. Beaucoup de gens l'apprécient pour la
-création de logos et de graphismes pour les pages web. GIMP dispose d'un
-grand nombre de filtres et de plug-ins que l'on ne trouve que dans les
-logiciels commerciaux haut de gamme ainsi que de nombreuses fonctionnalité
-inédites.
+Le Programme de Manipulation d'Image de GNU permet de retoucher des
+photos, de réaliser des compositions. Beaucoup de gens l'apprécient
+pour la création de logos et de graphismes pour les pages web. GIMP
+dispose d'un grand nombre de filtres et de plug-ins que l'on ne trouve
+que dans les logiciels commerciaux haut de gamme ainsi que de
+nombreuses fonctionnalité inédites.
 
-GIMP fournit une boite à outil permettant de gérer plusieurs calques, de
-nombreux effets, l'anti-aliasing, les conversions de fichiers ainsi qu'un
-grand nombre de niveaux d'annulation.
+GIMP fournit une boite à outil permettant de gérer plusieurs calques,
+de nombreux effets, l'anti-aliasing, les conversions de fichiers ainsi
+qu'un grand nombre de niveaux d'annulation.
 
 %description -l pl
 Program Gimp jest przeznaczony do obróbki i tworzenia plików w ró¿nych
@@ -90,7 +90,7 @@ Requires:	gtk+-devel >= 1.2.0
 Header files for writing GIMP plugins and extensions.
 
 %description -l de devel
-Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen
+Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen.
 
 %descriptions -l pl devel
 Pliki nag³ówkowe dla GIMP.
@@ -116,28 +116,28 @@ Group(pl):	X11/Aplikacje/Grafika
 Requires:	%{name} = %{version}
 
 %description aa
-This package contains the ASCII Art plugin which requires the aalib shared
-library.
+This package contains the ASCII Art plugin which requires the aalib
+shared library.
 
 %description aa -l fr
 Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie
 partagée aalib.
 
-#%package xd
-#Summary:	Xdelta plugin for GIMP
-#Summary(fr):	Plugin Xdelta pour GIMP
-#Group:		X11/Applications/Graphics
-#Group(fr):	X11/Applications/Graphismes
-#Group(pl):	X11/Aplikacje/Grafika
-#Requires:	%{name} = %{version}
+%package xd
+Summary:	Xdelta plugin for GIMP
+Summary(fr):	Plugin Xdelta pour GIMP
+Group:		X11/Applications/Graphics
+Group(fr):	X11/Applications/Graphismes
+Group(pl):	X11/Aplikacje/Grafika
+Requires:	%{name} = %{version}
 
-#%description xd
-#This package contains the Xdelta plugin which requires the xdelta shared
-#library.
+%description xd
+This package contains the Xdelta plugin which requires the xdelta
+shared library.
 
-#%description -l fr xd
-#Ce paquet contient le plugin Xdelta qui nécéssite la librairie partagée
-#xdelta.
+%description -l fr xd
+Ce paquet contient le plugin Xdelta qui nécéssite la librairie
+partagée xdelta.
 
 %prep
 %setup  -q
@@ -162,7 +162,7 @@ make -C plug-ins/perl/po update-gmo
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_datadir}/icons \
-	$RPM_BUILD_ROOT%{_datadir}/applnk/Graphics
+	$RPM_BUILD_ROOT%{_applnkdir}/Graphics
 
 make install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -171,7 +171,7 @@ make install \
 install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/applnk/Graphics
+install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
 mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
 
 strip --strip-unneeded \
@@ -213,7 +213,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/white-paper/gimp-white-paper.tex docs/quick_reference.*
 
 %attr(755,root,root) %{_bindir}/gimp* 
-%{_datadir}/applnk/Graphics/gimp.desktop
+%{_applnkdir}/Graphics/gimp.desktop
 
 %{_mandir}/man1/gimp.1* 
 %{_mandir}/man5/gimprc.5*
