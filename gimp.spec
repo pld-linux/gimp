@@ -226,6 +226,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/gimp/1.1/modules/*so
 
 %dir %{_datadir}/gimp
+%dir %{_datadir}/gimp/1.1
 %{_datadir}/gimp/1.1/brushes
 %{_datadir}/gimp/1.1/fractalexplorer
 %{_datadir}/gimp/1.1/gfig
