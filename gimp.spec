@@ -7,7 +7,7 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.16
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
@@ -15,6 +15,7 @@ Group(pl):	X11/Aplikacje/Grafika
 Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	gimp.desktop
 Patch0:		gimp-perldep.patch
+Patch1:		gimp-DESTDIR.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gtk+-devel >= 1.2.0
@@ -143,12 +144,14 @@ aalib.
 %prep
 %setup  -q
 %patch0 -p1
+%patch1 -p1
 
 chmod +x find-perl-requires
 
 %build
 LDFLAGS="-s"; export LDFLAGS
 CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
+automake
 %configure \
 	--without-included-gettext \
 	--without-xdelta \
@@ -164,18 +167,8 @@ install -d $RPM_BUILD_ROOT%{_datadir}/icons \
 	$RPM_BUILD_ROOT%{_datadir}/applnk/Graphics
 
 make install \
-	prefix=$RPM_BUILD_ROOT%{_prefix} \
-	libdir=$RPM_BUILD_ROOT%{_libdir} \
-	bindir=$RPM_BUILD_ROOT%{_bindir} \
-	includedir=$RPM_BUILD_ROOT%{_includedir} \
-	mandir=$RPM_BUILD_ROOT%{_mandir} \
-	gimpplugindir=$RPM_BUILD_ROOT%{_libdir}/gimp/1.1 \
-	gimpdatadir=$RPM_BUILD_ROOT%{_datadir}/gimp \
-	m4datadir=$RPM_BUILD_ROOT/usr/share/aclocal \
-	datadir=$RPM_BUILD_ROOT%{_datadir} \
-	PREFIX=$RPM_BUILD_ROOT/usr \
-	INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
-	INSTALLMAN3DIR=$RPM_BUILD_ROOT/usr/share/man/man3
+	DESTDIR=$RPM_BUILD_ROOT \
+	m4datadir=/usr/share/aclocal
 
 install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
@@ -189,7 +182,7 @@ strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*.so \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*/*.so
 
-gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
+gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man[13]/* \
 	$RPM_BUILD_ROOT%{_mandir}/man[15]/* \
 	ChangeLog NEWS README README.i18n README.perl \
 	TODO MAINTAINERS docs/*.txt
@@ -197,7 +190,8 @@ gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
 %find_lang %{name}
 %find_lang %{name}-std-plugins
 %find_lang %{name}-perl
-cat %{name}.lang %{name}-std-plugins.lang %{name}-perl.lang > %{name}.list
+cat %{name}.lang %{name}-std-plugins.lang %{name}-perl.lang \
+	> %{name}.list
 
 echo "%defattr(755,root,root,755)" >> %{name}.list
 
@@ -299,7 +293,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/xcftopnm
 
 %{_mandir}/man1/gimptool.1*
-%{_mandir}/man1/scm2*.1*
+/usr/share/man/man1/*
 /usr/share/man/man3/*
 
 %files static
