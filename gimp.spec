@@ -25,6 +25,7 @@ BuildPrereq:	zlib-devel
 Requires:	gtk+ >= 1.2.0
 Requires:	glib >= 1.2.0
 %requires_eq	perl
+Requires:	%{perl_sitearch}
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
