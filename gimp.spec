@@ -15,6 +15,13 @@ URL:		http://www.gimp.org/
 BuildPrereq:	gtk+-devel
 BuildPrereq:	glib-devel
 BuildPrereq:	perl
+BuildPrereq:	XFree86-devel
+BuildPrereq:	libtiff-devel
+BuildPrereq:	libjpeg-devel
+BuildPrereq:	libpng-devel
+BuildPrereq:	libungif-devel
+BuildPrereq:	xpm-devel
+BuildPrereq:	zlib-devel
 Requires:	gtk+ >= 1.2.0
 Requires:	glib >= 1.2.0
 %requires_eq	perl
