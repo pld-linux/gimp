@@ -1,5 +1,6 @@
 #
 # Conditional build:
+# _without_aalib
 # _without_print - no need for gimp-print
 #
 
@@ -25,7 +26,7 @@ Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar.bz2
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
-BuildRequires:	aalib-devel
+%{!?_without_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
@@ -316,7 +317,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp/%{mver}
 %dir %{_libdir}/gimp/%{mver}/plug-ins
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
-%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa
+%{!?_without_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
 %{!?_without_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
 
 %dir %{_libdir}/gimp/%{mver}/modules
@@ -372,9 +373,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
 
+%if %{!?_without_aalib:1}0
 %files aa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/aa
+%endif
 
 %if 0%{!?_without_print:1}
 %files print
