@@ -80,44 +80,60 @@ diff -Nur gimp-1.2.2.orig/po-script-fu/Makefile.in.in gimp-1.2.2/po-script-fu/Ma
  	  if test -r "$(MKINSTALLDIRS)"; then \
  	    $(MKINSTALLDIRS) $$dir; \
  	  else \
---- gimp-1.2.2/gimptool.in.wiget	Wed Feb  6 15:51:03 2002
-+++ gimp-1.2.2/gimptool.in	Wed Feb  6 15:51:59 2002
-@@ -1,23 +1,23 @@
- #! /bin/sh
- 
--prefix=@prefix@
--exec_prefix=@exec_prefix@
-+prefix=${DESTDIR}@prefix@
-+exec_prefix=${DESTDIR}@exec_prefix@
- exec_prefix_set=no
- 
--bindir=@bindir@
--sbindir=@sbindir@
--libexecdir=@libexecdir@
--datadir=@datadir@
--sysconfdir=@sysconfdir@
--sharedstatedir=@sharedstatedir@
--localstatedir=@localstatedir@
--libdir=@libdir@
--infodir=@infodir@
--mandir=@mandir@
--includedir=@includedir@
-+bindir=${DESTDIR}@bindir@
-+sbindir=${DESTDIR}@sbindir@
-+libexecdir=${DESTDIR}@libexecdir@
-+datadir=${DESTDIR}@datadir@
-+sysconfdir=${DESTDIR}@sysconfdir@
-+sharedstatedir=${DESTDIR}@sharedstatedir@
-+localstatedir=${DESTDIR}@localstatedir@
-+libdir=${DESTDIR}@libdir@
-+infodir=${DESTDIR}@infodir@
-+mandir=${DESTDIR}@mandir@
-+includedir=${DESTDIR}@includedir@
- 
--gimpplugindir=@gimpplugindir@
--gimpdatadir=@gimpdatadir@
-+gimpplugindir=${DESTDIR}@gimpplugindir@
-+gimpdatadir=${DESTDIR}@gimpdatadir@
- 
- usage()
- {
+--- gimp-1.2.3/gimptool-1.2.in~	Tue Feb 12 09:58:38 2002
++++ gimp-1.2.3/gimptool-1.2.in	Tue Feb 12 09:58:38 2002
+@@ -228,27 +228,27 @@
+       case $1 in
+         --*install-bin)
+           install_cmd="@INSTALL_PROGRAM@"
+-          install_dir="$HOME/@gimpdir@/plug-ins"
++          install_dir="${DESTDIR}${HOME}/@gimpdir@/plug-ins"
+           ;;
+         --install-bin-strip)
+           install_cmd="@INSTALL_PROGRAM@ -s"
+-          install_dir="$HOME/@gimpdir@/plug-ins"
++          install_dir="${DESTDIR}${HOME}/@gimpdir@/plug-ins"
+           ;;
+         --*install-admin-bin)
+           install_cmd="@INSTALL_PROGRAM@"
+-          install_dir="$gimpplugindir/plug-ins"
++          install_dir="${DESTDIR}$(gimpplugindir)/plug-ins"
+           ;;
+         --install-admin-bin-strip)
+           install_cmd="@INSTALL_PROGRAM@ -s"
+-          install_dir="$gimpplugindir/plug-ins"
++          install_dir="${DESTDIR}${gimpplugindir}/plug-ins"
+           ;;
+         --*install-script)
+           install_cmd="@INSTALL_DATA@"
+-          install_dir="$HOME/@gimpdir@/scripts"
++          install_dir="${DESTDIR}${HOME}/@gimpdir@/scripts"
+           ;;
+         --*install-admin-script)
+           install_cmd="@INSTALL_DATA@"
+-          install_dir="$gimpdatadir/scripts"
++          install_dir="${DESTDIR}${gimpdatadir}/scripts"
+           ;;
+       esac
+       case $1 in
+@@ -256,7 +256,7 @@
+           shift
+           if test "x$1" != "x"; then
+             if test -f "$install_dir/$1"; then
+-              cmd="rm -f $DESTDIR$install_dir/$1"
++              cmd="rm -f ${DESTDIR}${install_dir}/$1"
+               test $quiet = "yes" || echo $cmd
+               test $donothing = "yes" || exec $cmd
+             else
+@@ -300,9 +300,9 @@
+         --build | --build-noui | --build-nogimpui)
+           install_dir=. ;;
+         --install | --install-noui | --install-nogimpui)
+-          install_dir="$HOME/@gimpdir@/plug-ins" ;;
++          install_dir="${DESTDIR}${HOME}/@gimpdir@/plug-ins" ;;
+         --install-admin | --install-admin-noui | --install-admin-nogimpui)
+-          install_dir="$gimpplugindir/plug-ins" ;;
++          install_dir="${DESTDIR}${gimpplugindir}/plug-ins" ;;
+       esac
+       noui=`echo $opt | sed 's/^.*\(noui\)$/\1/'`
+       nogimpui=`echo $opt | sed 's/^.*\(nogimpui\)$/\1/'`
