@@ -1,3 +1,6 @@
+#
+# Conditional build:
+# _without_print - no need for gimp-print
 
 #
 # todo:
@@ -35,7 +38,7 @@ URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	aalib-devel
 BuildRequires:	gettext-devel
-BuildRequires:	gimp-print-devel
+%{!?_without_print:BuildRequires:	gimp-print-devel}
 BuildRequires:	gtk+2-devel
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libjpeg-devel
@@ -243,6 +246,7 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 %configure \
 	--without-included-gettext \
 	--disable-perl \
+	%{?_without_print: --disable-print} \
 	--disable-python \
 	--with-mp \
 	--with-threads=posix \
