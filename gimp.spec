@@ -23,7 +23,7 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	1.3.11
+Version:	1.3.12
 Release:	1
 Epoch:		1
 License:	GPL
@@ -36,6 +36,7 @@ BuildRequires:	gettext-devel
 %{!?_without_print:BuildRequires:	gimp-print-devel}
 BuildRequires:	gtk+2-devel
 BuildRequires:	libart_lgpl-devel
+BuildRequires:	libgtkhtml-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libtiff-devel
@@ -285,7 +286,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog MAINTAINERS NEWS PLUGIN_MAINTAINERS README TODO
+%doc AUTHORS ChangeLog MAINTAINERS NEWS PLUGIN_MAINTAINERS README
 %doc docs/{*.txt,quick_reference.*,Wilber*}
 
 %attr(755,root,root) %{_bindir}/gimp-%{mver}
