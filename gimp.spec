@@ -172,7 +172,7 @@ install pixmaps/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 install plug-ins/*/*.xpm $RPM_BUILD_ROOT%{_datadir}/icons/
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Graphics
-mv $RPM_BUILD_ROOT%{_bindir}/* $RPM_BUILD_ROOT%{_bindir}
+mv $RPM_BUILD_ROOT/usr/bin/* $RPM_BUILD_ROOT%{_bindir}
 
 strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* \
