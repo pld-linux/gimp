@@ -30,7 +30,6 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng >= 1.0.8
 BuildRequires:	libungif-devel
-BuildRequires:	xpm-devel
 BuildRequires:	zlib-devel
 BuildRequires:	aalib-devel
 BuildRequires:	rpm-perlprov
