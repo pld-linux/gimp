@@ -1,8 +1,9 @@
 #
 # Conditional build:
-%bcond_without aalib	# without aa plugin (which requires aalib)
-%bcond_without print	# without print plugin (which requires gimp-print 4.2.x)
-%bcond_without python	# without python plugins
+%bcond_without	aalib		# without aa plugin (which requires aalib)
+%bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
+%bcond_without	python		# without python plugins
+%bcond_with	file_chooser	# use new file chooser introduced in gtk+2 2.4
 #
 %define	mver	2.0
 %define	pre	rc1
@@ -28,6 +29,8 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/testing/%{name}-%{version}%{pre}.tar.b
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-locale-names.patch
 Patch2:		%{name}-gcc34.patch
+# Patch3 comes from http://mitch.gimp.org/filechooser/
+Patch3:		%{name}-file-chooser-10.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -36,7 +39,8 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.0}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gtk+2-devel >= 2.2.2
+%{?with_file_chooser:BuildRequires:	gtk+2-devel >= 2.4.0}
+%{!?with_file_chooser:BuildRequires:	gtk+2-devel >= 2.2.0}
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
@@ -54,6 +58,7 @@ BuildRequires:	libwmf-devel >= 0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 BuildRequires:	rpm-build >= 4.1-13
+%{?with_file_chooser:Requires:	gtk+2 >= 2.4.0}
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
@@ -257,6 +262,7 @@ Wtyczka do drukowania dla Gimpa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%{?with_file_chooser:%patch3 -p0}
 
 for dir in po po-libgimp po-plug-ins po-script-fu; do
 	mv $dir/{no,nb}.po
