@@ -11,9 +11,8 @@ Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
 Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	gimp.desktop
-Patch:		gimp-perlinst.patch
-Patch1:		gimp-perl-croak.patch
-Patch2:		gimp-noWIN.patch
+Patch0:		gimp-perlinst.patch
+Patch1:		gimp-noWIN.patch
 URL:		http://www.gimp.org/
 BuildRequires:	gtk+-devel >= 1.2.0
 BuildRequires:	glib-devel >= 1.2.0
@@ -109,7 +108,6 @@ Biblioteki statyczne do GIMPa.
 %setup  -q
 %patch0 -p0
 %patch1 -p1
-%patch2 -p1
 
 %build
 LDFLAGS="-s"; export LDFLAGS
