@@ -4,15 +4,13 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.5
+Version:	1.1.6
 Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
 #######		ftp://ftp.gimp.org/pub/gimp/unstable/v1.1.5/
 Source:		%{name}-%{version}.tar.bz2
-Patch0:		gimp-perl-gimpmodule.h-fix.patch
-Patch1:		gimp-perl.patch
 URL:		http://www.gimp.org/
 Requires:	gtk+ >= 1.1.15
 Requires:	glib >= 1.1.15
@@ -84,13 +82,11 @@ Biblioteki statyczne do GIMPa
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p0
 
 %build
 CFLAGS="$RPM_OPT_FLAGS -Wall" \
 LDFLAGS="-s" \
-./configure %{_target_platform}\
+./configure %{_target}\
 	--prefix=%{_prefix} \
 	--without-included-gettext \
 	--without-xdelta 
@@ -118,12 +114,20 @@ install plug-ins/*/*.xpm $RPM_BUILD_ROOT/usr/X11R6/share/icons/
 
 strip $RPM_BUILD_ROOT/usr/X11R6/{lib/lib*.so.*.*,bin/gimp,lib/gimp/*/plug-ins/*} ||:
 
+mv $RPM_BUILD_ROOT/usr/share/aclocal/gimp* $RPM_BUILD_ROOT/%{_datadir}/aclocal
+
+mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/5.* $RPM_BUILD_ROOT/usr/lib/perl5/
+install -d $RPM_BUILD_ROOT/usr/lib/perl5/site_perl/5.005
+mv $RPM_BUILD_ROOT/usr/X11R6/lib/perl5/site_perl/5.005/* \
+	$RPM_BUILD_ROOT/usr/lib/perl5/site_perl/5.005/
+
 gzip -9 $RPM_BUILD_ROOT/usr/X11R6/man/man[135]/*
 gzip -9 $RPM_BUILD_ROOT/usr/share/man/man[13]/*
 
 bzip2 -9 ChangeLog NEWS README docs/*.txt
 
 %find_lang	gimp
+%find_lang	gimp-std-plugins
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -131,62 +135,70 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%files -f gimp.lang
+%files -f gimp.lang -f gimp-std-plugins
 %defattr(644,root,root,755)
 %doc ChangeLog.bz2 NEWS.bz2 README.bz2 docs/*.bz2 docs/*.eps
 
-%attr(755,root,root) %{_bindir}/gimp
-%attr(644,root, man) /usr/X11R6/man/man1/gimp.1*
+%attr(755,root,root) %{_bindir}/gimp 
+%attr(755,root,root) %{_bindir}/gimpdoc 
 
-%attr(755,root,root) %{_libdir}/lib*.so.*
+%attr(644,root, man) %{_mandir}/man1/gimp.1* 
 
-%attr(755,root,root) %{_libdir}/gimp
+%attr(755,root,root) %{_libdir}/lib*.so.* 
+
+%attr(755,root,root) %{_libdir}/gimp 
 
 %dir %{_datadir}/gimp
-/usr/X11R6/share/gimp/brushes
-/usr/X11R6/share/gimp/gfig
-/usr/X11R6/share/gimp/gradients
-/usr/X11R6/share/gimp/palettes
-/usr/X11R6/share/gimp/patterns
-/usr/X11R6/share/gimp/scripts
-/usr/X11R6/share/gimp/*.ppm
+%{_datadir}/gimp/brushes
+%{_datadir}/gimp/gfig
+%{_datadir}/gimp/gradients
+%{_datadir}/gimp/palettes
+%{_datadir}/gimp/patterns
+%{_datadir}/gimp/scripts
+%{_datadir}/gimp/*.ppm
 
 %config %verify(not md5 mtime) /usr/X11R6/share/gimp/gimprc*
 %config /usr/X11R6/share/gimp/gtkrc*
 %config /usr/X11R6/share/gimp/ps-menurc
 
-/usr/X11R6/share/gimp/gimp_tips.txt
+##/usr/X11R6/share/gimp/gimp_tips.txt
 
 %attr(755,root,root) /usr/X11R6/share/gimp/user_install
 
-/usr/X11R6/share/icons/*.xpm
+##/usr/X11R6/share/icons/*.xpm
+%{_datadir}/icons/*.xpm 
 
-%attr(-,root,root) /usr/lib/perl5/*
-%attr(-,root,root) %{_libdir}/perl5/*
+%attr(-,root,root) /usr/lib/perl5/* 
+#%attr(-,root,root) /usr/lib/perl5/*
 
 %files devel
 %defattr(644,root,root,755)
 
-%attr(755,root,root) /usr/X11R6/lib/lib*.so
+%attr(755,root,root) /usr/X11R6/lib/lib*.so 
 
-/usr/X11R6/include/*
-/usr/share/aclocal/*
+%attr(644,root,root) %{_includedir}/gck/*.h 
+%attr(644,root,root) %{_includedir}/libgimp/*.h
+%attr(644,root,root)%{_datadir}/aclocal/gimp.m4
 
-%attr(755,root,root) /usr/X11R6/bin/gimptool
+%attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_bindir}/scm2*
 
-%attr(644,root, man) /usr/X11R6/man/man1/gimptool.1.gz
-%attr(644,root, man) /usr/X11R6/man/man3/*
-%attr(644,root, man) /usr/X11R6/man/man5/*
+%attr(644,root, man) /usr/X11R6/man/man1/gimptool.1*
+%attr(644,root, man) /usr/X11R6/man/man3/gpc.3*
+%attr(644,root, man) /usr/X11R6/man/man5/gimprc.5*
 
 %attr(644,root, man) /usr/share/man/man1/*
 %attr(644,root, man) /usr/share/man/man3/*
 
 %files static
-%attr(644,root,root) /usr/X11R6/lib/lib*.a
+%attr(644,root,root) %{_libdir}/lib*.a
 %attr(644,root,root) %{_libdir}/lib*.la
 
 %changelog
+* Mon Jun 14 1999 Wojciech "Sas" Ciêciwa <cieciwa@alpha.zarz.agh.edu.pl>
+  [1.1.6-1]
+- updated to version 1.1.6.
+
 * Mon May 31 1999 Wojciech "Sas" Ciêciwa <cieciwa@alpha.zarz.agh.edu.pl>
   [1.1.5-1]
 - updated to 1.1.5,
