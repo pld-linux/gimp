@@ -5,15 +5,17 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.10
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		X11/Applications/Graphics
+Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
 Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	gimp.desktop
 Patch0:		gimp-perlinst.patch
 Patch1:		gimp-noWIN.patch
 URL:		http://www.gimp.org/
+Icon:		gimp.gif
 BuildRequires:	gtk+-devel >= 1.2.0
 BuildRequires:	glib-devel >= 1.2.0
 BuildRequires:	perl
@@ -104,6 +106,38 @@ GIMP static libraries.
 %description -l pl static
 Biblioteki statyczne do GIMPa.
 
+%package aa
+Summary:	ASCII Art plugin for Gimp
+Summary(fr):	Plugin d'art ASCII pour Gimp
+Group:		X11/Applications/Graphics
+Group(fr):	X11/Applications/Graphismes
+Group(pl):	X11/Aplikacje/Grafika
+Requires:	%{name} = %{version}
+
+%description aa
+This package contains the ASCII Art plugin which requires the aalib shared
+library.
+
+%description aa -l fr
+Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie partagée
+aalib.
+
+#%package xd
+#Summary:	Xdelta plugin for GIMP
+#Summary(fr):	Plugin Xdelta pour GIMP
+#Group:		X11/Applications/Graphics
+#Group(fr):	X11/Applications/Graphismes
+#Group(pl):	X11/Aplikacje/Grafika
+#Requires:	%{name} = %{version}
+
+#%description xd
+#This package contains the Xdelta plugin which requires the xdelta shared
+#library.
+
+#%description xd -l fr
+#Ce paquet contient le plugin Xdelta qui nécéssite la librairie partagée
+#xdelta.
+
 %prep
 %setup  -q
 %patch0 -p0
@@ -158,8 +192,11 @@ gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
 
 %find_lang %{name}
 %find_lang %{name}-std-plugins
+cat %{name}.lang %{name}-std-plugins.lang > %{name}.list
 
-cat %{name}-std-plugins.lang >> %{name}.lang
+ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.1/plug-ins/* | \
+	egrep -w -v -e "aa|xd" | \
+	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.list
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -167,7 +204,7 @@ cat %{name}-std-plugins.lang >> %{name}.lang
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f %{name}.lang
+%files -f %{name}.list
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS,README,README.i18n,README.perl,MAINTAINERS}.gz
 %doc docs/*.gz docs/*README docs/*.eps docs/script-fu.tex 
@@ -183,7 +220,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/1.1
 %dir %{_libdir}/gimp/1.1/plug-ins
-%attr(755,root,root) %{_libdir}/gimp/1.1/plug-ins/*
 %dir %{_libdir}/gimp/1.1/modules
 %attr(755,root,root) %{_libdir}/gimp/1.1/modules/*la
 %attr(755,root,root) %{_libdir}/gimp/1.1/modules/*so
@@ -254,3 +290,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files static
 %attr(644,root,root) %{_libdir}/lib*.a
+
+%files aa
+%attr(755,root,root) %{_libdir}/gimp/1.1/plug-ins/aa
+
+#%files xd
+#%attr(755,root,root) %{_libdir}/gimp/1.1/plug-ins/xd
