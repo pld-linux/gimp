@@ -199,6 +199,9 @@ ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
 	
 echo "%defattr(644,root,root,755)" >> %{name}.lang
 
+rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/yes.xpm
+rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/no.xpm
+
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
