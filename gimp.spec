@@ -273,10 +273,12 @@ echo "%defattr(644,root,root,755)" >> %{name}.lang
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/yes.xpm
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/no.xpm
 
-#(cd $RPM_BUILD_ROOT%{_bindir}
-#ln -s gimptool-%{mver} gimptool
-#ln -s gimp-%{mver} gimp
-#ln -s gimp-remote-%{mver} gimp-remote)
+cd $RPM_BUILD_ROOT%{_bindir}
+ln -s gimp-%{mver} gimp
+ln -s gimp-remote-%{mver} gimp-remote
+ln -s gimptool-%{mver} gimp-config
+ln -s gimptool-%{mver} gimptool
+cd -
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -290,9 +292,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/{*.txt,quick_reference.*,Wilber*}
 
 %attr(755,root,root) %{_bindir}/gimp-%{mver}
-#%%attr(755,root,root) %{_bindir}/gimp
+%attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
-#%%attr(755,root,root) %{_bindir}/gimp-remote
+%attr(755,root,root) %{_bindir}/gimp-remote
 %{_datadir}/applications/gimp13.desktop
 
 %{_mandir}/man1/gimp-%{mver}*
@@ -339,7 +341,8 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gimptool-%{mver}
-#%%attr(755,root,root) %{_bindir}/gimptool
+%attr(755,root,root) %{_bindir}/gimp-config
+%attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/gimp/%{mver}/modules/*.la
 %{_libdir}/lib*.la
