@@ -24,8 +24,11 @@ License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/%{name}-%{version}.tar.bz2
 # Source0-md5:	7fa66cfd3a2a67f95c3c80307e46e4dd
+# missing in tarball:
+Source1:	%{name}-pygimp-logo.png
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-makefile.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -258,6 +261,10 @@ Wtyczka do drukowania dla Gimpa.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
+cp /usr/share/automake/py-compile plug-ins/pygimp
+cp %{SOURCE1} plug-ins/pygimp/pygimp-logo.png
 
 %build
 %{__libtoolize}
@@ -265,6 +272,7 @@ Wtyczka do drukowania dla Gimpa.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+
 %configure \
 	--disable-rpath \
 	%{!?with_print: --disable-print} \
@@ -273,7 +281,9 @@ Wtyczka do drukowania dla Gimpa.
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-default-binary \
 	--enable-static \
-	--enable-gtk-doc
+	--enable-gtk-doc \
+	--with-shm=posix
+	
 %{__make}
 
 %install
@@ -321,6 +331,7 @@ umask 022
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
 %postun
+
 umask 022
 /sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
