@@ -6,11 +6,6 @@
 
 %include	/usr/lib/rpm/macros.perl
 
-# http://bugzilla.gnome.org/show_bug.cgi?id=85249
-%ifarch athlon
-%define optflags -O2 -march=i386
-%endif
-
 %define mver 1.3
 
 Summary:	The GNU Image Manipulation Program
