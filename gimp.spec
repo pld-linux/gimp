@@ -6,7 +6,7 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.19
+Version:	1.1.20
 Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
