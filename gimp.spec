@@ -1,4 +1,5 @@
 %include	/usr/lib/rpm/macros.perl
+%define		__find_requires	%{_builddir}/gimp-%{version}/find-perl-requires
 Summary:	The GNU Image Manipulation Program
 Summary(fr):	Le programme de manipulation d'images de GNU
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
@@ -6,7 +7,7 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.15
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
@@ -20,8 +21,9 @@ BuildRequires:	gtk+-devel >= 1.2.0
 BuildRequires:	glib-devel >= 1.2.0
 BuildRequires:	perl
 BuildRequires:	perl-PDL >= 1.9906
-BuildRequires:	perl-gtk >= 0.5120
+BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	perl-Parse-RecDescent
+BuildRequires:	perl-File-Slurp
 BuildRequires:	XFree86-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
@@ -33,7 +35,6 @@ BuildRequires:	aalib-devel
 BuildRequires:	rpm-perlprov
 %requires_eq	perl
 Requires:	%{perl_sitearch}
-Requires:	perl-Parse-RecDescent
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -142,6 +143,8 @@ aalib.
 %prep
 %setup  -q
 %patch0 -p1
+
+chmod +x find-perl-requires
 
 %build
 LDFLAGS="-s"; export LDFLAGS
