@@ -304,9 +304,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
 %attr(755,root,root) %{_bindir}/gimp-remote
-%dir %{_sysconfdir}/%{name}
-%dir %{_sysconfdir}/%{name}/1.3
-%config(noreplace) %{_sysconfdir}/%{name}/1.3/templaterc
 %{_desktopdir}/gimp13.desktop
 %{_datadir}/application-registry/gimp.applications
 %{_datadir}/mime-info/gimp.keys
@@ -346,12 +343,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/%{mver}/tips
 %dir %{_datadir}/gimp/%{mver}/misc
 
-%dir %{_sysconfdir}/gimp
-%dir %{_sysconfdir}/gimp/%{mver}
-%config %verify(not md5 mtime) %{_sysconfdir}/gimp/%{mver}/gimprc*
-%config %{_sysconfdir}/gimp/%{mver}/gtkrc*
-%config %{_sysconfdir}/gimp/%{mver}/ps-menurc
-%config %{_sysconfdir}/gimp/%{mver}/unitrc
+%dir %{_sysconfdir}/%{name}
+%dir %{_sysconfdir}/%{name}/%{mver}
+%config %verify(not md5 mtime) %{_sysconfdir}/%{name}/%{mver}/gimprc*
+%config(noreplace) %{_sysconfdir}/%{name}/%{mver}/templaterc
+%config %{_sysconfdir}/%{name}/%{mver}/gtkrc*
+%config %{_sysconfdir}/%{name}/%{mver}/ps-menurc
+%config %{_sysconfdir}/%{name}/%{mver}/unitrc
 
 %{_pixmapsdir}/*
 
