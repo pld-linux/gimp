@@ -4,8 +4,8 @@
 %bcond_without print	# without print plugin (which requires gimp-print 4.2.x)
 %bcond_without python	# without python plugins
 #
-%define	mver	1.3
-%define	pre	pre4
+%define	mver	2.0
+%define	pre	rc1
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulaci鏮 de imagen GNU
@@ -19,16 +19,15 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.0
-Release:	0.%{pre}.2
+Release:	0.%{pre}.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/testing/%{name}-%{version}%{pre}.tar.bz2
-# Source0-md5:	cbd15608c08110a392edd89ebdf8bcef
+# Source0-md5:	21bdc4440c2158792aef7a7b36a22f11
 Patch0:		%{name}-home_etc.patch
-Patch1:		%{name}-GIMP_VISIBLE_NAME.patch
-Patch2:		%{name}-locale-names.patch
-Patch3:		%{name}-gcc34.patch
+Patch1:		%{name}-locale-names.patch
+Patch2:		%{name}-gcc34.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -258,7 +257,6 @@ Wtyczka do drukowania dla Gimpa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 for dir in po po-libgimp po-plug-ins po-script-fu; do
 	mv $dir/{no,nb}.po
