@@ -7,7 +7,7 @@ Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.1
-Release: 	2
+Release: 	3
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -251,6 +251,8 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ru) %{_datadir}/gimp/1.2/tips/gimp_tips.ru.txt
 %lang(uk) %{_datadir}/gimp/1.2/tips/gimp_tips.uk.txt
 
+%dir %{_sysconfdir}/gimp
+%dir %{_sysconfdir}/gimp/1.2
 %config %verify(not md5 mtime) %{_sysconfdir}/gimp/1.2/gimprc*
 %config %{_sysconfdir}/gimp/1.2/gtkrc*
 %config %{_sysconfdir}/gimp/1.2/ps-menurc
