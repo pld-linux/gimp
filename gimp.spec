@@ -5,7 +5,6 @@
 %bcond_without	python		# without python plugins
 #
 %define	mver	2.0
-%define	pre	pre2
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulaci鏮 de imagen GNU
@@ -18,13 +17,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.2
-Release:	0.%{pre}.1
+Version:	2.2.0
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/testing/%{name}-%{version}-%{pre}.tar.bz2
-# Source0-md5:	ebf7e6ecfd8140933ba8def721df49cd
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/%{name}-%{version}.tar.bz2
+# Source0-md5:	7fa66cfd3a2a67f95c3c80307e46e4dd
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 URL:		http://www.gimp.org/
@@ -256,7 +255,7 @@ Print plugin for Gimp.
 Wtyczka do drukowania dla Gimpa.
 
 %prep
-%setup -qn %{name}-%{version}-%{pre}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
