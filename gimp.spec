@@ -315,7 +315,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp/%{mver}/plug-ins
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
 %exclude %{_libdir}/gimp/%{mver}/plug-ins/aa
-%exclude %{_libdir}/gimp/%{mver}/plug-ins/print
+%{!?_without_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
 
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
