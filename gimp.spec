@@ -4,8 +4,8 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.2
-Release:	2d
+Version:	1.1.3
+Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
@@ -14,8 +14,8 @@ Source:		%{name}-%{version}.tar.bz2
 Patch0:		gimp-perl.patch
 Patch1:		gimp-perlsh.patch
 URL:		http://www.gimp.org/
-Requires:	gtk+ = 1.1.15
-Requires:	glib = 1.1.15
+Requires:	gtk+ = 1.2.0
+Requires:	glib = 1.2.0
 Requires:	perl >= 5.005
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
@@ -57,7 +57,7 @@ Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
 Copyright:	LGPL
 Requires:	%{name} = %{version}
-Requires:	gtk+-devel = 1.1.15
+Requires:	gtk+-devel = 1.2.0
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -83,7 +83,7 @@ Biblioteki statyczne do GIMPa
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
