@@ -3,6 +3,7 @@
 %bcond_without	aalib		# without aa plugin (which requires aalib)
 %bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
 %bcond_without	python		# without python plugins
+%bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 #
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -17,18 +18,16 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.2.0
-Release:	2
+Version:	2.2.1
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	7fa66cfd3a2a67f95c3c80307e46e4dd
+# Source0-md5:	bfc5ebe61113124353b86499b1bfe889
 # missing in tarball:
-Source1:	%{name}-pygimp-logo.png
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
-Patch2:		%{name}-makefile.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -273,10 +272,8 @@ Wtyczka SVG dla Gimpa.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 cp /usr/share/automake/py-compile plug-ins/pygimp
-cp %{SOURCE1} plug-ins/pygimp/pygimp-logo.png
 
 %build
 %{__libtoolize}
@@ -294,7 +291,7 @@ cp %{SOURCE1} plug-ins/pygimp/pygimp-logo.png
 	--enable-default-binary \
 	--enable-static \
 	--enable-gtk-doc \
-	--with-shm=posix
+	%{?with_posix_shm:--with-shm=posix}
 	
 %{__make}
 
