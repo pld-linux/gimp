@@ -10,6 +10,7 @@ Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
 Source:		ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
+Patch:		gimp-perlinst.patch
 URL:		http://www.gimp.org/
 BuildRequires:	gtk+-devel >= 1.2.0
 BuildRequires:	glib-devel >= 1.2.0
@@ -24,7 +25,6 @@ BuildRequires:	libungif-devel
 BuildRequires:	xpm-devel
 BuildRequires:	zlib-devel
 %requires_eq	perl
-#BuildConflicts:	gimp
 Requires:	%{perl_sitearch}
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
@@ -94,6 +94,7 @@ Biblioteki statyczne do GIMPa.
 
 %prep
 %setup -q
+%patch -p0
 
 %build
 CFLAGS="$RPM_OPT_FLAGS -Wall" \
