@@ -5,7 +5,7 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.14
+Version:	1.1.15
 Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
@@ -13,8 +13,7 @@ Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
 Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	gimp.desktop
-Patch0:		gimp-perlinst.patch
-Patch1:		gimp-perldep.patch
+Patch0:		gimp-perldep.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gtk+-devel >= 1.2.0
@@ -143,7 +142,6 @@ aalib.
 %prep
 %setup  -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 LDFLAGS="-s"; export LDFLAGS
@@ -189,7 +187,7 @@ strip --strip-unneeded \
 	$RPM_BUILD_ROOT%{perl_sitearch}/auto/Gimp/*/*.so
 
 gzip -9nf $RPM_BUILD_ROOT/usr/share/man/man3/* \
-	$RPM_BUILD_ROOT%{_mandir}/man[135]/* \
+	$RPM_BUILD_ROOT%{_mandir}/man[15]/* \
 	ChangeLog NEWS README README.i18n README.perl \
 	TODO MAINTAINERS docs/*.txt
 
@@ -299,7 +297,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man1/gimptool.1*
 %{_mandir}/man1/scm2*.1*
-%{_mandir}/man3/*
 /usr/share/man/man3/*
 
 %files static
