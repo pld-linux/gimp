@@ -27,20 +27,22 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v%{mver}/v%{version}/%{name}-%{version}.tar
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-%{?with_print:BuildRequires:	gimp-print-devel}
+%{?with_print:BuildRequires:	gimp-print-devel >= 4.2.0}
+%{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
 BuildRequires:	gtk+2-devel >= 2.2.0
+BuildRequires:	gtkdoc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel
-BuildRequires:	libgtkhtml-devel
+BuildRequires:	libgtkhtml-devel >= 1.99.5
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool
+BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel}
