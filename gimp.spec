@@ -8,7 +8,7 @@ Summary(pt_BR):	Programa de manipulação de imagem GNU
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.3
-Release:	1.4
+Release:	1.5
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -33,10 +33,8 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	libungif-devel
 BuildRequires:	aalib-devel
-BuildRequires:	mpeg_lib-devel >= 1.3.1-2
 BuildRequires:	rpm-perlprov
 Requires:	gtk+ >= 1.2.8-3
-Requires:	mpeg_lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -44,8 +42,6 @@ Obsoletes:	gimp-libgimp
 %define		_prefix		/usr/X11R6
 %define		_mandir		%{_prefix}/man
 
-# need libmpeg.so from mpeg_lib (xmps has other libmpeg.so)
-%define		_noautoreqdep	libmpeg.so
 # workaround for find-perl-requires
 %define		_noautoreq	"perl(of)"
 
@@ -177,18 +173,6 @@ partagée aalib.
 %description aa -l pl
 Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 
-%package mpeg
-Summary:	MPEG plugin for Gimp
-Summary(pl):	Wtyczka do MPEG Gimpa
-Group:		X11/Applications/Graphics
-Requires:	%{name} = %{version}
-
-%description mpeg
-This package contains the MPEG plugin.
-
-%description mpeg -l pl
-Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do MPEG.
-
 %prep
 %setup	-q
 %patch0 -p1
@@ -225,7 +209,7 @@ mv -f $RPM_BUILD_ROOT/usr/share/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
-	egrep -w -v -e "aa|mpeg|print" | \
+	egrep -w -v -e "aa|print" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 
 echo "%defattr(644,root,root,755)" >> %{name}.lang
@@ -359,7 +343,3 @@ rm -rf $RPM_BUILD_ROOT
 %files aa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/aa
-
-%files mpeg
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gimp/1.2/plug-ins/mpeg
