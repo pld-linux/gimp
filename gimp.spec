@@ -4,23 +4,33 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.4
+Version:	1.1.5
 Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
-Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v1.1/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	gimp.wmconfig
 Patch0:		gimp-perl.patch
-Patch1:		gimp-DESTDIR.patch
+#Patch1:	gimp-DESTDIR.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.xpm
-Requires:	gtk+ = 1.2.1
-Requires:	glib = 1.2.1
-Requires:	perl >= 5.005
+BuildPrereq:	gtk+-devel >= 1.2.0
+BuildPrereq:	glib-devel >= 1.2.0
+BuildPrereq:	xdelta-devel
+BuildPrereq:	gettext
+BuildPrereq:	XFree86-devel
+BuildPrereq:	aalib-devel
+BuildPrereq:	libtiff-devel
+BuildPrereq:	libjpeg-devel
+BuildPrereq:	libpng-devel
+BuildPrereq:	libmpeg
+BuildPrereq:	perl >= 5.004_04
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
+
+%define		_prefix	/usr/X11R6
 
 %description
 The GIMP is an image manipulation program suitable for photo retouching,
@@ -58,7 +68,7 @@ Group:		X11/Developmet/Libraries
 Group(pl):	X11/Programowanie/Biblioteki
 Copyright:	LGPL
 Requires:	%{name} = %{version}
-Requires:	gtk+-devel = 1.2.1
+Requires:	gtk+-devel >= 1.2.0
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -85,37 +95,37 @@ Biblioteki statyczne do GIMPa
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#patch1 -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure %{_target} \
-	--prefix=/usr/X11R6 \
+gettextize --copy --force
+LDFLAGS="-s"; export LDFLAGS
+CFLAGS="-I`pwd`"
+%configure \
 	--without-included-gettext \
-	--disable-perl \
 	--with-xdelta
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/X11/wmconfig,usr/share/aclocal} \
-	$RPM_BUILD_ROOT/usr/X11R6/share/icons \
-	$RPM_BUILD_ROOT%{_libdir}/perl5/5.00502/$RPM_ARCH-linux-thread
+	$RPM_BUILD_ROOT%{_datadir}/icons 
 
 make install \
-	prefix=$RPM_BUILD_ROOT/usr/X11R6 \
-	INSTALLMAN3DIR=/tmp/gimp-1.1.4-root%{_mandir}/man3 \
-	INSTALLMAN1DIR=/tmp/gimp-1.1.4-root%{_mandir}/man1 \
-	PREFIX=/tmp/gimp-1.1.4-root/usr \
-	m4datadir=$RPM_BUILD_ROOT%{_datadir}/aclocal
+	DESTDIR=$RPM_BUILD_ROOT \
+	INSTALLMAN3DIR=$RPM_BUILD_ROOT%{_mandir}/man3 \
+	INSTALLMAN1DIR=$RPM_BUILD_ROOT%{_mandir}/man1 \
+	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
+	m4datadir=$RPM_BUILD_ROOT/usr/share/aclocal
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/X11/wmconfig/gimp
 
 strip $RPM_BUILD_ROOT/usr/X11R6/lib/lib*.so.*.*
 
-gzip -9nf $RPM_BUILD_ROOT/usr/X11R6/man/man*/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
 	ChangeLog NEWS README docs/{*.txt,*.eps} \
-#	$RPM_BUILD_ROOT%{_mandir}/man*/*
+
+%find_lang gimp
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -123,41 +133,39 @@ gzip -9nf $RPM_BUILD_ROOT/usr/X11R6/man/man*/* \
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc {ChangeLog,NEWS,README,docs/*,docs/*.eps}.gz
 
 /etc/X11/wmconfig/gimp
 
 %attr(755,root,root) /usr/X11R6/bin/gimp
-#%attr(755,root,root) %{_bindir}/*
 
-/usr/X11R6/man/man1/gimp.1*
-/usr/X11R6/man/man5/gimprc.5*
-#%{_mandir}/man1/*
+%{_mandir}/man1/gimp.1*
+%{_mandir}/man5/gimprc.5*
 
-%attr(755,root,root) /usr/X11R6/lib/lib*.so.*
+%attr(755,root,root) %{_libdir}/lib*.so.*
 
-%attr(755,root,root,755) /usr/X11R6/lib/gimp
+%{_libdir}/gimp
 
-%dir /usr/X11R6/share/gimp
-/usr/X11R6/share/gimp/brushes
-/usr/X11R6/share/gimp/gfig
-/usr/X11R6/share/gimp/gradients
-/usr/X11R6/share/gimp/palettes
-/usr/X11R6/share/gimp/patterns
-/usr/X11R6/share/gimp/scripts
-/usr/X11R6/share/gimp/*.ppm
+%dir %{_datadir}/gimp
+%{_datadir}/gimp/brushes
+%{_datadir}/gimp/gfig
+%{_datadir}/gimp/gradients
+%{_datadir}/gimp/palettes
+%{_datadir}/gimp/patterns
+%{_datadir}/gimp/scripts
+%{_datadir}/gimp/*.ppm
 
-%config %verify(not md5 mtime) /usr/X11R6/share/gimp/gimprc*
-%config /usr/X11R6/share/gimp/gtkrc*
-%config /usr/X11R6/share/gimp/ps-menurc
+%config %verify(not md5 mtime) %{_datadir}/gimp/gimprc*
+%config %{_datadir}/gimp/gtkrc*
+%config %{_datadir}/gimp/ps-menurc
 
-/usr/X11R6/share/gimp/gimp_tips.txt
+%{_datadir}/gimp/gimp_tips.txt
 
-%attr(755,root,root) /usr/X11R6/share/gimp/user_install
+%attr(755,root,root) %{_datadir}/gimp/user_install
 
-#%attr(-,root,root,755) %{_libdir}/perl5/site_perl/*
+%attr(-,root,root,755) %{perl_sitearch}/*
 
 %lang(de) /usr/X11R6/share/locale/de/LC_MESSAGES/gimp.mo
 %lang(fi) /usr/X11R6/share/locale/fi/LC_MESSAGES/gimp.mo
@@ -170,18 +178,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) /usr/X11R6/lib/lib*.so
-%attr(755,root,root) /usr/X11R6/bin/gimptool
+%attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_bindir}/gimptool
 
-/usr/X11R6/include/*
-%{_datadir}/aclocal/*
+%{_includedir}/*
+/usr/share/aclocal/*
 
-/usr/X11R6/man/man1/gimptool.1.*
-/usr/X11R6/man/man3/*
-#%{_mandir}/man3/*
+%{_mandir}/man1/gimptool.1.*
+#/usr/X11R6/man/man3/*
+%{_mandir}/man3/*
 
 %files static
-%attr(644,root,root) /usr/X11R6/lib/lib*.a
+%defattr(644,root,root,755) 
+%{_libdir}/lib*.a
 
 %changelog
 * Mon Mar 29 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
