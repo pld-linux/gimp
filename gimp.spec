@@ -6,8 +6,8 @@ Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(pl):	GNU program do manipulacji formatami graficznymi (GIMP)
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
-Version:	1.1.16
-Release:	2
+Version:	1.1.17
+Release:	1
 Copyright:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
@@ -151,7 +151,6 @@ chmod +x find-perl-requires
 %build
 LDFLAGS="-s"; export LDFLAGS
 CFLAGS="$RPM_OPT_FLAGS -DPERL_POLLUTE"; export CFLAGS
-automake
 %configure \
 	--without-included-gettext \
 	--without-xdelta \
