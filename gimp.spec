@@ -1,3 +1,9 @@
+
+# http://bugzilla.gnome.org/show_bug.cgi?id=85249
+%ifarch athlon
+%define optflags -O2 -march=i386
+%endif
+
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulación de imagen GNU
@@ -236,7 +242,6 @@ install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_applnkdir}/Graphics}
 cat $RPM_BUILD_ROOT%{_datadir}/gimp/1.3/misc/gimp.desktop | \
 	sed 's@/usr/X11R6/share/gimp/1.3/images/@@' > \
 	$RPM_BUILD_ROOT%{_applnkdir}/Graphics/gimp13.desktop
-rm $RPM_BUILD_ROOT%{_datadir}/gimp/1.3/misc/gimp.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %find_lang %{name} --all-name
@@ -279,7 +284,21 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp/1.3/modules
 %attr(755,root,root) %{_libdir}/gimp/1.3/modules/*.so
 
-%{_datadir}/gimp/1.3
+%dir %{_datadir}/gimp/1.3
+%{_datadir}/gimp/1.3/brushes
+%{_datadir}/gimp/1.3/fractalexplorer
+%{_datadir}/gimp/1.3/gfig
+%{_datadir}/gimp/1.3/gflare
+%{_datadir}/gimp/1.3/gimpressionist
+%{_datadir}/gimp/1.3/gradients
+%{_datadir}/gimp/1.3/images
+%{_datadir}/gimp/1.3/palettes
+%{_datadir}/gimp/1.3/patterns
+%{_datadir}/gimp/1.3/scripts
+%{_datadir}/gimp/1.3/themes
+%{_datadir}/gimp/1.3/tips
+%dir %{_datadir}/gimp/1.3/misc
+%attr(755,root,root) %{_datadir}/gimp/1.3/misc/user_install
 
 # 1.2 own it
 #%dir %{_sysconfdir}/gimp
