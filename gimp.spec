@@ -36,8 +36,6 @@ BuildRequires:	libungif-devel
 BuildRequires:	aalib-devel
 BuildRequires:	mpeg_lib
 BuildRequires:	rpm-perlprov
-%requires_eq	perl
-Requires:	%{perl_sitearch}
 Requires:	gtk+ >= 1.2.8-3
 Requires:	mpeg_lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
