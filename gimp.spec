@@ -182,6 +182,7 @@ Summary(zh_CN):	[开发]gimp的开发包
 Summary(zh_TW):	[秨祇]gimp秨祇
 License:	LGPL
 Group:		X11/Development/Libraries
+Requires(post,postun):	/sbin/ldconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gtk-doc-common
 Requires:	gtk+2-devel >= 1:2.2.2
@@ -318,8 +319,15 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,ke
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post
+umask 022
+/sbin/ldconfig
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+
+%postun
+umask 022
+/sbin/ldconfig
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
