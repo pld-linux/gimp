@@ -20,13 +20,11 @@ Patch2:		gimp-resize.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gtk+-devel >= 1.2.0
-BuildRequires:	glib-devel >= 1.2.0
 BuildRequires:	perl
 BuildRequires:	perl-PDL >= 1.9906
 BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	perl-Parse-RecDescent
 BuildRequires:	perl-File-Slurp
-BuildRequires:	XFree86-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
