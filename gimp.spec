@@ -107,7 +107,7 @@ make install \
 	INSTALLMAN3DIR=/tmp/gimp-1.1.4-root%{_mandir}/man3 \
 	INSTALLMAN1DIR=/tmp/gimp-1.1.4-root%{_mandir}/man1 \
 	PREFIX=/tmp/gimp-1.1.4-root/usr \
-	m4datadir=$RPM_BUILD_ROOT/usr/share/aclocal
+	m4datadir=$RPM_BUILD_ROOT%{_datadir}/aclocal
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/X11/wmconfig/gimp
 
@@ -174,7 +174,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/X11R6/bin/gimptool
 
 /usr/X11R6/include/*
-/usr/share/aclocal/*
+%{_datadir}/aclocal/*
 
 /usr/X11R6/man/man1/gimptool.1.*
 /usr/X11R6/man/man3/*
