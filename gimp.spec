@@ -299,7 +299,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
 	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
 	$RPM_BUILD_ROOT%{_desktopdir}/gimp.desktop
-install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
+install data/images/wilber-devel-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-registry
 install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 
