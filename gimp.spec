@@ -4,8 +4,8 @@
 %bcond_without print	# without print plugin (which requires gimp-print 4.2.x)
 %bcond_without python	# without python plugins
 #
-%define mver 1.3
-%define pre  pre4
+%define	mver	1.3
+%define	pre	pre4
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulación de imagen GNU
