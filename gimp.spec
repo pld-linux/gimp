@@ -35,13 +35,12 @@ URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	aalib-devel
 BuildRequires:	gettext-devel
-BuildRequires:	gtk+2-devel
 BuildRequires:	gimp-print-devel
+BuildRequires:	gtk+2-devel
 BuildRequires:	libart_lgpl-devel
-BuildRequires:	pkgconfig
-BuildRequires:	libtiff-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel >= 1.0.8
+BuildRequires:	libtiff-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libungif-devel
 #BuildRequires:	perl-File-Slurp
@@ -50,6 +49,7 @@ BuildRequires:	libungif-devel
 #BuildRequires:	perl-Parse-RecDescent
 #BuildRequires:	perl-devel >= 5.6.1
 #BuildRequires:	perl-gtk >= 0.6123
+BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov >= 4.0.2-56
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
@@ -291,9 +291,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp-remote-%{mver}
 %{_applnkdir}/Graphics/gimp13.desktop
 
-%{_mandir}/man1/gimp-%{mver}.1*
-%{_mandir}/man1/gimp-remote-%{mver}.1*
-%{_mandir}/man5/gimprc-%{mver}.5*
+%{_mandir}/man1/gimp-%{mver}*
+%{_mandir}/man1/gimp-remote-%{mver}*
+%{_mandir}/man5/gimprc-%{mver}*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir %{_libdir}/gimp
@@ -329,19 +329,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc %{_datadir}/gtk-doc/html/*
-%attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_bindir}/gimptool-%{mver}
-%attr(755,root,root) %{_bindir}/gimp-config
 %attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.la
 %{_libdir}/lib*.la
 %{_libdir}/pkgconfig/*
-%attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.la
+%{_gtkdocdir}/*
 
 %{_includedir}/gimp-%{mver}
 %{_aclocaldir}/gimp-1.4.m4
 
-%{_mandir}/man1/gimptool-%{mver}.1*
+%{_mandir}/man1/gimptool-%{mver}*
 
 %files static
 %defattr(644,root,root,755)
