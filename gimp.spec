@@ -22,7 +22,7 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.0.6
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -31,6 +31,7 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v2.0/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-home_etc.patch
 # Patch1 comes from http://mitch.gimp.org/filechooser/
 Patch1:		%{name}-file-chooser-10.patch
+Patch2:		%{name}-desktop.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -263,6 +264,7 @@ Wtyczka do drukowania dla Gimpa.
 %setup -q
 %patch0 -p1
 %{?with_file_chooser:%patch1 -p0}
+%patch2 -p1
 
 %build
 %{__libtoolize}
