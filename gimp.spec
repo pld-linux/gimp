@@ -16,7 +16,7 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	1.3.8
+Version:	1.3.9
 Release:	1
 Epoch:		1
 License:	GPL
