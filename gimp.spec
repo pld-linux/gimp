@@ -181,6 +181,7 @@ rm -rf $RPM_BUILD_ROOT
 
 ## perl stuff
 %{perl_sitearch}/Gimp
+%{perl_sitearch}/Gimp.pm
 %dir %{perl_sitearch}/auto/Gimp
 %dir %{perl_sitearch}/auto/Gimp/Lib
 %dir %{perl_sitearch}/auto/Gimp/Net
