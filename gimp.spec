@@ -35,6 +35,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2.2.0
 BuildRequires:	intltool
 BuildRequires:	libart_lgpl-devel
+BuildRequires:	libexif-devel
 BuildRequires:	libgtkhtml-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
