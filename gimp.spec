@@ -130,7 +130,7 @@ rm -rf $RPM_BUILD_ROOT
 /etc/X11/wmconfig/gimp
 
 %attr(755,root,root) /usr/X11R6/bin/gimp
-#%attr(755,root,root) /usr/bin/*
+#%attr(755,root,root) %{_bindir}/*
 
 /usr/X11R6/man/man1/gimp.1*
 /usr/X11R6/man/man5/gimprc.5*
