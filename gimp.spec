@@ -13,7 +13,7 @@ License:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
-Source0:	ftp://ftp.gimp.org/pub/gimp/stable/v%{version}/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gimp.org/pub/gimp/v1.2/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	gimp.desktop
 Patch0:		gimp-perldep.patch
 Patch1:		gimp-DESTDIR.patch
