@@ -1,12 +1,11 @@
-diff -urN gimp-2.0.1.orig/configure.in gimp-2.0.1/configure.in
---- gimp-2.0.1.orig/configure.in	2004-04-14 14:44:49.390290224 +0200
-+++ gimp-2.0.1/configure.in	2004-04-14 14:45:11.248967200 +0200
+--- gimp-2.0.2/configure.in	2004-06-15 11:09:24.000000000 +0000
++++ gimp-2.0.2.new/configure.in	2004-06-15 14:52:40.879174712 +0000
 @@ -383,7 +383,7 @@
  dnl Note to translators: you MUST have .po files in all 4 directories: po,
  dnl po-libgimp, po-plug-ins, and po-script-fu before adding you language
  dnl code to ALL_LINGUAS
--ALL_LINGUAS="ca cs da de el en_CA en_GB es eu fi fr ga gl he hu hr id it ja ko ms nl no pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi yi zh_CN zh_TW"
-+ALL_LINGUAS="ca cs da de el en_CA en_GB es eu fi fr ga gl he hu hr id it ja ko ms nl nb pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi yi zh_CN zh_TW"
+-ALL_LINGUAS="ca cs da de el en_CA en_GB es eu fi fr ga gl he hu hr id it ja ko lt ms nl no pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi yi zh_CN zh_TW"
++ALL_LINGUAS="ca cs da de el en_CA en_GB es eu fi fr ga gl he hu hr id it ja ko lt ms nb nl pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi yi zh_CN zh_TW"
  
  AC_PROG_INTLTOOL
  AM_GLIB_GNU_GETTEXT
