@@ -49,7 +49,7 @@ BuildRequires:	libungif-devel
 #BuildRequires:	perl-gtk >= 0.6123
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel
-BuildRequires:	rpm-perlprov >= 4.1-10
+#BuildRequires:	rpm-perlprov >= 4.1-10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
