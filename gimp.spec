@@ -37,7 +37,6 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gnome-vfs2-devel
 BuildRequires:	gtk+2-devel >= 2:2.4.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
@@ -58,10 +57,10 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.1-13
 Requires:	gtk+2 >= 2:2.4.0
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 Obsoletes:	gimp-svg
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The GIMP is an image manipulation program suitable for photo
