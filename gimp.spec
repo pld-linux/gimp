@@ -331,7 +331,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_applnkdir}/Graphics/gimp.desktop
 
 %{_mandir}/man1/gimp-1.2.1*
-%{_mandir}/man5/gimp-remote-1.2.1*
+%{_mandir}/man1/gimp-remote-1.2.1*
 %{_mandir}/man5/gimprc-1.2.5*
 
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
