@@ -12,21 +12,6 @@ Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Group(cs):	X11/Aplikace/Grafika
-Group(da):	X11/Programmer/Grafik
-Group(de):	X11/Applikationen/Grafik
-Group(es):	X11/Aplicaciones/Gráficos
-Group(fr):	X11/Applications/Graphiques
-Group(id):	X11/Aplikasi/Grafik
-Group(is):	X11/Forrit/Myndvinnsla
-Group(it):	X11/Applicazioni/Immagini
-Group(ja):	X11/¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥°¥é¥Õ¥£¥Ã¥¯¥¹
-Group(no):	X11/Applikasjoner/Grafikk
-Group(pl):	X11/Aplikacje/Grafika
-Group(pt):	X11/Aplicações/Gráficos
-Group(ru):	X11/ğÒÉÌÏÖÅÎÉÑ/çÒÁÆÉËÁ
-Group(sl):	X11/Programi/Grafika
-Group(sv):	X11/Tillämpningar/Grafik
 Source0:	ftp://ftp.gimp.org/pub/gimp/v1.2/v%{version}/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
 Patch0:		%{name}-perldep.patch
@@ -131,22 +116,6 @@ Summary(pt_BR):	Kit de desenvolvimento de "plugins" extensões para o GIMP
 Summary(tr):	GIMP plugin ve uzantı geliştirme araçları
 License:	LGPL
 Group:		X11/Development/Libraries
-Group(cs):	X11/Vıvojové prostøedky/Knihovny
-Group(da):	X11/Udvikling/Biblioteker
-Group(de):	X11/Entwicklung/Bibliotheken
-Group(es):	X11/Desarrollo/Bibliotecas
-Group(fr):	X11/Development/Librairies
-Group(is):	X11/Şróunartól/Ağgerğasöfn
-Group(it):	X11/Sviluppo/Librerie
-Group(ja):	X11/³«È¯/¥é¥¤¥Ö¥é¥ê
-Group(no):	X11/Applikasjoner/Biblioteker
-Group(pl):	X11/Programowanie/Biblioteki
-Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
-Group(pt):	X11/Desenvolvimento/Bibliotecas
-Group(ru):	X11/òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(sl):	X11/Razvoj/Knji¾nice
-Group(sv):	X11/Utveckling/Bibliotek
-Group(uk):	X11/òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 Requires:	gtk+-devel >= 1.2.0
 
@@ -175,22 +144,6 @@ plugins para Gimp.
 Summary:	GIMP static libraries
 Summary(pl):	Biblioteki statyczne do GIMPa
 Group:		X11/Development/Libraries
-Group(cs):	X11/Vıvojové prostøedky/Knihovny
-Group(da):	X11/Udvikling/Biblioteker
-Group(de):	X11/Entwicklung/Bibliotheken
-Group(es):	X11/Desarrollo/Bibliotecas
-Group(fr):	X11/Development/Librairies
-Group(is):	X11/Şróunartól/Ağgerğasöfn
-Group(it):	X11/Sviluppo/Librerie
-Group(ja):	X11/³«È¯/¥é¥¤¥Ö¥é¥ê
-Group(no):	X11/Applikasjoner/Biblioteker
-Group(pl):	X11/Programowanie/Biblioteki
-Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
-Group(pt):	X11/Desenvolvimento/Bibliotecas
-Group(ru):	X11/òÁÚÒÁÂÏÔËÁ/âÉÂÌÉÏÔÅËÉ
-Group(sl):	X11/Razvoj/Knji¾nice
-Group(sv):	X11/Utveckling/Bibliotek
-Group(uk):	X11/òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -211,21 +164,6 @@ Summary:	ASCII Art plugin for Gimp
 Summary(fr):	Plugin d'art ASCII pour Gimp
 Summary(pl):	Wtyczka do ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
-Group(cs):	X11/Aplikace/Grafika
-Group(da):	X11/Programmer/Grafik
-Group(de):	X11/Applikationen/Grafik
-Group(es):	X11/Aplicaciones/Gráficos
-Group(fr):	X11/Applications/Graphiques
-Group(id):	X11/Aplikasi/Grafik
-Group(is):	X11/Forrit/Myndvinnsla
-Group(it):	X11/Applicazioni/Immagini
-Group(ja):	X11/¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥°¥é¥Õ¥£¥Ã¥¯¥¹
-Group(no):	X11/Applikasjoner/Grafikk
-Group(pl):	X11/Aplikacje/Grafika
-Group(pt):	X11/Aplicações/Gráficos
-Group(ru):	X11/ğÒÉÌÏÖÅÎÉÑ/çÒÁÆÉËÁ
-Group(sl):	X11/Programi/Grafika
-Group(sv):	X11/Tillämpningar/Grafik
 Requires:	%{name} = %{version}
 
 %description aa
@@ -243,21 +181,6 @@ Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 Summary:	MPEG plugin for Gimp
 Summary(pl):	Wtyczka do MPEG Gimpa
 Group:		X11/Applications/Graphics
-Group(cs):	X11/Aplikace/Grafika
-Group(da):	X11/Programmer/Grafik
-Group(de):	X11/Applikationen/Grafik
-Group(es):	X11/Aplicaciones/Gráficos
-Group(fr):	X11/Applications/Graphiques
-Group(id):	X11/Aplikasi/Grafik
-Group(is):	X11/Forrit/Myndvinnsla
-Group(it):	X11/Applicazioni/Immagini
-Group(ja):	X11/¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥°¥é¥Õ¥£¥Ã¥¯¥¹
-Group(no):	X11/Applikasjoner/Grafikk
-Group(pl):	X11/Aplikacje/Grafika
-Group(pt):	X11/Aplicações/Gráficos
-Group(ru):	X11/ğÒÉÌÏÖÅÎÉÑ/çÒÁÆÉËÁ
-Group(sl):	X11/Programi/Grafika
-Group(sv):	X11/Tillämpningar/Grafik
 Requires:	%{name} = %{version}
 
 %description mpeg
