@@ -18,16 +18,15 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.1.0
-Release:	2
+Version:	2.1.1
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.1/%{name}-%{version}.tar.bz2
-# Source0-md5:	395c319d778415546c58a19455b7dc86
+# Source0-md5:	ebc6fe9021d85982b52f5f324a97cadb
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-locale-names.patch
-Patch2:		%{name}-missing_size_group.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
@@ -258,7 +257,6 @@ Wtyczka do drukowania dla Gimpa.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 for dir in po po-libgimp po-plug-ins po-script-fu; do
 	mv $dir/{no,nb}.po
