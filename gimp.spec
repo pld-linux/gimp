@@ -209,7 +209,7 @@ mv -f $RPM_BUILD_ROOT/usr/share/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 echo "%defattr(755,root,root,755)" >> %{name}.lang
 
 ls -1 $RPM_BUILD_ROOT%{_libdir}/gimp/1.2/plug-ins/* | \
-	egrep -w -v -e "aa|print" | \
+	egrep -w -v -e "aa|mpeg|print" | \
 	sed -e s#^`echo $RPM_BUILD_ROOT`## >> %{name}.lang
 
 echo "%defattr(644,root,root,755)" >> %{name}.lang
