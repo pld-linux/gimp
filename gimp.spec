@@ -5,10 +5,14 @@ Summary(es):	Programa de manipulaciСn de imagen GNU
 Summary(fr):	Le programme de manipulation d'images de GNU
 Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
 Summary(pt_BR):	Programa de manipulaГЦo de imagem GNU
+Summary(ru):	The GNU Image Manipulation Program
 Summary(tr):	гizim, boyama ve gЖrЭntЭ iЧleme programЩ
+Summary(uk):	The GNU Image Manipulation Program
+Summary(zh_CN):	[м╪оЯ]GNUм╪оС╢╕юМ╧╓╬ъ
+Summary(zh_TW):	[╧о╧Ё]GNU╧о╤HЁB╡z╓u╗Ц
 Name:		gimp
 Version:	1.2.3
-Release:	5
+Release:	6
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -101,6 +105,53 @@ Program Gimp jest przeznaczony do obrСbki i tworzenia plikСw w rС©nych
 formatach graficznych. DziЙki niemu bЙdziesz mСgЁ stworzyФ grafikЙ dla
 stron WWW, przerobiФ zdjЙcia, czy stworzyФ wЁasne logo.
 
+%description -l ru
+GIMP - это программа для создания и обработки изображений. Ее считают
+исключительно полезной для создания логотипов и другой графики для
+web-страниц. GIMP имеет множество инструментов и фильтров, которые
+обычно включаются в аналогичные коммерческие пакеты, а также ряд
+возможностей, присущих только ей.
+
+GIMP предоставляет большой набор инструментов для работы с графикой,
+включающий операции над каналами, слоями, эффекты, sub-pixel imaging и
+антиалиасинг, всяческие конверторы и все это с многоуровневым откатом.
+
+GIMP включает поддержку создания сценариев (scripting facility),
+однако многие из поставляемых с программой сценариев предполагают
+наличие шрифтов, которые не могут быть включены в дистрибутив.
+ftp-сайт GIMP содержит пакет шрифтов, которые вы можете поставить
+самостоятельно, включающий все шрифты, необходимые для работы входящих
+в комплект сценариев. Некоторые из шрифтов имеют весьма необычные
+лицензионные требования; все лицензии включены в упомянутый пакет.
+Скачайте ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz и
+ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz, если хотите
+запускать сценарии без изменений или выберите те шрифты, которые
+установлены у вас в системе, перед запуском сценариев.
+
+%description -l uk
+GIMP - це програма для створення та обробки зображень. ╥╖ вважають
+дуже корисною для створення логотип╕в та ╕ншо╖ граф╕ки для
+web-стор╕нок. GIMP ма╓ багато ╕нструмент╕в та ф╕льтр╕в, як╕ звичайно
+включаються в аналог╕чн╕ комерц╕йн╕ пакети, а також ряд можливостей,
+властивих саме ╖й.
+
+GIMP нада╓ великий наб╕р ╕нструмент╕в для роботи з граф╕кою, що
+включа╓ операц╕╖ над каналами, шарами (layers), ефекти, sub-pixel
+imaging ╕ антиал╕асинг, р╕зноман╕тн╕ конвертори ╕ все це з
+багатор╕вневим в╕дкатом.
+
+GIMP ма╓ п╕дтримку сценар╕╖в (scripting facility), проте багато з
+включених до поставки сценар╕╖в припускають наявн╕сть шрифт╕в, як╕ не
+можуть бути включен╕ в дистрибутив. ftp-сайт GIMP м╕стить пакет
+шрифт╕в, котр╕ ви можете встановити самост╕йно, в який входять вс╕
+шрифти, необх╕дн╕ для роботи сценар╕╖в з поставки GIMP. Деяк╕ з
+шрифт╕в мають вельми незвичайн╕ л╕ценз╕йн╕ умови; вс╕ л╕ценз╕╖
+включено в згаданий пакет. Завантажте
+ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz та
+ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. якщо хочете
+запускати сценар╕╖ без зм╕н або ж вибер╕ть встановален╕ у вас в
+систем╕ шрифти перед запуском сценар╕╖в.
+
 %package devel
 Summary:	GIMP plugin and extension development kit
 Summary(de):	GIMP-Plugin und Extension Development Kit
@@ -108,7 +159,11 @@ Summary(es):	Kit de desarrollo de "plugins" extensiones para GIMP
 Summary(fr):	Plugin GIMP et kit de dИveloppement d'extensions
 Summary(pl):	Pliki do budowania moduЁСw i rozszerzeЯ dla Gimp
 Summary(pt_BR):	Kit de desenvolvimento de "plugins" extensУes para o GIMP
+Summary(ru):	Инструментарий для разработки плагинов и расширений GIMP
 Summary(tr):	GIMP plugin ve uzantЩ geliЧtirme araГlarЩ
+Summary(uk):	╤нструментар╕й для розробки плаг╕н╕в та розширень GIMP
+Summary(zh_CN):	[©╙╥╒]gimp╣д©╙╥╒╟Э
+Summary(zh_TW):	[╤}╣o]gimp╙╨╤}╣o╔]
 License:	LGPL
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}
@@ -219,9 +274,6 @@ echo "%defattr(644,root,root,755)" >> %{name}.lang
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/yes.xpm
 rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/no.xpm
 
-gzip -9nf ChangeLog NEWS README README.i18n README.perl \
-	TODO MAINTAINERS docs/*.txt
-
 %post	-p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
@@ -230,8 +282,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc {ChangeLog,NEWS,README,README.i18n,README.perl,MAINTAINERS}.gz
-%doc docs/*.gz docs/*README
+%doc ChangeLog NEWS README README.i18n README.perl MAINTAINERS
+%doc docs/*.txt docs/*README
 %doc docs/quick_reference.*
 
 %attr(755,root,root) %{_bindir}/gimp-1.2
