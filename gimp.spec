@@ -8,7 +8,7 @@ Summary(pt_BR):	Programa de manipulação de imagem GNU
 Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.2.3
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -41,6 +41,8 @@ Obsoletes:	gimp-libgimp
 
 %define		_prefix		/usr/X11R6
 %define		_mandir		%{_prefix}/man
+
+%define               _noautoreq      "perl(of)"
 
 %description
 The GIMP is an image manipulation program suitable for photo
