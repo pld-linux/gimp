@@ -20,7 +20,7 @@ URL:		http://www.gimp.org/
 Icon:		gimp.gif
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-libs-devel
-BuildRequires:	gtk+-devel >= 1.2.0
+BuildRequires:	gtk+-devel >= 1.2.8
 BuildRequires:	perl
 BuildRequires:	perl-PDL >= 1.9906
 BuildRequires:	perl-gtk >= 0.6123
@@ -36,6 +36,7 @@ BuildRequires:	aalib-devel
 BuildRequires:	rpm-perlprov
 %requires_eq	perl
 Requires:	%{perl_sitearch}
+Requires:	gtk+ >= 1.2.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
