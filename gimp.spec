@@ -35,6 +35,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2.2.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
+BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel
 BuildRequires:	libgtkhtml-devel >= 1.99.5
@@ -45,6 +46,7 @@ BuildRequires:	librsvg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
+BuildRequires:	libwmf-devel >= 0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel}
 BuildRequires:	rpm-build >= 4.1-13
