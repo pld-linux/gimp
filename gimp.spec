@@ -8,7 +8,7 @@ Summary(tr):	Çizim, boyama ve görüntü iþleme programý
 Name:		gimp
 Version:	1.1.21
 Release:	1
-Copyright:	GPL
+License:	GPL
 Group:		X11/Applications/Graphics
 Group(fr):	X11/Applications/Graphismes
 Group(pl):	X11/Aplikacje/Grafika
@@ -44,23 +44,23 @@ Obsoletes:	gimp-libgimp
 %description
 The GIMP is an image manipulation program suitable for photo retouching,
 image composition and image authoring. Many people find it extremely useful
-in creating logos and other graphics for web pages. The GIMP has many of the
-tools and filters you would expect to find in similar commercial offerings,
-and some interesting extras as well.
+in creating logos and other graphics for web pages. The GIMP has many of
+the tools and filters you would expect to find in similar commercial
+offerings, and some interesting extras as well.
 
 The GIMP provides a large image manipulation toolbox, including channel
-operations and layers, effects, sub-pixel imaging and anti-aliasing,
-and conversions, all with multi-level undo.
+operations and layers, effects, sub-pixel imaging and anti-aliasing, and
+conversions, all with multi-level undo.
 
 This version of The GIMP includes a scripting facility, but many of the
-included scripts rely on fonts that we cannot distribute. The GIMP ftp
-site has a package of fonts that you can install by yourself, which
-includes all the fonts needed to run the included scripts.
+included scripts rely on fonts that we cannot distribute. The GIMP ftp site
+has a package of fonts that you can install by yourself, which includes all
+the fonts needed to run the included scripts.
 
 %description -l fr
 Le Programme de Manipulation d'Image de GNU permet de retoucher des photos,
-de réaliser des compositions.  Beaucoup de gens l'apprécient pour la
-création de logos et de graphismes pour les pages web.  GIMP dispose d'un
+de réaliser des compositions. Beaucoup de gens l'apprécient pour la
+création de logos et de graphismes pour les pages web. GIMP dispose d'un
 grand nombre de filtres et de plug-ins que l'on ne trouve que dans les
 logiciels commerciaux haut de gamme ainsi que de nombreuses fonctionnalité
 inédites.
@@ -71,7 +71,7 @@ grand nombre de niveaux d'annulation.
 
 %description -l pl
 Program Gimp jest przeznaczony do obróbki i tworzenia plików w ró¿nych
-formatach graficznych. Dziêki niemu bêdziesz móg³ stworzyæ grafikê dla 
+formatach graficznych. Dziêki niemu bêdziesz móg³ stworzyæ grafikê dla
 stron WWW, przerobiæ zdjêcia, czy stworzyæ w³asne logo.
 
 %package devel
@@ -82,7 +82,7 @@ Summary(pl):	Dodatkowe moduly i rozszerzenia dla Gimp
 Summary(tr):	GIMP plugin ve uzantý geliþtirme araçlarý
 Group:		X11/Applications/Graphics
 Group(pl):	X11/Aplikacje/Grafika
-Copyright:	LGPL
+License:	LGPL
 Requires:	%{name} = %{version}
 Requires:	gtk+-devel >= 1.2.0
 
@@ -120,8 +120,8 @@ This package contains the ASCII Art plugin which requires the aalib shared
 library.
 
 %description aa -l fr
-Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie partagée
-aalib.
+Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie
+partagée aalib.
 
 #%package xd
 #Summary:	Xdelta plugin for GIMP
@@ -135,7 +135,7 @@ aalib.
 #This package contains the Xdelta plugin which requires the xdelta shared
 #library.
 
-#%description xd -l fr
+#%description -l fr xd
 #Ce paquet contient le plugin Xdelta qui nécéssite la librairie partagée
 #xdelta.
 
