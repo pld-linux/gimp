@@ -104,8 +104,8 @@ install -d $RPM_BUILD_ROOT/{etc/X11/wmconfig,usr/share/aclocal} \
 
 make install \
 	prefix=$RPM_BUILD_ROOT/usr/X11R6 \
-	INSTALLMAN3DIR=/tmp/gimp-1.1.4-root/usr/man/man3 \
-	INSTALLMAN1DIR=/tmp/gimp-1.1.4-root/usr/man/man1 \
+	INSTALLMAN3DIR=/tmp/gimp-1.1.4-root%{_mandir}/man3 \
+	INSTALLMAN1DIR=/tmp/gimp-1.1.4-root%{_mandir}/man1 \
 	PREFIX=/tmp/gimp-1.1.4-root/usr \
 	m4datadir=$RPM_BUILD_ROOT/usr/share/aclocal
 
@@ -115,7 +115,7 @@ strip $RPM_BUILD_ROOT/usr/X11R6/lib/lib*.so.*.*
 
 gzip -9nf $RPM_BUILD_ROOT/usr/X11R6/man/man*/* \
 	ChangeLog NEWS README docs/{*.txt,*.eps} \
-#	$RPM_BUILD_ROOT/usr/man/man*/*
+#	$RPM_BUILD_ROOT%{_mandir}/man*/*
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -134,7 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 
 /usr/X11R6/man/man1/gimp.1*
 /usr/X11R6/man/man5/gimprc.5*
-#/usr/man/man1/*
+#%{_mandir}/man1/*
 
 %attr(755,root,root) /usr/X11R6/lib/lib*.so.*
 
@@ -178,7 +178,7 @@ rm -rf $RPM_BUILD_ROOT
 
 /usr/X11R6/man/man1/gimptool.1.*
 /usr/X11R6/man/man3/*
-#/usr/man/man3/*
+#%{_mandir}/man3/*
 
 %files static
 %attr(644,root,root) /usr/X11R6/lib/lib*.a
