@@ -325,6 +325,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gimp/%{mver}/python/*.py[co]
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/python/*.so
 
+%dir %{_datadir}/gimp
 %dir %{_datadir}/gimp/%{mver}
 %{_datadir}/gimp/%{mver}/brushes
 %{_datadir}/gimp/%{mver}/fractalexplorer
