@@ -55,7 +55,7 @@ BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
-BuildRequires:	rpm-build >= 4.1-13
+BuildRequires:	rpmbuild(macros) >= 1.197
 Requires:	gtk+2 >= 2:2.4.4
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 Obsoletes:	gimp-data-min
@@ -300,8 +300,6 @@ cp /usr/share/automake/py-compile plug-ins/pygimp
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
-install -d $RPM_BUILD_ROOT%{_datadir}/application-registry
-install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -315,8 +313,6 @@ cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
 	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
 	$RPM_BUILD_ROOT%{_desktopdir}/gimp.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
-install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-registry
-install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 ################### end hack ############################
 
@@ -337,14 +333,12 @@ rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 rm -rf $RPM_BUILD_ROOT
 
 %post
-umask 022
-/sbin/ldconfig
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+%ldconfig_post
+%update_desktop_database
 
 %postun
-umask 022
-/sbin/ldconfig
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+%ldconfig_postun
+%update_desktop_database
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -356,8 +350,6 @@ umask 022
 %attr(755,root,root) %{_bindir}/gimp-remote-2.2
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_datadir}/application-registry/gimp.applications
-%{_datadir}/mime-info/gimp.keys
 %{_mandir}/man1/gimp-2*
 %{_mandir}/man1/gimp-remote-2*
 %{_mandir}/man5/gimprc-2*
