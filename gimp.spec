@@ -334,11 +334,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %ldconfig_post
-%update_desktop_database
+%update_desktop_database_post
 
 %postun
 %ldconfig_postun
-%update_desktop_database
+%update_desktop_database_postun
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
