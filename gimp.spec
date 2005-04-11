@@ -56,6 +56,7 @@ BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 BuildRequires:	rpmbuild(macros) >= 1.197
+Requires(post,postun):	desktop-file-utils
 Requires:	gtk+2 >= 2:2.4.4
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 Obsoletes:	gimp-data-min
