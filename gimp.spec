@@ -55,8 +55,6 @@ BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
-BuildRequires:	rpmbuild(macros) >= 1.197
-Requires(post,postun):	desktop-file-utils
 Requires:	gtk+2 >= 2:2.4.4
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 Obsoletes:	gimp-data-min
@@ -334,12 +332,14 @@ rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%ldconfig_post
-%update_desktop_database_post
+umask 022
+/sbin/ldconfig
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
 %postun
-%ldconfig_postun
-%update_desktop_database_postun
+umask 022
+/sbin/ldconfig
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -351,7 +351,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp-remote-2.2
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_mandir}/man1/gimp-2*
+[M#D%{_mandir}/man1/gimp-2*
 %{_mandir}/man1/gimp-remote-2*
 %{_mandir}/man5/gimprc-2*
 
