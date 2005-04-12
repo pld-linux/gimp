@@ -351,7 +351,7 @@ umask 022
 %attr(755,root,root) %{_bindir}/gimp-remote-2.2
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-[M#D%{_mandir}/man1/gimp-2*
+%{_mandir}/man1/gimp-2*
 %{_mandir}/man1/gimp-remote-2*
 %{_mandir}/man5/gimprc-2*
 
