@@ -3,9 +3,9 @@
 %bcond_without	aalib		# without aa plugin (which requires aalib)
 %bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
 %bcond_without	python		# without python plugins
+%bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 #
 %define	mver	2.0
-%define	pre	pre2
 Summary:	The GNU Image Manipulation Program
 Summary(de):	Das GNU-Bildbearbeitungs-Programm
 Summary(es):	Programa de manipulaciСn de imagen GNU
@@ -18,25 +18,26 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[м╪оЯ]GNUм╪оС╢╕юМ╧╓╬ъ
 Summary(zh_TW):	[╧о╧Ё]GNU╧о╤HЁB╡z╓u╗Ц
 Name:		gimp
-Version:	2.2
-Release:	0.%{pre}.1
+Version:	2.3.0
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/testing/%{name}-%{version}-%{pre}.tar.bz2
-# Source0-md5:	ebf7e6ecfd8140933ba8def721df49cd
-# Source0-size:	13847868
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
+# Source0-md5:	88e536ba0e4882958eb98bc0eadc8dd4
 Patch0:		%{name}-home_etc.patch
+Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-gcc4.patch
 URL:		http://www.gimp.org/
 Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
+BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gnome-vfs2-devel
-BuildRequires:	gtk+2-devel >= 2:2.4.0
+BuildRequires:	gtk+2-devel >= 2:2.4.4
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
@@ -50,16 +51,14 @@ BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
-BuildRequires:	libwmf-devel >= 0.2.8
+BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
-BuildRequires:	rpm-build >= 4.1-13
-Requires:	gtk+2 >= 2:2.4.0
+Requires:	gtk+2 >= 2:2.4.4
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
-Obsoletes:	gimp-svg
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The GIMP is an image manipulation program suitable for photo
@@ -74,7 +73,7 @@ anti-aliasing, and conversions, all with multi-level undo.
 
 This version of The GIMP includes a scripting facility, but many of
 the included scripts rely on fonts that we cannot distribute. The GIMP
-ftp site has a package of fonts that you can install by yourself,
+FTP site has a package of fonts that you can install by yourself,
 which includes all the fonts needed to run the included scripts.
 
 %description -l es
@@ -136,7 +135,7 @@ GIMP предоставляет большой набор инструментов для работы с графикой,
 GIMP включает поддержку создания сценариев (scripting facility),
 однако многие из поставляемых с программой сценариев предполагают
 наличие шрифтов, которые не могут быть включены в дистрибутив.
-ftp-сайт GIMP содержит пакет шрифтов, которые вы можете поставить
+FTP-сайт GIMP содержит пакет шрифтов, которые вы можете поставить
 самостоятельно, включающий все шрифты, необходимые для работы входящих
 в комплект сценариев. Некоторые из шрифтов имеют весьма необычные
 лицензионные требования; все лицензии включены в упомянутый пакет.
@@ -159,7 +158,7 @@ imaging ╕ антиал╕асинг, р╕зноман╕тн╕ конвертори ╕ все це з
 
 GIMP ма╓ п╕дтримку сценар╕╖в (scripting facility), проте багато з
 включених до поставки сценар╕╖в припускають наявн╕сть шрифт╕в, як╕ не
-можуть бути включен╕ в дистрибутив. ftp-сайт GIMP м╕стить пакет
+можуть бути включен╕ в дистрибутив. FTP-сайт GIMP м╕стить пакет
 шрифт╕в, котр╕ ви можете встановити самост╕йно, в який входять вс╕
 шрифти, необх╕дн╕ для роботи сценар╕╖в з поставки GIMP. Деяк╕ з
 шрифт╕в мають вельми незвичайн╕ л╕ценз╕йн╕ умови; вс╕ л╕ценз╕╖
@@ -186,7 +185,7 @@ Group:		X11/Development/Libraries
 Requires(post,postun):	/sbin/ldconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gtk-doc-common
-Requires:	gtk+2-devel >= 1:2.2.2
+Requires:	gtk+2-devel >= 2:2.4.4
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -255,9 +254,26 @@ Print plugin for Gimp.
 %description print -l pl
 Wtyczka do drukowania dla Gimpa.
 
+%package svg
+Summary:	SVG plugin for Gimp
+Summary(pl):	Wtyczka SVG dla Gimpa
+Group:		X11/Applications/Graphics
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	librsvg >= 2.2.0
+
+%description svg
+SVG plugin for Gimp.
+
+%description svg -l pl
+Wtyczka SVG dla Gimpa.
+
 %prep
-%setup -qn %{name}-%{version}-%{pre}
+%setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+cp /usr/share/automake/py-compile plug-ins/pygimp
 
 %build
 %{__libtoolize}
@@ -265,6 +281,7 @@ Wtyczka do drukowania dla Gimpa.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+
 %configure \
 	--disable-rpath \
 	%{!?with_print: --disable-print} \
@@ -273,32 +290,29 @@ Wtyczka do drukowania dla Gimpa.
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-default-binary \
 	--enable-static \
-	--enable-gtk-doc
+	--enable-gtk-doc \
+	%{?with_posix_shm:--with-shm=posix}
+	
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
-install -d $RPM_BUILD_ROOT%{_datadir}/application-registry
-install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-#############################################################
-# This is hack indeed, but it is supposed to disappear when #
-# version 2.0 will arrive                                   #
-# but it doesn't :(
-#############################################################
+#########################################################
+# This is hack indeed, but it was supposed to disappear #
+# when version 2.0 will arrive but it doesn't :(        #
+#########################################################
 
 cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
 	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
 	$RPM_BUILD_ROOT%{_desktopdir}/gimp.desktop
-install data/images/wilber-devel-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
-install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-registry
-install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
+install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
-###################### end hack #############################
+################### end hack ############################
 
 # Link gimptool to gimptool-2.0
 
@@ -331,13 +345,12 @@ umask 022
 %doc AUTHORS ChangeLog NEWS README
 %doc docs/{*.txt,quick_reference.*,Wilber*}
 
-%attr(755,root,root) %{_bindir}/gimp-2.2
+%attr(755,root,root) %{_bindir}/gimp-2.3
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-remote-2.2
+%attr(755,root,root) %{_bindir}/gimp-console-2.3
+%attr(755,root,root) %{_bindir}/gimp-remote-2.3
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_datadir}/application-registry/gimp.applications
-%{_datadir}/mime-info/gimp.keys
 %{_mandir}/man1/gimp-2*
 %{_mandir}/man1/gimp-remote-2*
 %{_mandir}/man5/gimprc-2*
@@ -346,9 +359,11 @@ umask 022
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
 %dir %{_libdir}/gimp/%{mver}/plug-ins
+%{_libdir}/gimp/%{mver}/interpreters
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
 %{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
 %{?with_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
+%exclude %{_libdir}/gimp/%{mver}/plug-ins/svg
 
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
@@ -357,6 +372,7 @@ umask 022
 %if %{with python}
 %dir %{_libdir}/gimp/%{mver}/python
 %{_libdir}/gimp/%{mver}/python/*.py[co]
+%{_libdir}/gimp/%{mver}/python/*.png
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/python/*.so
 %endif
 
@@ -419,3 +435,7 @@ umask 022
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/print
 %endif
+
+%files svg
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/svg
