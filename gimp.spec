@@ -18,13 +18,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.3.1
+Version:	2.3.2
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	eff5c193e9e8a0699d99b1df95b70003
+# Source0-md5:	c310f55a7896285caee5e2ad12c2064f
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -302,14 +302,6 @@ install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-#########################################################
-# This is hack indeed, but it was supposed to disappear #
-# when version 2.0 will arrive but it doesn't :(        #
-#########################################################
-
-cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
-	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
-	$RPM_BUILD_ROOT%{_desktopdir}/gimp.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
 ################### end hack ############################
@@ -322,7 +314,6 @@ echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
-rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,keys}
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --all-name
@@ -391,7 +382,6 @@ umask 022
 %{_datadir}/gimp/%{mver}/scripts
 %{_datadir}/gimp/%{mver}/themes
 %{_datadir}/gimp/%{mver}/tips
-%dir %{_datadir}/gimp/%{mver}/misc
 
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/%{mver}
