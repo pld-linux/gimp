@@ -54,6 +54,7 @@ BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
+Requires:	hicolor-icon-theme
 Requires:	gtk+2 >= 2:2.4.4
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 Obsoletes:	gimp-data-min
@@ -315,6 +316,7 @@ echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
+rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
 
 %find_lang %{name} --all-name
 
@@ -393,6 +395,7 @@ umask 022
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
 %config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 
+%{_iconsdir}/hicolor/48x48/apps/gimp.png
 %{_pixmapsdir}/*
 
 %files devel
