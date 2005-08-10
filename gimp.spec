@@ -53,6 +53,7 @@ BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
+BuildRequires:	poppler-glib-devel >= 0.3.1
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 Requires:	hicolor-icon-theme
 Requires:	gtk+2 >= 2:2.4.4
