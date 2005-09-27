@@ -18,13 +18,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.3.3
+Version:	2.3.4
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	08b27555772a8bafeb428a6a34d4c685
+# Source0-md5:	aed743d450b268dfadcd79c3487e46ea
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -287,7 +287,7 @@ cp /usr/share/automake/py-compile plug-ins/pygimp
 %configure \
 	--disable-rpath \
 	%{!?with_print: --disable-print} \
-	%{?with_python: --enable-python} \
+	%{!?with_python: --disable-python} \
 	--enable-mp \
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-default-binary \
