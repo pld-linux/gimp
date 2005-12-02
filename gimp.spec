@@ -1,9 +1,11 @@
 #
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
+%bcond_without	apidocs		# disable gtk-doc
 %bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
 %bcond_without	python		# without python plugins
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
+%bcond_without	static_libs	# do not build static libraries
 #
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -38,7 +40,7 @@ BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
 BuildRequires:	gtk+2-devel >= 2:2.4.4
-BuildRequires:	gtk-doc >= 1.0
+%{?with_apidocs:BuildRequires:	gtk-doc >= 1.0}
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
@@ -284,14 +286,14 @@ cp /usr/share/automake/py-compile plug-ins/pygimp
 %{__automake}
 
 %configure \
-	--disable-rpath \
 	%{!?with_print: --disable-print} \
-	%{?with_python: --enable-python} \
-	--enable-mp \
-	--with-html-dir=%{_gtkdocdir} \
+	--disable-rpath \
 	--enable-default-binary \
-	--enable-static \
-	--enable-gtk-doc \
+	%{?with_apidocs:--enable-gtk-doc} \
+	--enable-mp \
+	%{?with_python: --enable-python} \
+	%{?with_static_lib:--enable-static} \
+	--with-html-dir=%{_gtkdocdir} \
 	%{?with_posix_shm:--with-shm=posix}
 	
 %{__make}
@@ -419,9 +421,11 @@ umask 022
 %{_mandir}/man1/gimptool-%{mver}*
 %{_mandir}/man1/gimptool.1*
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+%endif
 
 %if %{with aalib}
 %files aa
