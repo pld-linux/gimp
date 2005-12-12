@@ -37,8 +37,8 @@ BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-%{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
+%{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 BuildRequires:	gtk+2-devel >= 2:2.4.4
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.0}
 BuildRequires:	intltool
@@ -187,8 +187,8 @@ License:	LGPL
 Group:		X11/Development/Libraries
 Requires(post,postun):	/sbin/ldconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	gtk-doc-common
 Requires:	gtk+2-devel >= 2:2.4.4
+Requires:	gtk-doc-common
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -295,7 +295,7 @@ cp /usr/share/automake/py-compile plug-ins/pygimp
 	%{?with_static_lib:--enable-static} \
 	--with-html-dir=%{_gtkdocdir} \
 	%{?with_posix_shm:--with-shm=posix}
-	
+
 %{__make}
 
 %install
