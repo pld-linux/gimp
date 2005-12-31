@@ -1,11 +1,22 @@
---- gimp-2.2.4/app/actions/dialogs-actions.h.orig	2004-04-27 15:55:26.000000000 +0200
-+++ gimp-2.2.4/app/actions/dialogs-actions.h	2005-03-12 21:47:08.443575392 +0100
-@@ -19,6 +19,8 @@
- #ifndef __DIALOGS_ACTIONS_H__
- #define __DIALOGS_ACTIONS_H__
- 
-+#include <widgets/gimpactiongroup.h>
-+#include <widgets/widgets-types.h>
- 
- extern GimpStringActionEntry dialogs_dockable_actions[];
- extern gint                  n_dialogs_dockable_actions;
+--- gimp-2.2.10/app/composite/gimp-composite-x86.h.orig	2005-01-08 00:58:33.000000000 +0100
++++ gimp-2.2.10/app/composite/gimp-composite-x86.h	2005-12-31 01:55:07.543302360 +0100
+@@ -85,7 +85,7 @@
+  * (high-order bit of each word is left alone)
+  * clobber list must include: "%eax", "%ecx", "%edx", divisor quotient
+  */
+-#define pdivwqX(dividend,divisor,quotient) "movd   %%" #dividend ",%%eax; " \
++#define pdivwqX(dividend,divisor,quotient) "pushl %%ecx ; movd   %%" #dividend ",%%eax; " \
+                                           "movd   %%" #divisor  ",%%ecx; " \
+                                           "xorl   %%edx,%%edx; "           \
+                                           "divw   %%cx; "                  \
+@@ -108,8 +108,8 @@
+                                           "roll   $16, %%eax; "            \
+                                           "movd   %%eax,%%" #divisor ";"   \
+                                           "psllq  $32,%%" #divisor ";"     \
+-                                          "por    %%" #divisor ",%%" #quotient ";"
+-#define pdivwqX_clobber "%eax", "%ecx", "%edx", "%cc"
++                                          "por    %%" #divisor ",%%" #quotient "; popl %%ecx"
++#define pdivwqX_clobber "%eax", "%edx", "cc"
+    
+ /*
+  * Quadword divide.  Adjusted for subsequent unsigned packing
