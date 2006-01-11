@@ -274,7 +274,9 @@ Wtyczka SVG dla Gimpa.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%ifarch %{ix86}
 %patch2 -p1
+%endif
 
 cp /usr/share/automake/py-compile plug-ins/pygimp
 
