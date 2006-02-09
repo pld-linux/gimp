@@ -18,18 +18,17 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.3.6
+Version:	2.3.7
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	ce8ad77f4eb47abb868e6b4eb1f97943
+# Source0-md5:	dfc47a29b3a7ade07bd17244f0e83311
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
 URL:		http://www.gimp.org/
-Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	autoconf >= 2.54
@@ -37,7 +36,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gtk+2-devel >= 2:2.4.4
+BuildRequires:	gtk+2-devel >= 2:2.8.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
@@ -56,7 +55,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.3.1
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
 Requires:	hicolor-icon-theme
-Requires:	gtk+2 >= 2:2.4.4
+Requires:	gtk+2 >= 2:2.8.0
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
