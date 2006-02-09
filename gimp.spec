@@ -18,19 +18,17 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.2.4
+Version:	2.3.7
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	99e2b9391e87f8930bc22e791c8342d8
-# missing in tarball:
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
+# Source0-md5:	dfc47a29b3a7ade07bd17244f0e83311
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
 URL:		http://www.gimp.org/
-Icon:		gimp.gif
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	autoconf >= 2.54
@@ -38,7 +36,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gtk+2-devel >= 2:2.4.4
+BuildRequires:	gtk+2-devel >= 2:2.8.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
@@ -54,9 +52,10 @@ BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
+BuildRequires:	poppler-glib-devel >= 0.3.1
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
-BuildRequires:	rpm-build >= 4.1-13
-Requires:	gtk+2 >= 2:2.4.4
+Requires:	hicolor-icon-theme
+Requires:	gtk+2 >= 2:2.8.0
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -287,7 +286,7 @@ cp /usr/share/automake/py-compile plug-ins/pygimp
 %configure \
 	--disable-rpath \
 	%{!?with_print: --disable-print} \
-	%{?with_python: --enable-python} \
+	%{!?with_python: --disable-python} \
 	--enable-mp \
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-default-binary \
@@ -300,23 +299,11 @@ cp /usr/share/automake/py-compile plug-ins/pygimp
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
-install -d $RPM_BUILD_ROOT%{_datadir}/application-registry
-install -d $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-#########################################################
-# This is hack indeed, but it was supposed to disappear #
-# when version 2.0 will arrive but it doesn't :(        #
-#########################################################
-
-cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
-	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
-	$RPM_BUILD_ROOT%{_desktopdir}/gimp.desktop
 install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
-install data/misc/gimp.applications $RPM_BUILD_ROOT%{_datadir}/application-registry
-install data/misc/gimp.keys $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 ################### end hack ############################
 
@@ -328,8 +315,8 @@ echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
-rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,keys}
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
+rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
 
 %find_lang %{name} --all-name
 
@@ -349,15 +336,14 @@ umask 022
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
-%doc docs/{*.txt,quick_reference.*,Wilber*}
+%doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.2
+%attr(755,root,root) %{_bindir}/gimp-2.3
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-remote-2.2
+%attr(755,root,root) %{_bindir}/gimp-console-2.3
+%attr(755,root,root) %{_bindir}/gimp-remote-2.3
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_datadir}/application-registry/gimp.applications
-%{_datadir}/mime-info/gimp.keys
 %{_mandir}/man1/gimp-2*
 %{_mandir}/man1/gimp-remote-2*
 %{_mandir}/man5/gimprc-2*
@@ -366,6 +352,7 @@ umask 022
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
 %dir %{_libdir}/gimp/%{mver}/plug-ins
+%{_libdir}/gimp/%{mver}/interpreters
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
 %{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
 %{?with_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
@@ -397,7 +384,6 @@ umask 022
 %{_datadir}/gimp/%{mver}/scripts
 %{_datadir}/gimp/%{mver}/themes
 %{_datadir}/gimp/%{mver}/tips
-%dir %{_datadir}/gimp/%{mver}/misc
 
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/%{mver}
@@ -409,6 +395,7 @@ umask 022
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
 %config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 
+%{_iconsdir}/hicolor/48x48/apps/gimp.png
 %{_pixmapsdir}/*
 
 %files devel
