@@ -273,8 +273,6 @@ Wtyczka SVG dla Gimpa.
 %patch0 -p1
 %patch1 -p1
 
-#cp /usr/share/automake/py-compile plug-ins/pygimp
-
 %build
 %{__libtoolize}
 %{__aclocal}
