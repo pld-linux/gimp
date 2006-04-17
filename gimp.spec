@@ -24,7 +24,7 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.3.8
-Release:	0.1
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -295,7 +295,7 @@ Wtyczka SVG dla Gimpa.
 %configure \
 	--disable-rpath \
 	%{!?with_gnome: --without-gnomeprint} \
-	%{!?with_print: --disable-print} \
+	%{!?with_print: --without-print} \
 	%{!?with_python: --disable-python} \
 	--enable-mp \
 	--with-html-dir=%{_gtkdocdir} \
@@ -308,7 +308,6 @@ Wtyczka SVG dla Gimpa.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
