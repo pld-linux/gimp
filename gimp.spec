@@ -36,6 +36,7 @@ BuildRequires:	alsa-lib-devel >= 1.0.0
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
+BuildRequires:	giflib-devel
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 BuildRequires:	gtk+2-devel >= 2:2.4.4
@@ -51,7 +52,6 @@ BuildRequires:	libpng-devel >= 1.0.8
 BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
-BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
