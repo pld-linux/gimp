@@ -65,6 +65,7 @@ BuildRequires:	gnome-vfs2-devel >= 2.10.0
 BuildRequires:	libgnomeprintui >= 2.10.0
 BuildRequires:	libgnomeui-devel >= 2.10.0
 %endif
+Requires(post,postun):  gtk+2
 Requires:	hicolor-icon-theme
 Requires:	gtk+2 >= 2:2.8.8
 %{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
@@ -333,11 +334,13 @@ rm -rf $RPM_BUILD_ROOT
 umask 022
 /sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %postun
 umask 022
 /sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
