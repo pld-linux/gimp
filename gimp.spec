@@ -185,7 +185,7 @@ ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. якщо хочете
 Summary:	GIMP libraries
 Summary(pl):	Biblioteki GIMPa
 Group:		Libraries
-Requires:	gtk+2 >= 2:2.8.8
+Requires:	gtk+2 >= 2:2.9.3
 
 %description libs
 This package contains GIMP libraries.
