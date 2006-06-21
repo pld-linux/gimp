@@ -24,7 +24,7 @@ Summary(zh_CN):	[Í¼Ïñ]GNUÍ¼Ïó´¦Àí¹¤¾ß
 Summary(zh_TW):	[¹Ï¹³]GNU¹Ï¶H³B²z¤u¨ã
 Name:		gimp
 Version:	2.3.9
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -35,40 +35,40 @@ Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
-BuildRequires:	alsa-lib-devel >= 1.0.0
+BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 %{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
 %{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gtk+2-devel >= 2:2.8.8
-BuildRequires:	gtk-doc >= 1.0
+BuildRequires:	gtk+2-devel >= 2:2.9.3
+BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	intltool
 BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel
-BuildRequires:	libgtkhtml-devel >= 2.0.0
+BuildRequires:	libgtkhtml-devel >= 2.6.3
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel >= 1.0.8
-BuildRequires:	librsvg-devel >= 2.8.0
+BuildRequires:	librsvg-devel >= 1:2.15.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
-BuildRequires:	poppler-glib-devel >= 0.3.1
-%{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
+BuildRequires:	poppler-glib-devel >= 0.5.3
+%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.9.3}
 %if %{with gnome}
-BuildRequires:	gnome-keyring-devel >= 0.4.5
-BuildRequires:	gnome-vfs2-devel >= 2.10.0
-BuildRequires:	libgnomeprintui >= 2.10.0
-BuildRequires:	libgnomeui-devel >= 2.10.0
+BuildRequires:	gnome-keyring-devel >= 0.5.1
+BuildRequires:	gnome-vfs2-devel >= 2.15.2
+BuildRequires:	libgnomeprintui >= 2.12.1
+BuildRequires:	libgnomeui-devel >= 2.15.1
 %endif
-Requires(post,postun):  gtk+2
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires(post,postun):  gtk+2 >= 2:2.9.3
 Requires:	hicolor-icon-theme
-Requires:	gtk+2 >= 2:2.8.8
-%{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
+%{?with_python:Requires:	python-pygtk-gtk >= 1:2.9.3}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -181,6 +181,18 @@ ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. ÑËÝÏ ÈÏÞÅÔÅ
 ÚÁÐÕÓËÁÔÉ ÓÃÅÎÁÒ¦§ ÂÅÚ ÚÍ¦Î ÁÂÏ Ö ×ÉÂÅÒ¦ÔØ ×ÓÔÁÎÏ×ÁÌÅÎ¦ Õ ×ÁÓ ×
 ÓÉÓÔÅÍ¦ ÛÒÉÆÔÉ ÐÅÒÅÄ ÚÁÐÕÓËÏÍ ÓÃÅÎÁÒ¦§×.
 
+%package libs
+Summary:	GIMP libraries
+Summary(pl):	Biblioteki GIMPa
+Group:		Libraries
+Requires:	gtk+2 >= 2:2.8.8
+
+%description libs
+This package contains GIMP libraries.
+
+%description libs -l pl
+Pakiet zawiera biblioteki GIMPa.
+
 %package devel
 Summary:	GIMP plugin and extension development kit
 Summary(de):	GIMP-Plugin und Extension Development Kit
@@ -195,10 +207,9 @@ Summary(zh_CN):	[¿ª·¢]gimpµÄ¿ª·¢°ü
 Summary(zh_TW):	[¶}µo]gimpªº¶}µo¥]
 License:	LGPL
 Group:		X11/Development/Libraries
-Requires(post,postun):	/sbin/ldconfig
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	gtk-doc-common
-Requires:	gtk+2-devel >= 2:2.8.8
+Requires:	gtk+2-devel >= 2:2.9.3
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -332,15 +343,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 umask 022
-/sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %postun
 umask 022
-/sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
 gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
+
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -357,7 +369,6 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %{_mandir}/man1/gimp-remote-2*
 %{_mandir}/man5/gimprc-2*
 
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
 %dir %{_libdir}/gimp/%{mver}/plug-ins
@@ -406,6 +417,10 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 
 %{_iconsdir}/hicolor/*/apps/gimp.*
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
