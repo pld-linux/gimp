@@ -1,14 +1,9 @@
 #
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
-%bcond_without	gnome		# don't build GNOME based features (like gnome-print support)
-%bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
+%bcond_without	gnome		# don't build GNOME based features
 %bcond_without	python		# without python plugins
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
-#
-%if %{with gnome}
-%undefine	with_print
-%endif
 #
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -39,11 +34,9 @@ BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-%{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
-%{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-BuildRequires:	gtk+2-devel >= 2:2.9.3
+BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	gtk-doc >= 1.6
-BuildRequires:	intltool
+BuildRequires:	intltool >= 0.35.0
 BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel
@@ -62,15 +55,14 @@ BuildRequires:	poppler-glib-devel >= 0.5.3
 %if %{with gnome}
 BuildRequires:	gnome-keyring-devel >= 0.5.1
 BuildRequires:	gnome-vfs2-devel >= 2.15.2
-BuildRequires:	libgnomeprintui >= 2.12.1
-BuildRequires:	libgnomeui-devel >= 2.15.1
 %endif
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires(post,postun):  gtk+2 >= 2:2.9.3
+Requires(post,postun):  gtk+2 >= 2:2.10.0
 Requires:	hicolor-icon-theme
 %{?with_python:Requires:	python-pygtk-gtk >= 1:2.9.3}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
+Obsoletes:	gimp-print
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -265,19 +257,6 @@ partagée aalib.
 %description aa -l pl
 Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
 
-%package print
-Summary:	Print plugin for Gimp
-Summary(pl):	Wtyczka do drukowania dla Gimpa
-Group:		X11/Applications/Graphics
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	gimp-print-lib >= 4.2.6
-
-%description print
-Print plugin for Gimp.
-
-%description print -l pl
-Wtyczka do drukowania dla Gimpa.
-
 %package svg
 Summary:	SVG plugin for Gimp
 Summary(pl):	Wtyczka SVG dla Gimpa
@@ -306,8 +285,6 @@ Wtyczka SVG dla Gimpa.
 
 %configure \
 	--disable-rpath \
-	%{!?with_gnome: --without-gnomeprint} \
-	%{!?with_print: --without-print} \
 	%{!?with_python: --disable-python} \
 	--enable-mp \
 	--with-html-dir=%{_gtkdocdir} \
@@ -375,8 +352,6 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %{_libdir}/gimp/%{mver}/interpreters
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
 %{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
-#%{?with_gnome:%{_libdir}/gimp/%{mver}/plug-ins/gnomeprint}
-%{?with_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
 %exclude %{_libdir}/gimp/%{mver}/plug-ins/svg
 
 %dir %{_libdir}/gimp/%{mver}/modules
@@ -445,12 +420,6 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %files aa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/aa
-%endif
-
-%if %{with print}
-%files print
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/print
 %endif
 
 %files svg
