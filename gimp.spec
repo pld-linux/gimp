@@ -23,13 +23,13 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.3.9
-Release:	3
+Version:	2.3.10
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	4299e81e1824e08a90b50dc8beb46151
+# Source0-md5:	a46acb413484300583ffca1fa54e0874
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -375,7 +375,7 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %{_libdir}/gimp/%{mver}/interpreters
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
 %{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
-%{?with_gnome:%{_libdir}/gimp/%{mver}/plug-ins/gnomeprint}
+#%{?with_gnome:%{_libdir}/gimp/%{mver}/plug-ins/gnomeprint}
 %{?with_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
 %exclude %{_libdir}/gimp/%{mver}/plug-ins/svg
 
