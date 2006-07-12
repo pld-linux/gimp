@@ -19,7 +19,7 @@ Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.3.10
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -43,7 +43,7 @@ BuildRequires:	libexif-devel
 BuildRequires:	libgtkhtml-devel >= 2.6.3
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
-BuildRequires:	libpng-devel >= 1.0.8
+BuildRequires:	libpng-devel >= 1.2.12
 BuildRequires:	librsvg-devel >= 1:2.15.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
@@ -54,7 +54,7 @@ BuildRequires:	poppler-glib-devel >= 0.5.3
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.9.3}
 %if %{with gnome}
 BuildRequires:	gnome-keyring-devel >= 0.5.1
-BuildRequires:	gnome-vfs2-devel >= 2.15.2
+BuildRequires:	gnome-vfs2-devel >= 2.15.3
 %endif
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires(post,postun):  gtk+2 >= 2:2.10.0
@@ -177,7 +177,7 @@ ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. 捀椿 �癹籥�
 Summary:	GIMP libraries
 Summary(pl):	Biblioteki GIMPa
 Group:		Libraries
-Requires:	gtk+2 >= 2:2.9.3
+Requires:	gtk+2 >= 2:2.10.0
 
 %description libs
 This package contains GIMP libraries.
@@ -201,7 +201,7 @@ License:	LGPL
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	gtk-doc-common
-Requires:	gtk+2-devel >= 2:2.9.3
+Requires:	gtk+2-devel >= 2:2.10.0
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -282,7 +282,7 @@ Wtyczka SVG dla Gimpa.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-
+LDFLAGS="%{rpmldflags} -Wl,--as-needed"
 %configure \
 	--disable-rpath \
 	%{!?with_python: --disable-python} \
