@@ -20,16 +20,15 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.2.11
+Version:	2.2.12
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	0403e9b4e0415c99cd27b137b9839212
+# Source0-md5:	6a1906db60166a88317f2df5f195a57d
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
-Patch2:		%{name}-gcc4.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.0
@@ -273,9 +272,6 @@ Wtyczka SVG dla Gimpa.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%ifarch %{ix86}
-%patch2 -p1
-%endif
 
 cp /usr/share/automake/py-compile plug-ins/pygimp
 
