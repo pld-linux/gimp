@@ -20,15 +20,14 @@ Summary(uk):	The GNU Image Manipulation Program
 Summary(zh_CN):	[芞砉]GNU芞砓揭燴馱撿
 Summary(zh_TW):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.2.12
+Version:	2.2.13
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	6a1906db60166a88317f2df5f195a57d
+# Source0-md5:	d84a4a476a0c4fae24602db67f6fe49a
 Patch0:		%{name}-home_etc.patch
-Patch1:		%{name}-desktop.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.0
@@ -271,7 +270,6 @@ Wtyczka SVG dla Gimpa.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 cp /usr/share/automake/py-compile plug-ins/pygimp
 
@@ -339,6 +337,13 @@ umask 022
 umask 022
 /sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+
+%if %{with posix_shm}
+%verifyscript
+if ! grep -q -s '^[^ ]* /dev/shm tmpfs ' /proc/mounts ; then
+	echo "/dev/shm is not mounted, but GIMP was compiled to use POSIX SHM"
+fi
+%endif
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
