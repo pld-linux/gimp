@@ -56,7 +56,7 @@ BuildRequires:	poppler-glib-devel >= 0.5.3
 %if %{with gnome}
 BuildRequires:	gnome-keyring-devel >= 0.5.1
 BuildRequires:	gnome-vfs2-devel >= 2.15.91
-BuildRequires:	gnomeui-devel >= 2.15.91
+BuildRequires:	libgnomeui-devel >= 2.15.91
 %endif
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires(post,postun):  gtk+2 >= 2:2.10.0
