@@ -28,6 +28,7 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
+Patch3:		%{name}-nognome.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -276,6 +277,7 @@ Wtyczka SVG dla Gimpa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%{!?with_gnome:%patch3 -p1}
 
 %build
 %{__libtoolize}
@@ -283,7 +285,6 @@ Wtyczka SVG dla Gimpa.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-LDFLAGS="%{rpmldflags} -Wl,--as-needed"
 %configure \
 	--disable-rpath \
 	%{!?with_python: --disable-python} \
