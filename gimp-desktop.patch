@@ -3,10 +3,10 @@ diff -aurN gimp-2.3.7.orig/desktop/gimp.desktop.in.in gimp-2.3.7/desktop/gimp.de
 +++ gimp-2.3.7/desktop/gimp.desktop.in.in	2006-02-09 15:09:20.415363016 +0100
 @@ -9,7 +9,7 @@
  TryExec=gimp-@GIMP_APP_VERSION@
- Icon=gimp.png
+ Icon=gimp
  Terminal=false
--Categories=Application;Graphics;2DGraphics;RasterGraphics;GTK;
+-Categories=Graphics;2DGraphics;RasterGraphics;GTK;
 +Categories=GTK;GNOME;Graphics;RasterGraphics;
  X-GNOME-Bugzilla-Bugzilla=GNOME
  X-GNOME-Bugzilla-Product=GIMP
- StartupNotify=true
+ X-GNOME-Bugzilla-Component=General
