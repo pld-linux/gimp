@@ -54,6 +54,7 @@ BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.5.3
+BuildRequires:	rpm-pythonprov
 BuildRequires:	xorg-lib-libXpm-devel
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.9.3}
 %if %{with gnome}
