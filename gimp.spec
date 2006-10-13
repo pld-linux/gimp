@@ -35,6 +35,7 @@ BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
+BuildRequires:	giflib-devel
 BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	intltool >= 0.35.0
@@ -48,7 +49,6 @@ BuildRequires:	libpng-devel >= 1.2.12
 BuildRequires:	librsvg-devel >= 1:2.15.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
-BuildRequires:	libungif-devel
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.5.3
