@@ -186,7 +186,6 @@ Requires(post,postun):	/sbin/ldconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.4.4
 Requires:	gtk-doc-common
-Requires:	pkgconfig
 
 %description devel
 Header files for writing GIMP plugins and extensions.
