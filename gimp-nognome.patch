@@ -1,0 +1,28 @@
+diff -ruN gimp-2.3.12./configure.in gimp-2.3.12/configure.in
+--- gimp-2.3.12./configure.in	2006-10-13 12:40:40.000000000 +0200
++++ gimp-2.3.12/configure.in	2006-10-13 12:45:49.550094250 +0200
+@@ -1232,21 +1232,21 @@
+ gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
+ 
+ if $PKG_CONFIG --atleast-version=gnomeui_required_version libgnomeui-2.0; then
+-  have_gnomeui=yes
++  have_gnomeui="no (we dont use)"
+   gnome_vfs_modules="$gnome_vfs_modules libgnomeui-2.0"
+ else
+   have_gnomeui="no (libgnomeui-2.0 not found)"
+ fi
+ 
+ if $PKG_CONFIG --atleast-version=gnome_keyring_required_version gnome-keyring-1; then
+-  have_gnome_keyring=yes
++  have_gnome_keyring="no (we dont use)"
+   gnome_vfs_modules="$gnome_vfs_modules gnome-keyring-1"
+ else
+   have_gnome_keyring="no (gnome-keyring-1 not found)"
+ fi
+ 
+ PKG_CHECK_MODULES(URI_GNOME_VFS, $gnome_vfs_modules,
+-  have_gnomevfs=yes,
++  have_gnomevfs="no (we dont use)",
+   have_gnomevfs="no (gnome-vfs-2.0 not found)")
+ 
+ AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
