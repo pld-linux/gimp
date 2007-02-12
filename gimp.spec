@@ -9,16 +9,16 @@
 #
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
-Summary(de):	Das GNU-Bildbearbeitungs-Programm
-Summary(es):	Programa de manipulación de imagen GNU
-Summary(fr):	Le programme de manipulation d'images de GNU
-Summary(pl):	Program GNU do manipulacji formatami graficznymi (GIMP)
-Summary(pt_BR):	Programa de manipulação de imagem GNU
-Summary(ru):	The GNU Image Manipulation Program
-Summary(tr):	Çizim, boyama ve görüntü iþleme programý
-Summary(uk):	The GNU Image Manipulation Program
-Summary(zh_CN):	[Í¼Ïñ]GNUÍ¼Ïó´¦Àí¹¤¾ß
-Summary(zh_TW):	[¹Ï¹³]GNU¹Ï¶H³B²z¤u¨ã
+Summary(de.UTF-8):   Das GNU-Bildbearbeitungs-Programm
+Summary(es.UTF-8):   Programa de manipulaciÃ³n de imagen GNU
+Summary(fr.UTF-8):   Le programme de manipulation d'images de GNU
+Summary(pl.UTF-8):   Program GNU do manipulacji formatami graficznymi (GIMP)
+Summary(pt_BR.UTF-8):   Programa de manipulaÃ§Ã£o de imagem GNU
+Summary(ru.UTF-8):   The GNU Image Manipulation Program
+Summary(tr.UTF-8):   Ã‡izim, boyama ve gÃ¶rÃ¼ntÃ¼ iÅŸleme programÄ±
+Summary(uk.UTF-8):   The GNU Image Manipulation Program
+Summary(zh_CN.UTF-8):   [å›¾åƒ]GNUå›¾è±¡å¤„ç†å·¥å…·
+Summary(zh_TW.UTF-8):   [åœ–åƒ]GNUåœ–è±¡è™•ç†å·¥å…·
 Name:		gimp
 Version:	2.2.13
 Release:	1
@@ -76,110 +76,110 @@ the included scripts rely on fonts that we cannot distribute. The GIMP
 FTP site has a package of fonts that you can install by yourself,
 which includes all the fonts needed to run the included scripts.
 
-%description -l es
-GIMP es un programa de manejo de imágenes adecuado para retoque de
-fotos, composición y editoración de imágenes. Muchas personas lo
-encuentran extremamente útil en la creación de logos y otros gráficos
-para páginas web. GIMP tiene muchas herramientas y filtros normalmente
-encontrados en aplicaciones comerciales similares, además de
-características extras bien interesantes. GIMP ofrece una extensa caja
+%description -l es.UTF-8
+GIMP es un programa de manejo de imÃ¡genes adecuado para retoque de
+fotos, composiciÃ³n y editoraciÃ³n de imÃ¡genes. Muchas personas lo
+encuentran extremamente Ãºtil en la creaciÃ³n de logos y otros grÃ¡ficos
+para pÃ¡ginas web. GIMP tiene muchas herramientas y filtros normalmente
+encontrados en aplicaciones comerciales similares, ademÃ¡s de
+caracterÃ­sticas extras bien interesantes. GIMP ofrece una extensa caja
 de herramientas de manejo de imagen, incluyendo camadas, efectos,
-formación de imagen subpíxel y antialiasing, conversiones, todos con
+formaciÃ³n de imagen subpÃ­xel y antialiasing, conversiones, todos con
 deshacer en varios niveles (multi-level undo).
 
-%description -l fr
+%description -l fr.UTF-8
 Le Programme de Manipulation d'Image de GNU permet de retoucher des
-photos, de réaliser des compositions. Beaucoup de gens l'apprécient
-pour la création de logos et de graphismes pour les pages web. GIMP
+photos, de rÃ©aliser des compositions. Beaucoup de gens l'apprÃ©cient
+pour la crÃ©ation de logos et de graphismes pour les pages web. GIMP
 dispose d'un grand nombre de filtres et de plug-ins que l'on ne trouve
 que dans les logiciels commerciaux haut de gamme ainsi que de
-nombreuses fonctionnalité inédites.
+nombreuses fonctionnalitÃ© inÃ©dites.
 
-GIMP fournit une boite à outil permettant de gérer plusieurs calques,
+GIMP fournit une boite Ã  outil permettant de gÃ©rer plusieurs calques,
 de nombreux effets, l'anti-aliasing, les conversions de fichiers ainsi
 qu'un grand nombre de niveaux d'annulation.
 
-%description -l pl
-Program GIMP jest przeznaczony do obróbki i tworzenia plików w ró¿nych
-formatach graficznych. Przy jego u¿yciu mo¿na tworzyæ grafikê dla
-stron WWW, retuszowaæ zdjêcia, czy stworzyæ w³asne logo.
+%description -l pl.UTF-8
+Program GIMP jest przeznaczony do obrÃ³bki i tworzenia plikÃ³w w rÃ³Å¼nych
+formatach graficznych. Przy jego uÅ¼yciu moÅ¼na tworzyÄ‡ grafikÄ™ dla
+stron WWW, retuszowaÄ‡ zdjÄ™cia, czy stworzyÄ‡ wÅ‚asne logo.
 
-GIMP dostarcza du¿y zestaw narzêdzi do obróbki obrazów, w tym do
-operowania na kana³ach i warstwach, efektów, antyaliasingu oraz
+GIMP dostarcza duÅ¼y zestaw narzÄ™dzi do obrÃ³bki obrazÃ³w, w tym do
+operowania na kanaÅ‚ach i warstwach, efektÃ³w, antyaliasingu oraz
 konwersji, a to wszystko z wielopoziomowym cofaniem operacji.
 
-%description -l pt_BR
-O GIMP é um programa de manipulação de imagens adequado para retoque
-de fotos, composição e editoração de imagens. Muitas pessoas o acham
-extremamente útil na criação de logos e outros gráficos para páginas
+%description -l pt_BR.UTF-8
+O GIMP Ã© um programa de manipulaÃ§Ã£o de imagens adequado para retoque
+de fotos, composiÃ§Ã£o e editoraÃ§Ã£o de imagens. Muitas pessoas o acham
+extremamente Ãºtil na criaÃ§Ã£o de logos e outros grÃ¡ficos para pÃ¡ginas
 web. O GIMP tem muitas ferramentas e filtros normalmente encontrados
-em aplicações comerciais similares, além de características extras bem
+em aplicaÃ§Ãµes comerciais similares, alÃ©m de caracterÃ­sticas extras bem
 interessantes.
 
-O GIMP fornece uma extensa caixa de ferramentas de manipulação de
-imagem, incluindo camadas, efeitos, formação de imagem subpíxel e
-anti-aliasing, conversões, todos com desfazimento em vários níveis
+O GIMP fornece uma extensa caixa de ferramentas de manipulaÃ§Ã£o de
+imagem, incluindo camadas, efeitos, formaÃ§Ã£o de imagem subpÃ­xel e
+anti-aliasing, conversÃµes, todos com desfazimento em vÃ¡rios nÃ­veis
 (multi-level undo).
 
-%description -l ru
-GIMP - ÜÔÏ ÐÒÏÇÒÁÍÍÁ ÄÌÑ ÓÏÚÄÁÎÉÑ É ÏÂÒÁÂÏÔËÉ ÉÚÏÂÒÁÖÅÎÉÊ. åÅ ÓÞÉÔÁÀÔ
-ÉÓËÌÀÞÉÔÅÌØÎÏ ÐÏÌÅÚÎÏÊ ÄÌÑ ÓÏÚÄÁÎÉÑ ÌÏÇÏÔÉÐÏ× É ÄÒÕÇÏÊ ÇÒÁÆÉËÉ ÄÌÑ
-web-ÓÔÒÁÎÉÃ. GIMP ÉÍÅÅÔ ÍÎÏÖÅÓÔ×Ï ÉÎÓÔÒÕÍÅÎÔÏ× É ÆÉÌØÔÒÏ×, ËÏÔÏÒÙÅ
-ÏÂÙÞÎÏ ×ËÌÀÞÁÀÔÓÑ × ÁÎÁÌÏÇÉÞÎÙÅ ËÏÍÍÅÒÞÅÓËÉÅ ÐÁËÅÔÙ, Á ÔÁËÖÅ ÒÑÄ
-×ÏÚÍÏÖÎÏÓÔÅÊ, ÐÒÉÓÕÝÉÈ ÔÏÌØËÏ ÅÊ.
+%description -l ru.UTF-8
+GIMP - ÑÑ‚Ð¾ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ð° Ð´Ð»Ñ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ñ Ð¸ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ¸ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ð¹. Ð•Ðµ ÑÑ‡Ð¸Ñ‚Ð°ÑŽÑ‚
+Ð¸ÑÐºÐ»ÑŽÑ‡Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð¿Ð¾Ð»ÐµÐ·Ð½Ð¾Ð¹ Ð´Ð»Ñ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ñ Ð»Ð¾Ð³Ð¾Ñ‚Ð¸Ð¿Ð¾Ð² Ð¸ Ð´Ñ€ÑƒÐ³Ð¾Ð¹ Ð³Ñ€Ð°Ñ„Ð¸ÐºÐ¸ Ð´Ð»Ñ
+web-ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†. GIMP Ð¸Ð¼ÐµÐµÑ‚ Ð¼Ð½Ð¾Ð¶ÐµÑÑ‚Ð²Ð¾ Ð¸Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ð¾Ð² Ð¸ Ñ„Ð¸Ð»ÑŒÑ‚Ñ€Ð¾Ð², ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ
+Ð¾Ð±Ñ‹Ñ‡Ð½Ð¾ Ð²ÐºÐ»ÑŽÑ‡Ð°ÑŽÑ‚ÑÑ Ð² Ð°Ð½Ð°Ð»Ð¾Ð³Ð¸Ñ‡Ð½Ñ‹Ðµ ÐºÐ¾Ð¼Ð¼ÐµÑ€Ñ‡ÐµÑÐºÐ¸Ðµ Ð¿Ð°ÐºÐµÑ‚Ñ‹, Ð° Ñ‚Ð°ÐºÐ¶Ðµ Ñ€ÑÐ´
+Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚ÐµÐ¹, Ð¿Ñ€Ð¸ÑÑƒÑ‰Ð¸Ñ… Ñ‚Ð¾Ð»ÑŒÐºÐ¾ ÐµÐ¹.
 
-GIMP ÐÒÅÄÏÓÔÁ×ÌÑÅÔ ÂÏÌØÛÏÊ ÎÁÂÏÒ ÉÎÓÔÒÕÍÅÎÔÏ× ÄÌÑ ÒÁÂÏÔÙ Ó ÇÒÁÆÉËÏÊ,
-×ËÌÀÞÁÀÝÉÊ ÏÐÅÒÁÃÉÉ ÎÁÄ ËÁÎÁÌÁÍÉ, ÓÌÏÑÍÉ, ÜÆÆÅËÔÙ, sub-pixel imaging É
-ÁÎÔÉÁÌÉÁÓÉÎÇ, ×ÓÑÞÅÓËÉÅ ËÏÎ×ÅÒÔÏÒÙ É ×ÓÅ ÜÔÏ Ó ÍÎÏÇÏÕÒÏ×ÎÅ×ÙÍ ÏÔËÁÔÏÍ.
+GIMP Ð¿Ñ€ÐµÐ´Ð¾ÑÑ‚Ð°Ð²Ð»ÑÐµÑ‚ Ð±Ð¾Ð»ÑŒÑˆÐ¾Ð¹ Ð½Ð°Ð±Ð¾Ñ€ Ð¸Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ð¾Ð² Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð³Ñ€Ð°Ñ„Ð¸ÐºÐ¾Ð¹,
+Ð²ÐºÐ»ÑŽÑ‡Ð°ÑŽÑ‰Ð¸Ð¹ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¸ Ð½Ð°Ð´ ÐºÐ°Ð½Ð°Ð»Ð°Ð¼Ð¸, ÑÐ»Ð¾ÑÐ¼Ð¸, ÑÑ„Ñ„ÐµÐºÑ‚Ñ‹, sub-pixel imaging Ð¸
+Ð°Ð½Ñ‚Ð¸Ð°Ð»Ð¸Ð°ÑÐ¸Ð½Ð³, Ð²ÑÑÑ‡ÐµÑÐºÐ¸Ðµ ÐºÐ¾Ð½Ð²ÐµÑ€Ñ‚Ð¾Ñ€Ñ‹ Ð¸ Ð²ÑÐµ ÑÑ‚Ð¾ Ñ Ð¼Ð½Ð¾Ð³Ð¾ÑƒÑ€Ð¾Ð²Ð½ÐµÐ²Ñ‹Ð¼ Ð¾Ñ‚ÐºÐ°Ñ‚Ð¾Ð¼.
 
-GIMP ×ËÌÀÞÁÅÔ ÐÏÄÄÅÒÖËÕ ÓÏÚÄÁÎÉÑ ÓÃÅÎÁÒÉÅ× (scripting facility),
-ÏÄÎÁËÏ ÍÎÏÇÉÅ ÉÚ ÐÏÓÔÁ×ÌÑÅÍÙÈ Ó ÐÒÏÇÒÁÍÍÏÊ ÓÃÅÎÁÒÉÅ× ÐÒÅÄÐÏÌÁÇÁÀÔ
-ÎÁÌÉÞÉÅ ÛÒÉÆÔÏ×, ËÏÔÏÒÙÅ ÎÅ ÍÏÇÕÔ ÂÙÔØ ×ËÌÀÞÅÎÙ × ÄÉÓÔÒÉÂÕÔÉ×.
-FTP-ÓÁÊÔ GIMP ÓÏÄÅÒÖÉÔ ÐÁËÅÔ ÛÒÉÆÔÏ×, ËÏÔÏÒÙÅ ×Ù ÍÏÖÅÔÅ ÐÏÓÔÁ×ÉÔØ
-ÓÁÍÏÓÔÏÑÔÅÌØÎÏ, ×ËÌÀÞÁÀÝÉÊ ×ÓÅ ÛÒÉÆÔÙ, ÎÅÏÂÈÏÄÉÍÙÅ ÄÌÑ ÒÁÂÏÔÙ ×ÈÏÄÑÝÉÈ
-× ËÏÍÐÌÅËÔ ÓÃÅÎÁÒÉÅ×. îÅËÏÔÏÒÙÅ ÉÚ ÛÒÉÆÔÏ× ÉÍÅÀÔ ×ÅÓØÍÁ ÎÅÏÂÙÞÎÙÅ
-ÌÉÃÅÎÚÉÏÎÎÙÅ ÔÒÅÂÏ×ÁÎÉÑ; ×ÓÅ ÌÉÃÅÎÚÉÉ ×ËÌÀÞÅÎÙ × ÕÐÏÍÑÎÕÔÙÊ ÐÁËÅÔ.
-óËÁÞÁÊÔÅ ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz É
-ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz, ÅÓÌÉ ÈÏÔÉÔÅ
-ÚÁÐÕÓËÁÔØ ÓÃÅÎÁÒÉÉ ÂÅÚ ÉÚÍÅÎÅÎÉÊ ÉÌÉ ×ÙÂÅÒÉÔÅ ÔÅ ÛÒÉÆÔÙ, ËÏÔÏÒÙÅ
-ÕÓÔÁÎÏ×ÌÅÎÙ Õ ×ÁÓ × ÓÉÓÔÅÍÅ, ÐÅÒÅÄ ÚÁÐÕÓËÏÍ ÓÃÅÎÁÒÉÅ×.
+GIMP Ð²ÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶ÐºÑƒ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ñ ÑÑ†ÐµÐ½Ð°Ñ€Ð¸ÐµÐ² (scripting facility),
+Ð¾Ð´Ð½Ð°ÐºÐ¾ Ð¼Ð½Ð¾Ð³Ð¸Ðµ Ð¸Ð· Ð¿Ð¾ÑÑ‚Ð°Ð²Ð»ÑÐµÐ¼Ñ‹Ñ… Ñ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ð¾Ð¹ ÑÑ†ÐµÐ½Ð°Ñ€Ð¸ÐµÐ² Ð¿Ñ€ÐµÐ´Ð¿Ð¾Ð»Ð°Ð³Ð°ÑŽÑ‚
+Ð½Ð°Ð»Ð¸Ñ‡Ð¸Ðµ ÑˆÑ€Ð¸Ñ„Ñ‚Ð¾Ð², ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð½Ðµ Ð¼Ð¾Ð³ÑƒÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ð²ÐºÐ»ÑŽÑ‡ÐµÐ½Ñ‹ Ð² Ð´Ð¸ÑÑ‚Ñ€Ð¸Ð±ÑƒÑ‚Ð¸Ð².
+FTP-ÑÐ°Ð¹Ñ‚ GIMP ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ Ð¿Ð°ÐºÐµÑ‚ ÑˆÑ€Ð¸Ñ„Ñ‚Ð¾Ð², ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð²Ñ‹ Ð¼Ð¾Ð¶ÐµÑ‚Ðµ Ð¿Ð¾ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ
+ÑÐ°Ð¼Ð¾ÑÑ‚Ð¾ÑÑ‚ÐµÐ»ÑŒÐ½Ð¾, Ð²ÐºÐ»ÑŽÑ‡Ð°ÑŽÑ‰Ð¸Ð¹ Ð²ÑÐµ ÑˆÑ€Ð¸Ñ„Ñ‚Ñ‹, Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ñ‹Ðµ Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ð²Ñ…Ð¾Ð´ÑÑ‰Ð¸Ñ…
+Ð² ÐºÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚ ÑÑ†ÐµÐ½Ð°Ñ€Ð¸ÐµÐ². ÐÐµÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð¸Ð· ÑˆÑ€Ð¸Ñ„Ñ‚Ð¾Ð² Ð¸Ð¼ÐµÑŽÑ‚ Ð²ÐµÑÑŒÐ¼Ð° Ð½ÐµÐ¾Ð±Ñ‹Ñ‡Ð½Ñ‹Ðµ
+Ð»Ð¸Ñ†ÐµÐ½Ð·Ð¸Ð¾Ð½Ð½Ñ‹Ðµ Ñ‚Ñ€ÐµÐ±Ð¾Ð²Ð°Ð½Ð¸Ñ; Ð²ÑÐµ Ð»Ð¸Ñ†ÐµÐ½Ð·Ð¸Ð¸ Ð²ÐºÐ»ÑŽÑ‡ÐµÐ½Ñ‹ Ð² ÑƒÐ¿Ð¾Ð¼ÑÐ½ÑƒÑ‚Ñ‹Ð¹ Ð¿Ð°ÐºÐµÑ‚.
+Ð¡ÐºÐ°Ñ‡Ð°Ð¹Ñ‚Ðµ ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz Ð¸
+ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz, ÐµÑÐ»Ð¸ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ
+Ð·Ð°Ð¿ÑƒÑÐºÐ°Ñ‚ÑŒ ÑÑ†ÐµÐ½Ð°Ñ€Ð¸Ð¸ Ð±ÐµÐ· Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ð¹ Ð¸Ð»Ð¸ Ð²Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ñ‚Ðµ ÑˆÑ€Ð¸Ñ„Ñ‚Ñ‹, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ
+ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½Ñ‹ Ñƒ Ð²Ð°Ñ Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ, Ð¿ÐµÑ€ÐµÐ´ Ð·Ð°Ð¿ÑƒÑÐºÐ¾Ð¼ ÑÑ†ÐµÐ½Ð°Ñ€Ð¸ÐµÐ².
 
-%description -l uk
-GIMP - ÃÅ ÐÒÏÇÒÁÍÁ ÄÌÑ ÓÔ×ÏÒÅÎÎÑ ÔÁ ÏÂÒÏÂËÉ ÚÏÂÒÁÖÅÎØ. ·§ ××ÁÖÁÀÔØ
-ÄÕÖÅ ËÏÒÉÓÎÏÀ ÄÌÑ ÓÔ×ÏÒÅÎÎÑ ÌÏÇÏÔÉÐ¦× ÔÁ ¦ÎÛÏ§ ÇÒÁÆ¦ËÉ ÄÌÑ
-web-ÓÔÏÒ¦ÎÏË. GIMP ÍÁ¤ ÂÁÇÁÔÏ ¦ÎÓÔÒÕÍÅÎÔ¦× ÔÁ Æ¦ÌØÔÒ¦×, ÑË¦ Ú×ÉÞÁÊÎÏ
-×ËÌÀÞÁÀÔØÓÑ × ÁÎÁÌÏÇ¦ÞÎ¦ ËÏÍÅÒÃ¦ÊÎ¦ ÐÁËÅÔÉ, Á ÔÁËÏÖ ÒÑÄ ÍÏÖÌÉ×ÏÓÔÅÊ,
-×ÌÁÓÔÉ×ÉÈ ÓÁÍÅ §Ê.
+%description -l uk.UTF-8
+GIMP - Ñ†Ðµ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð° Ð´Ð»Ñ ÑÑ‚Ð²Ð¾Ñ€ÐµÐ½Ð½Ñ Ñ‚Ð° Ð¾Ð±Ñ€Ð¾Ð±ÐºÐ¸ Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½ÑŒ. Ð‡Ñ— Ð²Ð²Ð°Ð¶Ð°ÑŽÑ‚ÑŒ
+Ð´ÑƒÐ¶Ðµ ÐºÐ¾Ñ€Ð¸ÑÐ½Ð¾ÑŽ Ð´Ð»Ñ ÑÑ‚Ð²Ð¾Ñ€ÐµÐ½Ð½Ñ Ð»Ð¾Ð³Ð¾Ñ‚Ð¸Ð¿Ñ–Ð² Ñ‚Ð° Ñ–Ð½ÑˆÐ¾Ñ— Ð³Ñ€Ð°Ñ„Ñ–ÐºÐ¸ Ð´Ð»Ñ
+web-ÑÑ‚Ð¾Ñ€Ñ–Ð½Ð¾Ðº. GIMP Ð¼Ð°Ñ” Ð±Ð°Ð³Ð°Ñ‚Ð¾ Ñ–Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ñ–Ð² Ñ‚Ð° Ñ„Ñ–Ð»ÑŒÑ‚Ñ€Ñ–Ð², ÑÐºÑ– Ð·Ð²Ð¸Ñ‡Ð°Ð¹Ð½Ð¾
+Ð²ÐºÐ»ÑŽÑ‡Ð°ÑŽÑ‚ÑŒÑÑ Ð² Ð°Ð½Ð°Ð»Ð¾Ð³Ñ–Ñ‡Ð½Ñ– ÐºÐ¾Ð¼ÐµÑ€Ñ†Ñ–Ð¹Ð½Ñ– Ð¿Ð°ÐºÐµÑ‚Ð¸, Ð° Ñ‚Ð°ÐºÐ¾Ð¶ Ñ€ÑÐ´ Ð¼Ð¾Ð¶Ð»Ð¸Ð²Ð¾ÑÑ‚ÐµÐ¹,
+Ð²Ð»Ð°ÑÑ‚Ð¸Ð²Ð¸Ñ… ÑÐ°Ð¼Ðµ Ñ—Ð¹.
 
-GIMP ÎÁÄÁ¤ ×ÅÌÉËÉÊ ÎÁÂ¦Ò ¦ÎÓÔÒÕÍÅÎÔ¦× ÄÌÑ ÒÏÂÏÔÉ Ú ÇÒÁÆ¦ËÏÀ, ÝÏ
-×ËÌÀÞÁ¤ ÏÐÅÒÁÃ¦§ ÎÁÄ ËÁÎÁÌÁÍÉ, ÛÁÒÁÍÉ (layers), ÅÆÅËÔÉ, sub-pixel
-imaging ¦ ÁÎÔÉÁÌ¦ÁÓÉÎÇ, Ò¦ÚÎÏÍÁÎ¦ÔÎ¦ ËÏÎ×ÅÒÔÏÒÉ ¦ ×ÓÅ ÃÅ Ú
-ÂÁÇÁÔÏÒ¦×ÎÅ×ÉÍ ×¦ÄËÁÔÏÍ.
+GIMP Ð½Ð°Ð´Ð°Ñ” Ð²ÐµÐ»Ð¸ÐºÐ¸Ð¹ Ð½Ð°Ð±Ñ–Ñ€ Ñ–Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ñ–Ð² Ð´Ð»Ñ Ñ€Ð¾Ð±Ð¾Ñ‚Ð¸ Ð· Ð³Ñ€Ð°Ñ„Ñ–ÐºÐ¾ÑŽ, Ñ‰Ð¾
+Ð²ÐºÐ»ÑŽÑ‡Ð°Ñ” Ð¾Ð¿ÐµÑ€Ð°Ñ†Ñ–Ñ— Ð½Ð°Ð´ ÐºÐ°Ð½Ð°Ð»Ð°Ð¼Ð¸, ÑˆÐ°Ñ€Ð°Ð¼Ð¸ (layers), ÐµÑ„ÐµÐºÑ‚Ð¸, sub-pixel
+imaging Ñ– Ð°Ð½Ñ‚Ð¸Ð°Ð»Ñ–Ð°ÑÐ¸Ð½Ð³, Ñ€Ñ–Ð·Ð½Ð¾Ð¼Ð°Ð½Ñ–Ñ‚Ð½Ñ– ÐºÐ¾Ð½Ð²ÐµÑ€Ñ‚Ð¾Ñ€Ð¸ Ñ– Ð²ÑÐµ Ñ†Ðµ Ð·
+Ð±Ð°Ð³Ð°Ñ‚Ð¾Ñ€Ñ–Ð²Ð½ÐµÐ²Ð¸Ð¼ Ð²Ñ–Ð´ÐºÐ°Ñ‚Ð¾Ð¼.
 
-GIMP ÍÁ¤ Ð¦ÄÔÒÉÍËÕ ÓÃÅÎÁÒ¦§× (scripting facility), ÐÒÏÔÅ ÂÁÇÁÔÏ Ú
-×ËÌÀÞÅÎÉÈ ÄÏ ÐÏÓÔÁ×ËÉ ÓÃÅÎÁÒ¦§× ÐÒÉÐÕÓËÁÀÔØ ÎÁÑ×Î¦ÓÔØ ÛÒÉÆÔ¦×, ÑË¦ ÎÅ
-ÍÏÖÕÔØ ÂÕÔÉ ×ËÌÀÞÅÎ¦ × ÄÉÓÔÒÉÂÕÔÉ×. FTP-ÓÁÊÔ GIMP Í¦ÓÔÉÔØ ÐÁËÅÔ
-ÛÒÉÆÔ¦×, ËÏÔÒ¦ ×É ÍÏÖÅÔÅ ×ÓÔÁÎÏ×ÉÔÉ ÓÁÍÏÓÔ¦ÊÎÏ, × ÑËÉÊ ×ÈÏÄÑÔØ ×Ó¦
-ÛÒÉÆÔÉ, ÎÅÏÂÈ¦ÄÎ¦ ÄÌÑ ÒÏÂÏÔÉ ÓÃÅÎÁÒ¦§× Ú ÐÏÓÔÁ×ËÉ GIMP. äÅÑË¦ Ú
-ÛÒÉÆÔ¦× ÍÁÀÔØ ×ÅÌØÍÉ ÎÅÚ×ÉÞÁÊÎ¦ Ì¦ÃÅÎÚ¦ÊÎ¦ ÕÍÏ×É; ×Ó¦ Ì¦ÃÅÎÚ¦§
-×ËÌÀÞÅÎÏ × ÚÇÁÄÁÎÉÊ ÐÁËÅÔ. úÁ×ÁÎÔÁÖÔÅ
-ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz ÔÁ
-ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. ÑËÝÏ ÈÏÞÅÔÅ
-ÚÁÐÕÓËÁÔÉ ÓÃÅÎÁÒ¦§ ÂÅÚ ÚÍ¦Î ÁÂÏ Ö ×ÉÂÅÒ¦ÔØ ×ÓÔÁÎÏ×ÁÌÅÎ¦ Õ ×ÁÓ ×
-ÓÉÓÔÅÍ¦ ÛÒÉÆÔÉ ÐÅÒÅÄ ÚÁÐÕÓËÏÍ ÓÃÅÎÁÒ¦§×.
+GIMP Ð¼Ð°Ñ” Ð¿Ñ–Ð´Ñ‚Ñ€Ð¸Ð¼ÐºÑƒ ÑÑ†ÐµÐ½Ð°Ñ€Ñ–Ñ—Ð² (scripting facility), Ð¿Ñ€Ð¾Ñ‚Ðµ Ð±Ð°Ð³Ð°Ñ‚Ð¾ Ð·
+Ð²ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ñ… Ð´Ð¾ Ð¿Ð¾ÑÑ‚Ð°Ð²ÐºÐ¸ ÑÑ†ÐµÐ½Ð°Ñ€Ñ–Ñ—Ð² Ð¿Ñ€Ð¸Ð¿ÑƒÑÐºÐ°ÑŽÑ‚ÑŒ Ð½Ð°ÑÐ²Ð½Ñ–ÑÑ‚ÑŒ ÑˆÑ€Ð¸Ñ„Ñ‚Ñ–Ð², ÑÐºÑ– Ð½Ðµ
+Ð¼Ð¾Ð¶ÑƒÑ‚ÑŒ Ð±ÑƒÑ‚Ð¸ Ð²ÐºÐ»ÑŽÑ‡ÐµÐ½Ñ– Ð² Ð´Ð¸ÑÑ‚Ñ€Ð¸Ð±ÑƒÑ‚Ð¸Ð². FTP-ÑÐ°Ð¹Ñ‚ GIMP Ð¼Ñ–ÑÑ‚Ð¸Ñ‚ÑŒ Ð¿Ð°ÐºÐµÑ‚
+ÑˆÑ€Ð¸Ñ„Ñ‚Ñ–Ð², ÐºÐ¾Ñ‚Ñ€Ñ– Ð²Ð¸ Ð¼Ð¾Ð¶ÐµÑ‚Ðµ Ð²ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚Ð¸ ÑÐ°Ð¼Ð¾ÑÑ‚Ñ–Ð¹Ð½Ð¾, Ð² ÑÐºÐ¸Ð¹ Ð²Ñ…Ð¾Ð´ÑÑ‚ÑŒ Ð²ÑÑ–
+ÑˆÑ€Ð¸Ñ„Ñ‚Ð¸, Ð½ÐµÐ¾Ð±Ñ…Ñ–Ð´Ð½Ñ– Ð´Ð»Ñ Ñ€Ð¾Ð±Ð¾Ñ‚Ð¸ ÑÑ†ÐµÐ½Ð°Ñ€Ñ–Ñ—Ð² Ð· Ð¿Ð¾ÑÑ‚Ð°Ð²ÐºÐ¸ GIMP. Ð”ÐµÑÐºÑ– Ð·
+ÑˆÑ€Ð¸Ñ„Ñ‚Ñ–Ð² Ð¼Ð°ÑŽÑ‚ÑŒ Ð²ÐµÐ»ÑŒÐ¼Ð¸ Ð½ÐµÐ·Ð²Ð¸Ñ‡Ð°Ð¹Ð½Ñ– Ð»Ñ–Ñ†ÐµÐ½Ð·Ñ–Ð¹Ð½Ñ– ÑƒÐ¼Ð¾Ð²Ð¸; Ð²ÑÑ– Ð»Ñ–Ñ†ÐµÐ½Ð·Ñ–Ñ—
+Ð²ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¾ Ð² Ð·Ð³Ð°Ð´Ð°Ð½Ð¸Ð¹ Ð¿Ð°ÐºÐµÑ‚. Ð—Ð°Ð²Ð°Ð½Ñ‚Ð°Ð¶Ñ‚Ðµ
+ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz Ñ‚Ð°
+ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. ÑÐºÑ‰Ð¾ Ñ…Ð¾Ñ‡ÐµÑ‚Ðµ
+Ð·Ð°Ð¿ÑƒÑÐºÐ°Ñ‚Ð¸ ÑÑ†ÐµÐ½Ð°Ñ€Ñ–Ñ— Ð±ÐµÐ· Ð·Ð¼Ñ–Ð½ Ð°Ð±Ð¾ Ð¶ Ð²Ð¸Ð±ÐµÑ€Ñ–Ñ‚ÑŒ Ð²ÑÑ‚Ð°Ð½Ð¾Ð²Ð°Ð»ÐµÐ½Ñ– Ñƒ Ð²Ð°Ñ Ð²
+ÑÐ¸ÑÑ‚ÐµÐ¼Ñ– ÑˆÑ€Ð¸Ñ„Ñ‚Ð¸ Ð¿ÐµÑ€ÐµÐ´ Ð·Ð°Ð¿ÑƒÑÐºÐ¾Ð¼ ÑÑ†ÐµÐ½Ð°Ñ€Ñ–Ñ—Ð².
 
 %package devel
 Summary:	GIMP plugin and extension development kit
-Summary(de):	GIMP-Plugin und Extension Development Kit
-Summary(es):	Kit de desarrollo de "plugins" extensiones para GIMP
-Summary(fr):	Plugin GIMP et kit de développement d'extensions
-Summary(pl):	Pliki do budowania modu³ów i rozszerzeñ dla Gimpa
-Summary(pt_BR):	Kit de desenvolvimento de "plugins" extensões para o GIMP
-Summary(ru):	éÎÓÔÒÕÍÅÎÔÁÒÉÊ ÄÌÑ ÒÁÚÒÁÂÏÔËÉ ÐÌÁÇÉÎÏ× É ÒÁÓÛÉÒÅÎÉÊ GIMP
-Summary(tr):	GIMP plugin ve uzantý geliþtirme araçlarý
-Summary(uk):	¶ÎÓÔÒÕÍÅÎÔÁÒ¦Ê ÄÌÑ ÒÏÚÒÏÂËÉ ÐÌÁÇ¦Î¦× ÔÁ ÒÏÚÛÉÒÅÎØ GIMP
-Summary(zh_CN):	[¿ª·¢]gimpµÄ¿ª·¢°ü
-Summary(zh_TW):	[¶}µo]gimpªº¶}µo¥]
+Summary(de.UTF-8):   GIMP-Plugin und Extension Development Kit
+Summary(es.UTF-8):   Kit de desarrollo de "plugins" extensiones para GIMP
+Summary(fr.UTF-8):   Plugin GIMP et kit de dÃ©veloppement d'extensions
+Summary(pl.UTF-8):   Pliki do budowania moduÅ‚Ã³w i rozszerzeÅ„ dla Gimpa
+Summary(pt_BR.UTF-8):   Kit de desenvolvimento de "plugins" extensÃµes para o GIMP
+Summary(ru.UTF-8):   Ð˜Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ€Ð¸Ð¹ Ð´Ð»Ñ Ñ€Ð°Ð·Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ¸ Ð¿Ð»Ð°Ð³Ð¸Ð½Ð¾Ð² Ð¸ Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¸Ð¹ GIMP
+Summary(tr.UTF-8):   GIMP plugin ve uzantÄ± geliÅŸtirme araÃ§larÄ±
+Summary(uk.UTF-8):   Ð†Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ€Ñ–Ð¹ Ð´Ð»Ñ Ñ€Ð¾Ð·Ñ€Ð¾Ð±ÐºÐ¸ Ð¿Ð»Ð°Ð³Ñ–Ð½Ñ–Ð² Ñ‚Ð° Ñ€Ð¾Ð·ÑˆÐ¸Ñ€ÐµÐ½ÑŒ GIMP
+Summary(zh_CN.UTF-8):   [å¼€å‘]gimpçš„å¼€å‘åŒ…
+Summary(zh_TW.UTF-8):   [é–‹ç™¼]gimpçš„é–‹ç™¼åŒ…
 License:	LGPL
 Group:		X11/Development/Libraries
 Requires(post,postun):	/sbin/ldconfig
@@ -190,43 +190,43 @@ Requires:	gtk-doc-common
 %description devel
 Header files for writing GIMP plugins and extensions.
 
-%description devel -l de
+%description devel -l de.UTF-8
 Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen.
 
-%description devel -l es
-Bibliotecas y archivos de inclusión para escribir extensiones y
+%description devel -l es.UTF-8
+Bibliotecas y archivos de inclusiÃ³n para escribir extensiones y
 plugins para Gimp.
 
-%description devel -l pl
-Pliki nag³ówkowe do tworzenia wtyczek i rozszerzeñ dla Gimpa.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe do tworzenia wtyczek i rozszerzeÅ„ dla Gimpa.
 
-%description devel -l pt_BR
-Bibliotecas e arquivos de inclusão para escrever extensões e plugins
+%description devel -l pt_BR.UTF-8
+Bibliotecas e arquivos de inclusÃ£o para escrever extensÃµes e plugins
 para o Gimp.
 
 %package static
 Summary:	GIMP static libraries
-Summary(pl):	Biblioteki statyczne Gimpa
+Summary(pl.UTF-8):   Biblioteki statyczne Gimpa
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 GIMP static libraries.
 
-%description static -l es
-Bibliotecas estáticas para escribir extensiones y plugins para Gimp.
+%description static -l es.UTF-8
+Bibliotecas estÃ¡ticas para escribir extensiones y plugins para Gimp.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Biblioteki statyczne Gimpa.
 
-%description static -l pt_BR
-Bibliotecas estáticas para desenvolvimento de plugins e extensões do
+%description static -l pt_BR.UTF-8
+Bibliotecas estÃ¡ticas para desenvolvimento de plugins e extensÃµes do
 GIMP.
 
 %package aa
 Summary:	ASCII Art plugin for Gimp
-Summary(fr):	Plugin d'art ASCII pour Gimp
-Summary(pl):	Wtyczka do ASCII Art do Gimpa
+Summary(fr.UTF-8):   Plugin d'art ASCII pour Gimp
+Summary(pl.UTF-8):   Wtyczka do ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -234,16 +234,16 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 This package contains the ASCII Art plugin which requires the aalib
 shared library.
 
-%description aa -l fr
-Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie
-partagée aalib.
+%description aa -l fr.UTF-8
+Ce paquet contient le plugin d'art ASCII qui nÃ©cÃ©ssite la librairie
+partagÃ©e aalib.
 
-%description aa -l pl
-Ten pakiet zawiera wtyczkê do Gimpa ze wsparciem do ASCII Art.
+%description aa -l pl.UTF-8
+Ten pakiet zawiera wtyczkÄ™ do Gimpa ze wsparciem do ASCII Art.
 
 %package print
 Summary:	Print plugin for Gimp
-Summary(pl):	Wtyczka do drukowania dla Gimpa
+Summary(pl.UTF-8):   Wtyczka do drukowania dla Gimpa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gimp-print-lib >= 4.2.6
@@ -251,12 +251,12 @@ Requires:	gimp-print-lib >= 4.2.6
 %description print
 Print plugin for Gimp.
 
-%description print -l pl
+%description print -l pl.UTF-8
 Wtyczka do drukowania dla Gimpa.
 
 %package svg
 Summary:	SVG plugin for Gimp
-Summary(pl):	Wtyczka SVG dla Gimpa
+Summary(pl.UTF-8):   Wtyczka SVG dla Gimpa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	librsvg >= 2.2.0
@@ -264,7 +264,7 @@ Requires:	librsvg >= 2.2.0
 %description svg
 SVG plugin for Gimp.
 
-%description svg -l pl
+%description svg -l pl.UTF-8
 Wtyczka SVG dla Gimpa.
 
 %prep
