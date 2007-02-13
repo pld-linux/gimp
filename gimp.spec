@@ -9,16 +9,16 @@
 #
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
-Summary(de.UTF-8):   Das GNU-Bildbearbeitungs-Programm
-Summary(es.UTF-8):   Programa de manipulación de imagen GNU
-Summary(fr.UTF-8):   Le programme de manipulation d'images de GNU
-Summary(pl.UTF-8):   Program GNU do manipulacji formatami graficznymi (GIMP)
-Summary(pt_BR.UTF-8):   Programa de manipulação de imagem GNU
-Summary(ru.UTF-8):   The GNU Image Manipulation Program
-Summary(tr.UTF-8):   Çizim, boyama ve görüntü işleme programı
-Summary(uk.UTF-8):   The GNU Image Manipulation Program
-Summary(zh_CN.UTF-8):   [图像]GNU图象处理工具
-Summary(zh_TW.UTF-8):   [圖像]GNU圖象處理工具
+Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
+Summary(es.UTF-8):	Programa de manipulación de imagen GNU
+Summary(fr.UTF-8):	Le programme de manipulation d'images de GNU
+Summary(pl.UTF-8):	Program GNU do manipulacji formatami graficznymi (GIMP)
+Summary(pt_BR.UTF-8):	Programa de manipulação de imagem GNU
+Summary(ru.UTF-8):	The GNU Image Manipulation Program
+Summary(tr.UTF-8):	Çizim, boyama ve görüntü işleme programı
+Summary(uk.UTF-8):	The GNU Image Manipulation Program
+Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
+Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.2.13
 Release:	1
@@ -170,16 +170,16 @@ ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. якщо хочете
 
 %package devel
 Summary:	GIMP plugin and extension development kit
-Summary(de.UTF-8):   GIMP-Plugin und Extension Development Kit
-Summary(es.UTF-8):   Kit de desarrollo de "plugins" extensiones para GIMP
-Summary(fr.UTF-8):   Plugin GIMP et kit de développement d'extensions
-Summary(pl.UTF-8):   Pliki do budowania modułów i rozszerzeń dla Gimpa
-Summary(pt_BR.UTF-8):   Kit de desenvolvimento de "plugins" extensões para o GIMP
-Summary(ru.UTF-8):   Инструментарий для разработки плагинов и расширений GIMP
-Summary(tr.UTF-8):   GIMP plugin ve uzantı geliştirme araçları
-Summary(uk.UTF-8):   Інструментарій для розробки плагінів та розширень GIMP
-Summary(zh_CN.UTF-8):   [开发]gimp的开发包
-Summary(zh_TW.UTF-8):   [開發]gimp的開發包
+Summary(de.UTF-8):	GIMP-Plugin und Extension Development Kit
+Summary(es.UTF-8):	Kit de desarrollo de "plugins" extensiones para GIMP
+Summary(fr.UTF-8):	Plugin GIMP et kit de développement d'extensions
+Summary(pl.UTF-8):	Pliki do budowania modułów i rozszerzeń dla Gimpa
+Summary(pt_BR.UTF-8):	Kit de desenvolvimento de "plugins" extensões para o GIMP
+Summary(ru.UTF-8):	Инструментарий для разработки плагинов и расширений GIMP
+Summary(tr.UTF-8):	GIMP plugin ve uzantı geliştirme araçları
+Summary(uk.UTF-8):	Інструментарій для розробки плагінів та розширень GIMP
+Summary(zh_CN.UTF-8):	[开发]gimp的开发包
+Summary(zh_TW.UTF-8):	[開發]gimp的開發包
 License:	LGPL
 Group:		X11/Development/Libraries
 Requires(post,postun):	/sbin/ldconfig
@@ -206,7 +206,7 @@ para o Gimp.
 
 %package static
 Summary:	GIMP static libraries
-Summary(pl.UTF-8):   Biblioteki statyczne Gimpa
+Summary(pl.UTF-8):	Biblioteki statyczne Gimpa
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -225,8 +225,8 @@ GIMP.
 
 %package aa
 Summary:	ASCII Art plugin for Gimp
-Summary(fr.UTF-8):   Plugin d'art ASCII pour Gimp
-Summary(pl.UTF-8):   Wtyczka do ASCII Art do Gimpa
+Summary(fr.UTF-8):	Plugin d'art ASCII pour Gimp
+Summary(pl.UTF-8):	Wtyczka do ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -243,7 +243,7 @@ Ten pakiet zawiera wtyczkę do Gimpa ze wsparciem do ASCII Art.
 
 %package print
 Summary:	Print plugin for Gimp
-Summary(pl.UTF-8):   Wtyczka do drukowania dla Gimpa
+Summary(pl.UTF-8):	Wtyczka do drukowania dla Gimpa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	gimp-print-lib >= 4.2.6
@@ -256,7 +256,7 @@ Wtyczka do drukowania dla Gimpa.
 
 %package svg
 Summary:	SVG plugin for Gimp
-Summary(pl.UTF-8):   Wtyczka SVG dla Gimpa
+Summary(pl.UTF-8):	Wtyczka SVG dla Gimpa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	librsvg >= 2.2.0
