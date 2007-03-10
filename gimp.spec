@@ -20,13 +20,13 @@ Summary(uk.UTF-8):   The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):   [图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):   [圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.3.14
+Version:	2.3.15
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	0c4f8acd57dcfa101a54e11c4157d5fe
+# Source0-md5:	ca1ac6c338866020b9ebe98d134bd749
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -40,6 +40,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	gtk-doc >= 1.6
+BuildRequires:	hal-devel
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
