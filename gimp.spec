@@ -38,7 +38,7 @@ BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
-BuildRequires:	gtk+2-devel >= 2:2.10.0
+BuildRequires:	gtk+2-devel >= 2:2.10.6
 BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	hal-devel
 BuildRequires:	intltool >= 0.35.0
@@ -64,7 +64,7 @@ BuildRequires:	gnome-vfs2-devel >= 2.15.91
 BuildRequires:	libgnomeui-devel >= 2.15.91
 %endif
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires(post,postun):  gtk+2 >= 2:2.10.0
+Requires(post,postun):  gtk+2 >= 2:2.10.6
 Requires:	hicolor-icon-theme
 %{?with_python:Requires:	python-pygtk-gtk >= 1:2.9.3}
 Obsoletes:	gimp-data-min
@@ -184,7 +184,7 @@ ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. якщо хочете
 Summary:	GIMP libraries
 Summary(pl.UTF-8):   Biblioteki GIMPa
 Group:		Libraries
-Requires:	gtk+2 >= 2:2.10.0
+Requires:	gtk+2 >= 2:2.10.6
 
 %description libs
 This package contains GIMP libraries.
