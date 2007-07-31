@@ -1,6 +1,4 @@
 #
-# TODO: Build requires libselinux-devel but it's not catched by dependencies
-#
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
 %bcond_without	gnome		# don't build GNOME based features
