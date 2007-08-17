@@ -18,13 +18,13 @@ Summary(uk.UTF-8):   The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):   [图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):   [圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.3.19
-Release:	1
+Version:	2.4.0
+Release:	0.rc1.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	9b5cc6aef0baca3735ce9bc4fdc949d9
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.4/testing/%{name}-%{version}-rc1.tar.bz2
+# Source0-md5:	788fb85712ea1d8b52d70f7b2ebdb439
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -276,7 +276,7 @@ SVG plugin for Gimp.
 Wtyczka SVG dla Gimpa.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-rc1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -341,10 +341,10 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %doc AUTHORS ChangeLog NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.3
+%attr(755,root,root) %{_bindir}/gimp-2.4
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-2.3
-%attr(755,root,root) %{_bindir}/gimp-remote-2.3
+%attr(755,root,root) %{_bindir}/gimp-console-2.4
+%attr(755,root,root) %{_bindir}/gimp-remote-2.4
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
 %{_mandir}/man1/gimp-2*
