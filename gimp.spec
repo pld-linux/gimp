@@ -19,7 +19,7 @@ Summary(zh_CN.UTF-8):   [图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):   [圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.4.0
-Release:	0.rc1.1
+Release:	0.rc1.2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -52,7 +52,7 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
-BuildRequires:	poppler-glib-devel >= 0.5.3
+BuildRequires:	poppler-glib-devel >= 0.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	xorg-lib-libXpm-devel
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.9.3}
