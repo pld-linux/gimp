@@ -19,12 +19,12 @@ Summary(zh_CN.UTF-8):   [图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):   [圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.4.0
-Release:	0.rc1.2
+Release:	0.rc2.1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.4/testing/%{name}-%{version}-rc1.tar.bz2
-# Source0-md5:	788fb85712ea1d8b52d70f7b2ebdb439
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.4/testing/%{name}-%{version}-rc2.tar.bz2
+# Source0-md5:	4a17f7d002cfc0ddf13d64181030a71b
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -276,7 +276,7 @@ SVG plugin for Gimp.
 Wtyczka SVG dla Gimpa.
 
 %prep
-%setup -q -n %{name}-%{version}-rc1
+%setup -q -n %{name}-%{version}-rc2
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
