@@ -1,63 +1,73 @@
 #
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
-%bcond_without	apidocs		# disable gtk-doc
-%bcond_without	print		# without print plugin (which requires gimp-print 4.2.x)
+%bcond_without	gnome		# don't build GNOME based features
 %bcond_without	python		# without python plugins
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
-%bcond_without	static_libs	# do not build static libraries
 #
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
-Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
-Summary(es.UTF-8):	Programa de manipulación de imagen GNU
-Summary(fr.UTF-8):	Le programme de manipulation d'images de GNU
-Summary(pl.UTF-8):	Program GNU do manipulacji formatami graficznymi (GIMP)
-Summary(pt_BR.UTF-8):	Programa de manipulação de imagem GNU
-Summary(ru.UTF-8):	The GNU Image Manipulation Program
-Summary(tr.UTF-8):	Çizim, boyama ve görüntü işleme programı
-Summary(uk.UTF-8):	The GNU Image Manipulation Program
-Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
-Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
+Summary(de.UTF-8):   Das GNU-Bildbearbeitungs-Programm
+Summary(es.UTF-8):   Programa de manipulación de imagen GNU
+Summary(fr.UTF-8):   Le programme de manipulation d'images de GNU
+Summary(pl.UTF-8):   Program GNU do manipulacji formatami graficznymi (GIMP)
+Summary(pt_BR.UTF-8):   Programa de manipulação de imagem GNU
+Summary(ru.UTF-8):   The GNU Image Manipulation Program
+Summary(tr.UTF-8):   Çizim, boyama ve görüntü işleme programı
+Summary(uk.UTF-8):   The GNU Image Manipulation Program
+Summary(zh_CN.UTF-8):   [图像]GNU图象处理工具
+Summary(zh_TW.UTF-8):   [圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.2.17
+Version:	2.4.0
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	4f509ed4a605452d88e04045ff388d58
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.4/%{name}-%{version}.tar.bz2
+# Source0-md5:	35fecf14cd5237065aef624b93030d5e
 Patch0:		%{name}-home_etc.patch
+Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-gcc4.patch
+Patch3:		%{name}-nognome.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
-BuildRequires:	alsa-lib-devel >= 1.0.0
+BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
-%{?with_print:BuildRequires:	gimp-print-devel < 4.3.0}
-%{?with_print:BuildRequires:	gimp-print-devel >= 4.2.6}
-BuildRequires:	gtk+2-devel >= 2:2.4.4
-%{?with_apidocs:BuildRequires:	gtk-doc >= 1.0}
-BuildRequires:	intltool
+BuildRequires:	gtk+2-devel >= 2:2.10.6
+BuildRequires:	gtk-doc >= 1.6
+BuildRequires:	hal-devel
+BuildRequires:	intltool >= 0.35.0
 BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel
-BuildRequires:	libgtkhtml-devel >= 2.0.0
+BuildRequires:	libgtkhtml-devel >= 2.6.3
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
-BuildRequires:	libpng-devel >= 1.0.8
-BuildRequires:	librsvg-devel >= 2.2.0
+BuildRequires:	libpng-devel >= 1.2.12
+BuildRequires:	librsvg-devel >= 1:2.15.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pkgconfig
-%{?with_python:BuildRequires:	python-pygtk-devel >= 1.99.15}
-%{?with_python:BuildRequires:	rpm-pythonprov}
-Requires:	gtk+2 >= 2:2.4.4
-%{?with_python:Requires:	python-pygtk-gtk >= 1.99.15}
+BuildRequires:	poppler-glib-devel >= 0.6
+BuildRequires:	rpm-pythonprov
+BuildRequires:	xorg-lib-libXpm-devel
+%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.9.3}
+%if %{with gnome}
+BuildRequires:	gnome-keyring-devel >= 0.5.1
+BuildRequires:	gnome-vfs2-devel >= 2.15.91
+BuildRequires:	libgnomeui-devel >= 2.15.91
+%endif
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires(post,postun):  gtk+2 >= 2:2.10.6
+Requires:	hicolor-icon-theme
+%{?with_python:Requires:	python-pygtk-gtk >= 1:2.9.3}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
+Obsoletes:	gimp-print
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -168,24 +178,35 @@ ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. якщо хочете
 запускати сценарії без змін або ж виберіть встановалені у вас в
 системі шрифти перед запуском сценаріїв.
 
+%package libs
+Summary:	GIMP libraries
+Summary(pl.UTF-8):   Biblioteki GIMPa
+Group:		Libraries
+Requires:	gtk+2 >= 2:2.10.6
+
+%description libs
+This package contains GIMP libraries.
+
+%description libs -l pl.UTF-8
+Pakiet zawiera biblioteki GIMPa.
+
 %package devel
 Summary:	GIMP plugin and extension development kit
-Summary(de.UTF-8):	GIMP-Plugin und Extension Development Kit
-Summary(es.UTF-8):	Kit de desarrollo de "plugins" extensiones para GIMP
-Summary(fr.UTF-8):	Plugin GIMP et kit de développement d'extensions
-Summary(pl.UTF-8):	Pliki do budowania modułów i rozszerzeń dla Gimpa
-Summary(pt_BR.UTF-8):	Kit de desenvolvimento de "plugins" extensões para o GIMP
-Summary(ru.UTF-8):	Инструментарий для разработки плагинов и расширений GIMP
-Summary(tr.UTF-8):	GIMP plugin ve uzantı geliştirme araçları
-Summary(uk.UTF-8):	Інструментарій для розробки плагінів та розширень GIMP
-Summary(zh_CN.UTF-8):	[开发]gimp的开发包
-Summary(zh_TW.UTF-8):	[開發]gimp的開發包
+Summary(de.UTF-8):   GIMP-Plugin und Extension Development Kit
+Summary(es.UTF-8):   Kit de desarrollo de "plugins" extensiones para GIMP
+Summary(fr.UTF-8):   Plugin GIMP et kit de développement d'extensions
+Summary(pl.UTF-8):   Pliki do budowania modułów i rozszerzeń dla Gimpa
+Summary(pt_BR.UTF-8):   Kit de desenvolvimento de "plugins" extensões para o GIMP
+Summary(ru.UTF-8):   Инструментарий для разработки плагинов и расширений GIMP
+Summary(tr.UTF-8):   GIMP plugin ve uzantı geliştirme araçları
+Summary(uk.UTF-8):   Інструментарій для розробки плагінів та розширень GIMP
+Summary(zh_CN.UTF-8):   [开发]gimp的开发包
+Summary(zh_TW.UTF-8):   [開發]gimp的開發包
 License:	LGPL
 Group:		X11/Development/Libraries
-Requires(post,postun):	/sbin/ldconfig
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	gtk+2-devel >= 2:2.4.4
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	gtk-doc-common
+Requires:	gtk+2-devel >= 2:2.10.0
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -206,7 +227,7 @@ para o Gimp.
 
 %package static
 Summary:	GIMP static libraries
-Summary(pl.UTF-8):	Biblioteki statyczne Gimpa
+Summary(pl.UTF-8):   Biblioteki statyczne Gimpa
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -225,8 +246,8 @@ GIMP.
 
 %package aa
 Summary:	ASCII Art plugin for Gimp
-Summary(fr.UTF-8):	Plugin d'art ASCII pour Gimp
-Summary(pl.UTF-8):	Wtyczka do ASCII Art do Gimpa
+Summary(fr.UTF-8):   Plugin d'art ASCII pour Gimp
+Summary(pl.UTF-8):   Wtyczka do ASCII Art do Gimpa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -241,22 +262,9 @@ partagée aalib.
 %description aa -l pl.UTF-8
 Ten pakiet zawiera wtyczkę do Gimpa ze wsparciem do ASCII Art.
 
-%package print
-Summary:	Print plugin for Gimp
-Summary(pl.UTF-8):	Wtyczka do drukowania dla Gimpa
-Group:		X11/Applications/Graphics
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	gimp-print-lib >= 4.2.6
-
-%description print
-Print plugin for Gimp.
-
-%description print -l pl.UTF-8
-Wtyczka do drukowania dla Gimpa.
-
 %package svg
 Summary:	SVG plugin for Gimp
-Summary(pl.UTF-8):	Wtyczka SVG dla Gimpa
+Summary(pl.UTF-8):   Wtyczka SVG dla Gimpa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	librsvg >= 2.2.0
@@ -270,8 +278,9 @@ Wtyczka SVG dla Gimpa.
 %prep
 %setup -q
 %patch0 -p1
-
-cp /usr/share/automake/py-compile plug-ins/pygimp
+%patch1 -p1
+%patch2 -p1
+%{!?with_gnome:%patch3 -p1}
 
 %build
 %{__libtoolize}
@@ -279,36 +288,23 @@ cp /usr/share/automake/py-compile plug-ins/pygimp
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-
 %configure \
-	%{!?with_print: --disable-print} \
 	--disable-rpath \
-	--enable-default-binary \
-	%{?with_apidocs:--enable-gtk-doc} \
+	%{!?with_python: --disable-python} \
 	--enable-mp \
-	%{?with_python: --enable-python} \
-	%{?with_static_libs:--enable-static} \
 	--with-html-dir=%{_gtkdocdir} \
+	--enable-default-binary \
+	--enable-static \
+	--enable-gtk-doc \
 	%{?with_posix_shm:--with-shm=posix}
-
-%{__make}
+	
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-#########################################################
-# This is hack indeed, but it was supposed to disappear #
-# when version 2.0 will arrive but it doesn't :(        #
-#########################################################
-
-cat $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.desktop | \
-	sed 's@/usr/share/gimp/%{mver}/images/@@' > \
-	$RPM_BUILD_ROOT%{_desktopdir}/gimp.desktop
-install data/images/wilber-icon.png $RPM_BUILD_ROOT%{_pixmapsdir}
 
 ################### end hack ############################
 
@@ -320,7 +316,7 @@ echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
-rm -f $RPM_BUILD_ROOT%{_datadir}/gimp/%{mver}/misc/gimp.{applications,desktop,keys}
+rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
 
 %find_lang %{name} --all-name
 
@@ -329,42 +325,38 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 umask 022
-/sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %postun
 umask 022
-/sbin/ldconfig
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
-%if %{with posix_shm}
-%verifyscript
-if ! grep -q -s '^[^ ]* /dev/shm tmpfs ' /proc/mounts ; then
-	echo "/dev/shm is not mounted, but GIMP was compiled to use POSIX SHM"
-fi
-%endif
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
-%doc docs/{*.txt,quick_reference.*,Wilber*}
+%doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.2
+%attr(755,root,root) %{_bindir}/gimp-2.4
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-remote-2.2
+%attr(755,root,root) %{_bindir}/gimp-console-2.4
+%attr(755,root,root) %{_bindir}/gimp-remote-2.4
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
 %{_mandir}/man1/gimp-2*
 %{_mandir}/man1/gimp-remote-2*
 %{_mandir}/man5/gimprc-2*
 
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
 %dir %{_libdir}/gimp/%{mver}/plug-ins
+%{_libdir}/gimp/%{mver}/interpreters
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
 %{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
-%{?with_print:%exclude %{_libdir}/gimp/%{mver}/plug-ins/print}
 %exclude %{_libdir}/gimp/%{mver}/plug-ins/svg
 
 %dir %{_libdir}/gimp/%{mver}/modules
@@ -393,19 +385,23 @@ fi
 %{_datadir}/gimp/%{mver}/scripts
 %{_datadir}/gimp/%{mver}/themes
 %{_datadir}/gimp/%{mver}/tips
-%dir %{_datadir}/gimp/%{mver}/misc
 
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/%{mver}
 %config %verify(not md5 mtime) %{_sysconfdir}/%{name}/%{mver}/gimprc*
 %config(noreplace) %{_sysconfdir}/%{name}/%{mver}/templaterc
+%config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 %config %{_sysconfdir}/%{name}/%{mver}/gtkrc*
+%config %{_sysconfdir}/%{name}/%{mver}/menurc
 %config %{_sysconfdir}/%{name}/%{mver}/ps-menurc
 %config %{_sysconfdir}/%{name}/%{mver}/sessionrc
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
-%config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 
-%{_pixmapsdir}/*
+%{_iconsdir}/hicolor/*/apps/gimp.*
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
@@ -422,22 +418,14 @@ fi
 %{_mandir}/man1/gimptool-%{mver}*
 %{_mandir}/man1/gimptool.1*
 
-%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
-%endif
 
 %if %{with aalib}
 %files aa
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/aa
-%endif
-
-%if %{with print}
-%files print
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/print
 %endif
 
 %files svg
