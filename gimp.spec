@@ -1,10 +1,14 @@
 #
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
-%bcond_without	gnome		# don't build GNOME based features
+%bcond_without	gnomevfs	# without GNOME VFS support
+%bcond_without	gnome		# convenient alias for gnomevfs
 %bcond_without	python		# without python plugins
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 #
+%if %{without gnome}
+%undefine	with_gnomevfs
+%endif
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -28,21 +32,23 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v2.4/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
-Patch3:		%{name}-nognome.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
+BuildRequires:	curl-devel >= 7.15.1
+BuildRequires:	dbus-devel >= 0.70
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
-BuildRequires:	gtk+2-devel >= 2:2.10.6
+BuildRequires:	glib2-devel >= 1:2.12.3
+BuildRequires:	gtk+2-devel >= 2:2.10.13
 BuildRequires:	gtk-doc >= 1.6
-BuildRequires:	hal-devel
+BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
-BuildRequires:	libexif-devel
+BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libgtkhtml-devel >= 2.6.3
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
@@ -51,20 +57,25 @@ BuildRequires:	librsvg-devel >= 1:2.15.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libwmf-devel >= 2:0.2.8
+BuildRequires:	pango-devel >= 1:1.12.2
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	xorg-lib-libXpm-devel
-%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.9.3}
-%if %{with gnome}
+%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
+%if %{with gnomevfs}
 BuildRequires:	gnome-keyring-devel >= 0.5.1
 BuildRequires:	gnome-vfs2-devel >= 2.15.91
 BuildRequires:	libgnomeui-devel >= 2.15.91
 %endif
+Requires(post,postun):	gtk+2 >= 2:2.10.13
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires(post,postun):	gtk+2 >= 2:2.10.6
+Requires:	curl >= 7.15.1
+Requires:	glib2 >= 1:2.12.3
+Requires:	gtk+2 >= 2:2.10.13
 Requires:	hicolor-icon-theme
-%{?with_python:Requires:	python-pygtk-gtk >= 1:2.9.3}
+Requires:	pango >= 1:1.12.2
+%{?with_python:Requires:	python-pygtk-gtk >= 1:2.10.4}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 Obsoletes:	gimp-print
@@ -280,7 +291,6 @@ Wtyczka SVG dla Gimpa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%{!?with_gnome:%patch3 -p1}
 
 %build
 %{__libtoolize}
@@ -289,6 +299,7 @@ Wtyczka SVG dla Gimpa.
 %{__autoheader}
 %{__automake}
 %configure \
+	%{!?with_gnomevfs:--disable-gnomevfs} \
 	--disable-rpath \
 	%{!?with_python: --disable-python} \
 	--enable-mp \
