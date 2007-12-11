@@ -23,7 +23,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.4.2
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications/Graphics
@@ -206,7 +206,7 @@ Summary:	GIMP plugin and extension development kit
 Summary(de.UTF-8):	GIMP-Plugin und Extension Development Kit
 Summary(es.UTF-8):	Kit de desarrollo de "plugins" extensiones para GIMP
 Summary(fr.UTF-8):	Plugin GIMP et kit de développement d'extensions
-Summary(pl.UTF-8):	Pliki do budowania modułów i rozszerzeń dla Gimpa
+Summary(pl.UTF-8):	Pliki do budowania modułów i rozszerzeń dla GIMPa
 Summary(pt_BR.UTF-8):	Kit de desenvolvimento de "plugins" extensões para o GIMP
 Summary(ru.UTF-8):	Инструментарий для разработки плагинов и расширений GIMP
 Summary(tr.UTF-8):	GIMP plugin ve uzantı geliştirme araçları
@@ -216,7 +216,6 @@ Summary(zh_TW.UTF-8):	[開發]gimp的開發包
 License:	LGPL
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	gtk-doc-common
 Requires:	gtk+2-devel >= 2:2.10.0
 
 %description devel
@@ -227,18 +226,18 @@ Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen.
 
 %description devel -l es.UTF-8
 Bibliotecas y archivos de inclusión para escribir extensiones y
-plugins para Gimp.
+plugins para GIMP.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe do tworzenia wtyczek i rozszerzeń dla Gimpa.
+Pliki nagłówkowe do tworzenia wtyczek i rozszerzeń dla GIMPa.
 
 %description devel -l pt_BR.UTF-8
 Bibliotecas e arquivos de inclusão para escrever extensões e plugins
-para o Gimp.
+para o GIMP.
 
 %package static
 Summary:	GIMP static libraries
-Summary(pl.UTF-8):	Biblioteki statyczne Gimpa
+Summary(pl.UTF-8):	Biblioteki statyczne GIMPa
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -246,19 +245,31 @@ Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 GIMP static libraries.
 
 %description static -l es.UTF-8
-Bibliotecas estáticas para escribir extensiones y plugins para Gimp.
+Bibliotecas estáticas para escribir extensiones y plugins para GIMP.
 
 %description static -l pl.UTF-8
-Biblioteki statyczne Gimpa.
+Biblioteki statyczne GIMPa.
 
 %description static -l pt_BR.UTF-8
 Bibliotecas estáticas para desenvolvimento de plugins e extensões do
 GIMP.
 
+%package apidocs
+Summary:	GIMP API documentation
+Summary(pl.UTF-8):	Dokumentacja API GIMPa
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description apidocs
+GIMP API documentation.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API GIMPa.
+
 %package aa
-Summary:	ASCII Art plugin for Gimp
-Summary(fr.UTF-8):	Plugin d'art ASCII pour Gimp
-Summary(pl.UTF-8):	Wtyczka do ASCII Art do Gimpa
+Summary:	ASCII Art plugin for GIMP
+Summary(fr.UTF-8):	Plugin d'art ASCII pour GIMP
+Summary(pl.UTF-8):	Wtyczka do ASCII Art do GIMPa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -271,20 +282,20 @@ Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie
 partagée aalib.
 
 %description aa -l pl.UTF-8
-Ten pakiet zawiera wtyczkę do Gimpa ze wsparciem do ASCII Art.
+Ten pakiet zawiera wtyczkę do GIMPa ze wsparciem do ASCII Art.
 
 %package svg
-Summary:	SVG plugin for Gimp
-Summary(pl.UTF-8):	Wtyczka SVG dla Gimpa
+Summary:	SVG plugin for GIMP
+Summary(pl.UTF-8):	Wtyczka SVG dla GIMPa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	librsvg >= 2.2.0
 
 %description svg
-SVG plugin for Gimp.
+SVG plugin for GIMP.
 
 %description svg -l pl.UTF-8
-Wtyczka SVG dla Gimpa.
+Wtyczka SVG dla GIMPa.
 
 %prep
 %setup -q
@@ -355,6 +366,7 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %attr(755,root,root) %{_bindir}/gimp-2.4
 %attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-console-2.4
+%attr(755,root,root) %{_bindir}/gimp-console
 %attr(755,root,root) %{_bindir}/gimp-remote-2.4
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
@@ -421,7 +433,6 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_pkgconfigdir}/*
-%{_gtkdocdir}/*
 
 %{_includedir}/gimp-2.0
 %{_aclocaldir}/gimp-2.0.m4
@@ -432,6 +443,10 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/*
 
 %if %{with aalib}
 %files aa
