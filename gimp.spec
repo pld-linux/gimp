@@ -57,7 +57,6 @@ BuildRequires:	librsvg-devel >= 1:2.15.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libwmf-devel >= 2:0.2.8
-BuildRequires:  libcap-devel >= 1.10
 BuildRequires:	pango-devel >= 1:1.12.2
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.6
