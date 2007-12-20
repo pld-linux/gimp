@@ -25,7 +25,7 @@ Name:		gimp
 Version:	2.4.3
 Release:	1
 Epoch:		1
-License:	GPL
+License:	GPL v2+
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.4/%{name}-%{version}.tar.bz2
 # Source0-md5:	958988ac02642e2dfda7ad7d045e2a84
@@ -193,6 +193,7 @@ ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. якщо хочете
 %package libs
 Summary:	GIMP libraries
 Summary(pl.UTF-8):	Biblioteki GIMPa
+License:	LGPL v2+
 Group:		Libraries
 Requires:	gtk+2 >= 2:2.10.6
 
@@ -214,7 +215,7 @@ Summary(tr.UTF-8):	GIMP plugin ve uzantı geliştirme araçları
 Summary(uk.UTF-8):	Інструментарій для розробки плагінів та розширень GIMP
 Summary(zh_CN.UTF-8):	[开发]gimp的开发包
 Summary(zh_TW.UTF-8):	[開發]gimp的開發包
-License:	LGPL
+License:	LGPL v2+
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.10.0
@@ -239,6 +240,7 @@ para o GIMP.
 %package static
 Summary:	GIMP static libraries
 Summary(pl.UTF-8):	Biblioteki statyczne GIMPa
+License:	LGPL v2+
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
