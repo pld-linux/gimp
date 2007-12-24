@@ -330,12 +330,17 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-################### end hack ############################
-
 # Link gimptool to gimptool-2.0
-
 ln -s gimptool-%{mver} $RPM_BUILD_ROOT%{_bindir}/gimptool
 echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
+# replace symlinks with .so links
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{gimp-console*,gimp-remote,gimp}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
+echo '.so gimp-2.4' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp.1
+echo '.so gimp-2.4' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-console-2.4.1
+echo '.so gimp-2.4' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-console.1
+echo '.so gimp-remote-2.4' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-remote.1
+echo '.so gimprc-2.4' > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
@@ -372,9 +377,14 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %attr(755,root,root) %{_bindir}/gimp-remote-2.4
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_mandir}/man1/gimp-2*
-%{_mandir}/man1/gimp-remote-2*
-%{_mandir}/man5/gimprc-2*
+%{_mandir}/man1/gimp-2.4.1*
+%{_mandir}/man1/gimp.1*
+%{_mandir}/man1/gimp-console-2.4.1*
+%{_mandir}/man1/gimp-console.1*
+%{_mandir}/man1/gimp-remote-2.4.1*
+%{_mandir}/man1/gimp-remote.1*
+%{_mandir}/man5/gimprc-2.4.5*
+%{_mandir}/man5/gimprc.5*
 
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
@@ -426,29 +436,77 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libgimp-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimp-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpbase-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpbase-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpcolor-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpcolor-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpconfig-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpconfig-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpmath-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpmath-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpmodule-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpmodule-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpthumb-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpthumb-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpui-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpui-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpwidgets-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpwidgets-2.0.so.0
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gimptool-%{mver}
 %attr(755,root,root) %{_bindir}/gimptool
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%{_pkgconfigdir}/*
-
+%attr(755,root,root) %{_libdir}/libgimp-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpbase-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpcolor-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpconfig-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpmath-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpmodule-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpthumb-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpui-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpwidgets-2.0.so
+%{_libdir}/libgimp-2.0.la
+%{_libdir}/libgimpbase-2.0.la
+%{_libdir}/libgimpcolor-2.0.la
+%{_libdir}/libgimpconfig-2.0.la
+%{_libdir}/libgimpmath-2.0.la
+%{_libdir}/libgimpmodule-2.0.la
+%{_libdir}/libgimpthumb-2.0.la
+%{_libdir}/libgimpui-2.0.la
+%{_libdir}/libgimpwidgets-2.0.la
+%{_pkgconfigdir}/gimp-2.0.pc
+%{_pkgconfigdir}/gimpthumb-2.0.pc
+%{_pkgconfigdir}/gimpui-2.0.pc
 %{_includedir}/gimp-2.0
 %{_aclocaldir}/gimp-2.0.m4
-
-%{_mandir}/man1/gimptool-%{mver}*
+%{_mandir}/man1/gimptool-%{mver}.1*
 %{_mandir}/man1/gimptool.1*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libgimp-2.0.a
+%{_libdir}/libgimpbase-2.0.a
+%{_libdir}/libgimpcolor-2.0.a
+%{_libdir}/libgimpconfig-2.0.a
+%{_libdir}/libgimpmath-2.0.a
+%{_libdir}/libgimpmodule-2.0.a
+%{_libdir}/libgimpthumb-2.0.a
+%{_libdir}/libgimpui-2.0.a
+%{_libdir}/libgimpwidgets-2.0.a
 
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/*
+%{_gtkdocdir}/libgimp
+%{_gtkdocdir}/libgimpbase
+%{_gtkdocdir}/libgimpcolor
+%{_gtkdocdir}/libgimpconfig
+%{_gtkdocdir}/libgimpmath
+%{_gtkdocdir}/libgimpmodule
+%{_gtkdocdir}/libgimpthumb
+%{_gtkdocdir}/libgimpwidgets
 
 %if %{with aalib}
 %files aa
