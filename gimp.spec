@@ -1,10 +1,14 @@
 #
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
-%bcond_without	gnome		# don't build GNOME based features
+%bcond_without	gnomevfs	# without GNOME VFS support
+%bcond_without	gnome		# convenient alias for gnomevfs
 %bcond_without	python		# without python plugins
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 #
+%if %{without gnome}
+%undefine	with_gnomevfs
+%endif
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -18,31 +22,34 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.4.0
+Version:	2.5.0
 Release:	1
 Epoch:		1
-License:	GPL
+License:	GPL v2+
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.4/%{name}-%{version}.tar.bz2
-# Source0-md5:	35fecf14cd5237065aef624b93030d5e
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.5/%{name}-%{version}.tar.bz2
+# Source0-md5:	8ba5d24c700b495e8a9f32743369c925
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
-Patch3:		%{name}-nognome.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
+BuildRequires:	curl-devel >= 7.15.1
+BuildRequires:	dbus-devel >= 0.70
+BuildRequires:	gegl-devel
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
-BuildRequires:	gtk+2-devel >= 2:2.10.6
+BuildRequires:	glib2-devel >= 1:2.12.3
+BuildRequires:	gtk+2-devel >= 2:2.10.13
 BuildRequires:	gtk-doc >= 1.6
-BuildRequires:	hal-devel
+BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	lcms-devel
 BuildRequires:	libart_lgpl-devel
-BuildRequires:	libexif-devel
+BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libgtkhtml-devel >= 2.6.3
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
@@ -51,20 +58,25 @@ BuildRequires:	librsvg-devel >= 1:2.15.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libwmf-devel >= 2:0.2.8
+BuildRequires:	pango-devel >= 1:1.12.2
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	xorg-lib-libXpm-devel
-%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.9.3}
-%if %{with gnome}
+%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
+%if %{with gnomevfs}
 BuildRequires:	gnome-keyring-devel >= 0.5.1
 BuildRequires:	gnome-vfs2-devel >= 2.15.91
 BuildRequires:	libgnomeui-devel >= 2.15.91
 %endif
+Requires(post,postun):	gtk+2 >= 2:2.10.13
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires(post,postun):	gtk+2 >= 2:2.10.6
+Requires:	curl >= 7.15.1
+Requires:	glib2 >= 1:2.12.3
+Requires:	gtk+2 >= 2:2.10.13
 Requires:	hicolor-icon-theme
-%{?with_python:Requires:	python-pygtk-gtk >= 1:2.9.3}
+Requires:	pango >= 1:1.12.2
+%{?with_python:Requires:	python-pygtk-gtk >= 1:2.10.4}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 Obsoletes:	gimp-print
@@ -142,18 +154,6 @@ GIMP предоставляет большой набор инструменто
 включающий операции над каналами, слоями, эффекты, sub-pixel imaging и
 антиалиасинг, всяческие конверторы и все это с многоуровневым откатом.
 
-GIMP включает поддержку создания сценариев (scripting facility),
-однако многие из поставляемых с программой сценариев предполагают
-наличие шрифтов, которые не могут быть включены в дистрибутив.
-FTP-сайт GIMP содержит пакет шрифтов, которые вы можете поставить
-самостоятельно, включающий все шрифты, необходимые для работы входящих
-в комплект сценариев. Некоторые из шрифтов имеют весьма необычные
-лицензионные требования; все лицензии включены в упомянутый пакет.
-Скачайте ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz и
-ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz, если хотите
-запускать сценарии без изменений или выберите те шрифты, которые
-установлены у вас в системе, перед запуском сценариев.
-
 %description -l uk.UTF-8
 GIMP - це програма для створення та обробки зображень. Її вважають
 дуже корисною для створення логотипів та іншої графіки для
@@ -166,21 +166,10 @@ GIMP надає великий набір інструментів для роб
 imaging і антиаліасинг, різноманітні конвертори і все це з
 багаторівневим відкатом.
 
-GIMP має підтримку сценаріїв (scripting facility), проте багато з
-включених до поставки сценаріїв припускають наявність шрифтів, які не
-можуть бути включені в дистрибутив. FTP-сайт GIMP містить пакет
-шрифтів, котрі ви можете встановити самостійно, в який входять всі
-шрифти, необхідні для роботи сценаріїв з поставки GIMP. Деякі з
-шрифтів мають вельми незвичайні ліцензійні умови; всі ліцензії
-включено в згаданий пакет. Завантажте
-ftp://ftp.gimp.org/pub/gimp/fonts/freefonts-0.10.tar.gz та
-ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. якщо хочете
-запускати сценарії без змін або ж виберіть встановалені у вас в
-системі шрифти перед запуском сценаріїв.
-
 %package libs
 Summary:	GIMP libraries
 Summary(pl.UTF-8):	Biblioteki GIMPa
+License:	LGPL v2+
 Group:		Libraries
 Requires:	gtk+2 >= 2:2.10.6
 
@@ -195,17 +184,16 @@ Summary:	GIMP plugin and extension development kit
 Summary(de.UTF-8):	GIMP-Plugin und Extension Development Kit
 Summary(es.UTF-8):	Kit de desarrollo de "plugins" extensiones para GIMP
 Summary(fr.UTF-8):	Plugin GIMP et kit de développement d'extensions
-Summary(pl.UTF-8):	Pliki do budowania modułów i rozszerzeń dla Gimpa
+Summary(pl.UTF-8):	Pliki do budowania modułów i rozszerzeń dla GIMPa
 Summary(pt_BR.UTF-8):	Kit de desenvolvimento de "plugins" extensões para o GIMP
 Summary(ru.UTF-8):	Инструментарий для разработки плагинов и расширений GIMP
 Summary(tr.UTF-8):	GIMP plugin ve uzantı geliştirme araçları
 Summary(uk.UTF-8):	Інструментарій для розробки плагінів та розширень GIMP
 Summary(zh_CN.UTF-8):	[开发]gimp的开发包
 Summary(zh_TW.UTF-8):	[開發]gimp的開發包
-License:	LGPL
+License:	LGPL v2+
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	gtk-doc-common
 Requires:	gtk+2-devel >= 2:2.10.0
 
 %description devel
@@ -216,18 +204,19 @@ Header-Dateien zum Schreiben von GIMP-Plugins und -Erweiterungen.
 
 %description devel -l es.UTF-8
 Bibliotecas y archivos de inclusión para escribir extensiones y
-plugins para Gimp.
+plugins para GIMP.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe do tworzenia wtyczek i rozszerzeń dla Gimpa.
+Pliki nagłówkowe do tworzenia wtyczek i rozszerzeń dla GIMPa.
 
 %description devel -l pt_BR.UTF-8
 Bibliotecas e arquivos de inclusão para escrever extensões e plugins
-para o Gimp.
+para o GIMP.
 
 %package static
 Summary:	GIMP static libraries
-Summary(pl.UTF-8):	Biblioteki statyczne Gimpa
+Summary(pl.UTF-8):	Biblioteki statyczne GIMPa
+License:	LGPL v2+
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -235,19 +224,31 @@ Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 GIMP static libraries.
 
 %description static -l es.UTF-8
-Bibliotecas estáticas para escribir extensiones y plugins para Gimp.
+Bibliotecas estáticas para escribir extensiones y plugins para GIMP.
 
 %description static -l pl.UTF-8
-Biblioteki statyczne Gimpa.
+Biblioteki statyczne GIMPa.
 
 %description static -l pt_BR.UTF-8
 Bibliotecas estáticas para desenvolvimento de plugins e extensões do
 GIMP.
 
+%package apidocs
+Summary:	GIMP API documentation
+Summary(pl.UTF-8):	Dokumentacja API GIMPa
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description apidocs
+GIMP API documentation.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API GIMPa.
+
 %package aa
-Summary:	ASCII Art plugin for Gimp
-Summary(fr.UTF-8):	Plugin d'art ASCII pour Gimp
-Summary(pl.UTF-8):	Wtyczka do ASCII Art do Gimpa
+Summary:	ASCII Art plugin for GIMP
+Summary(fr.UTF-8):	Plugin d'art ASCII pour GIMP
+Summary(pl.UTF-8):	Wtyczka do ASCII Art do GIMPa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -260,27 +261,26 @@ Ce paquet contient le plugin d'art ASCII qui nécéssite la librairie
 partagée aalib.
 
 %description aa -l pl.UTF-8
-Ten pakiet zawiera wtyczkę do Gimpa ze wsparciem do ASCII Art.
+Ten pakiet zawiera wtyczkę do GIMPa ze wsparciem do ASCII Art.
 
 %package svg
-Summary:	SVG plugin for Gimp
-Summary(pl.UTF-8):	Wtyczka SVG dla Gimpa
+Summary:	SVG plugin for GIMP
+Summary(pl.UTF-8):	Wtyczka SVG dla GIMPa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	librsvg >= 2.2.0
 
 %description svg
-SVG plugin for Gimp.
+SVG plugin for GIMP.
 
 %description svg -l pl.UTF-8
-Wtyczka SVG dla Gimpa.
+Wtyczka SVG dla GIMPa.
 
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%{!?with_gnome:%patch3 -p1}
 
 %build
 %{__libtoolize}
@@ -289,6 +289,7 @@ Wtyczka SVG dla Gimpa.
 %{__autoheader}
 %{__automake}
 %configure \
+	%{!?with_gnomevfs:--disable-gnomevfs} \
 	--disable-rpath \
 	%{!?with_python: --disable-python} \
 	--enable-mp \
@@ -298,7 +299,7 @@ Wtyczka SVG dla Gimpa.
 	--enable-gtk-doc \
 	%{?with_posix_shm:--with-shm=posix}
 	
-%{__make} -j1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -306,17 +307,21 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-################### end hack ############################
-
 # Link gimptool to gimptool-2.0
-
 ln -s gimptool-%{mver} $RPM_BUILD_ROOT%{_bindir}/gimptool
 echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
+# replace symlinks with .so links
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{gimp-console*,gimp-remote,gimp}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
+echo '.so gimp-2.5' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp.1
+echo '.so gimp-2.5' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-console-2.5.1
+echo '.so gimp-2.5' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-console.1
+echo '.so gimp-remote-2.5' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-remote.1
+echo '.so gimprc-2.5' > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
-rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
 
 %find_lang %{name} --all-name
 
@@ -341,15 +346,23 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %doc AUTHORS ChangeLog NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.4
+%attr(755,root,root) %{_bindir}/gimp-2.5
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-2.4
-%attr(755,root,root) %{_bindir}/gimp-remote-2.4
+%attr(755,root,root) %{_bindir}/gimp-console-2.5
+%attr(755,root,root) %{_bindir}/gimp-console
+%attr(755,root,root) %{_bindir}/gimp-remote-2.5
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_mandir}/man1/gimp-2*
-%{_mandir}/man1/gimp-remote-2*
-%{_mandir}/man5/gimprc-2*
+%{_mandir}/man1/gimp-2.5.1*
+%{_mandir}/man1/gimp.1*
+%{_mandir}/man1/gimp-console-2.5.1*
+%{_mandir}/man1/gimp-console.1*
+%{_mandir}/man1/gimp-remote-2.5.1*
+%{_mandir}/man1/gimp-remote.1*
+%{_mandir}/man5/gimp-2.5.5*
+%{_mandir}/man5/gimprc-2.5.5*
+%{_mandir}/man5/gimprc.5*
+%{_mandir}/man5/gimp-remote-2.5.5*
 
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
@@ -401,26 +414,77 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libgimp-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimp-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpbase-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpbase-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpcolor-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpcolor-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpconfig-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpconfig-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpmath-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpmath-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpmodule-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpmodule-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpthumb-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpthumb-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpui-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpui-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpwidgets-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpwidgets-2.0.so.0
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gimptool-%{mver}
 %attr(755,root,root) %{_bindir}/gimptool
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%{_pkgconfigdir}/*
-%{_gtkdocdir}/*
-
+%attr(755,root,root) %{_libdir}/libgimp-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpbase-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpcolor-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpconfig-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpmath-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpmodule-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpthumb-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpui-2.0.so
+%attr(755,root,root) %{_libdir}/libgimpwidgets-2.0.so
+%{_libdir}/libgimp-2.0.la
+%{_libdir}/libgimpbase-2.0.la
+%{_libdir}/libgimpcolor-2.0.la
+%{_libdir}/libgimpconfig-2.0.la
+%{_libdir}/libgimpmath-2.0.la
+%{_libdir}/libgimpmodule-2.0.la
+%{_libdir}/libgimpthumb-2.0.la
+%{_libdir}/libgimpui-2.0.la
+%{_libdir}/libgimpwidgets-2.0.la
+%{_pkgconfigdir}/gimp-2.0.pc
+%{_pkgconfigdir}/gimpthumb-2.0.pc
+%{_pkgconfigdir}/gimpui-2.0.pc
 %{_includedir}/gimp-2.0
 %{_aclocaldir}/gimp-2.0.m4
-
-%{_mandir}/man1/gimptool-%{mver}*
+%{_mandir}/man1/gimptool-%{mver}.1*
 %{_mandir}/man1/gimptool.1*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libgimp-2.0.a
+%{_libdir}/libgimpbase-2.0.a
+%{_libdir}/libgimpcolor-2.0.a
+%{_libdir}/libgimpconfig-2.0.a
+%{_libdir}/libgimpmath-2.0.a
+%{_libdir}/libgimpmodule-2.0.a
+%{_libdir}/libgimpthumb-2.0.a
+%{_libdir}/libgimpui-2.0.a
+%{_libdir}/libgimpwidgets-2.0.a
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/libgimp
+%{_gtkdocdir}/libgimpbase
+%{_gtkdocdir}/libgimpcolor
+%{_gtkdocdir}/libgimpconfig
+%{_gtkdocdir}/libgimpmath
+%{_gtkdocdir}/libgimpmodule
+%{_gtkdocdir}/libgimpthumb
+%{_gtkdocdir}/libgimpwidgets
 
 %if %{with aalib}
 %files aa
