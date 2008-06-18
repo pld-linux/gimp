@@ -22,13 +22,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.5.0
+Version:	2.5.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.5/%{name}-%{version}.tar.bz2
-# Source0-md5:	8ba5d24c700b495e8a9f32743369c925
+# Source0-md5:	da2a6ffd8ed5e137d34784ef3fba9a04
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -37,9 +37,10 @@ URL:		http://www.gimp.org/
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
+BuildRequires:	babl-devel >= 0.0.22
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-devel >= 0.70
-BuildRequires:	gegl-devel
+BuildRequires:	gegl-devel >= 0.0.18
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.12.3
@@ -48,7 +49,6 @@ BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	lcms-devel
-BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libgtkhtml-devel >= 2.6.3
 BuildRequires:	libjpeg-devel
