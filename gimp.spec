@@ -282,6 +282,9 @@ Wtyczka SVG dla GIMPa.
 %patch1 -p1
 %patch2 -p1
 
+rm -f po/ca@valencia.po
+sed -i -e 's#ca@valencia ##' configure.in
+
 %build
 %{__libtoolize}
 %{__aclocal}
