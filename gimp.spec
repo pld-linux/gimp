@@ -22,13 +22,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.4.7
+Version:	2.6.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.4/%{name}-%{version}.tar.bz2
-# Source0-md5:	8d0e059597d70fbdeb77e6447bae29c4
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.6/%{name}-%{version}.tar.bz2
+# Source0-md5:	e5ac955fee8b376d431e4693027d7640
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -37,8 +37,10 @@ URL:		http://www.gimp.org/
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
+BuildRequires:	babl-devel >= 0.0.22
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-devel >= 0.70
+BuildRequires:	gegl-devel >= 0.0.18
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.12.3
@@ -318,6 +320,7 @@ Wtyczka SVG dla GIMPa.
 	--enable-mp \
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-default-binary \
+	--enable-gimp-remote \
 	--enable-static \
 	--enable-gtk-doc \
 	%{?with_posix_shm:--with-shm=posix}
@@ -330,25 +333,16 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# Link gimptool to gimptool-2.0
-ln -s gimptool-%{mver} $RPM_BUILD_ROOT%{_bindir}/gimptool
-echo '.so gimptool-%{mver}' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
-# replace symlinks with .so links
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{gimp-console*,gimp-remote,gimp}.1 \
-	$RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
-echo '.so gimp-2.4' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp.1
-echo '.so gimp-2.4' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-console-2.4.1
-echo '.so gimp-2.4' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-console.1
-echo '.so gimp-remote-2.4' > $RPM_BUILD_ROOT%{_mandir}/man1/gimp-remote.1
-echo '.so gimprc-2.4' > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
+# Link gimptool to gimptool-2.0.1
+ln -s gimptool-2.0.1 $RPM_BUILD_ROOT%{_bindir}/gimptool
+echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
-rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
 
 # error: gimp-2.4.6-1: req /usr/share/locale/ca@valencia/LC_MESSAGES not found
-rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/ca@valencia
+rm -r $RPM_BUILD_ROOT%{_datadir}/locale/ca@valencia
 
 %find_lang %{name} --all-name
 
@@ -373,20 +367,20 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %doc AUTHORS ChangeLog NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.4
+%attr(755,root,root) %{_bindir}/gimp-2.6
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-2.4
+%attr(755,root,root) %{_bindir}/gimp-console-2.6
 %attr(755,root,root) %{_bindir}/gimp-console
-%attr(755,root,root) %{_bindir}/gimp-remote-2.4
+%attr(755,root,root) %{_bindir}/gimp-remote-2.6
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_mandir}/man1/gimp-2.4.1*
+%{_mandir}/man1/gimp-2.6.1*
 %{_mandir}/man1/gimp.1*
-%{_mandir}/man1/gimp-console-2.4.1*
+%{_mandir}/man1/gimp-console-2.6.1*
 %{_mandir}/man1/gimp-console.1*
-%{_mandir}/man1/gimp-remote-2.4.1*
+%{_mandir}/man1/gimp-remote-2.6.1*
 %{_mandir}/man1/gimp-remote.1*
-%{_mandir}/man5/gimprc-2.4.5*
+%{_mandir}/man5/gimprc-2.6.5*
 %{_mandir}/man5/gimprc.5*
 
 %dir %{_libdir}/gimp
@@ -394,8 +388,8 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %dir %{_libdir}/gimp/%{mver}/plug-ins
 %{_libdir}/gimp/%{mver}/interpreters
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
-%{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/aa}
-%exclude %{_libdir}/gimp/%{mver}/plug-ins/svg
+%{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/file-aa}
+%exclude %{_libdir}/gimp/%{mver}/plug-ins/file-svg
 
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
@@ -514,9 +508,9 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %if %{with aalib}
 %files aa
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/aa
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/file-aa
 %endif
 
 %files svg
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/svg
+%attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/file-svg
