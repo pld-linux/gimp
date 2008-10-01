@@ -46,6 +46,7 @@ BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.12.3
 BuildRequires:	gtk+2-devel >= 2:2.10.13
 BuildRequires:	gtk-doc >= 1.6
+BuildRequires:	gtk-webkit-devel
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	lcms-devel
