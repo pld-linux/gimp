@@ -23,7 +23,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.6.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
@@ -316,9 +316,7 @@ Wtyczka SVG dla GIMPa.
 %{__automake}
 %configure \
 	%{!?with_gnomevfs:--disable-gnomevfs} \
-	--disable-rpath \
 	%{!?with_python: --disable-python} \
-	--enable-mp \
 	--with-html-dir=%{_gtkdocdir} \
 	--enable-default-binary \
 	--enable-gimp-remote \
@@ -335,8 +333,9 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 # Link gimptool to gimptool-2.0.1
-ln -s gimptool-2.0.1 $RPM_BUILD_ROOT%{_bindir}/gimptool
+ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
 echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
+echo '.so gimptool-2.0' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
