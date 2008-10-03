@@ -335,7 +335,6 @@ rm -rf $RPM_BUILD_ROOT
 # Link gimptool to gimptool-2.0.1
 ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
 echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
-echo '.so gimptool-2.0' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
 # Remove obsolete files
 rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
