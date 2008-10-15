@@ -43,13 +43,14 @@ BuildRequires:	dbus-devel >= 0.70
 BuildRequires:	gegl-devel >= 0.0.18
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
-BuildRequires:	glib2-devel >= 1:2.12.3
-BuildRequires:	gtk+2-devel >= 2:2.10.13
+BuildRequires:	glib2-devel >= 1:2.16.1
+BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	gtk-webkit-devel
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool >= 0.35.5
-BuildRequires:	lcms-devel
+BuildRequires:	iso-codes
+BuildRequires:	lcms-devel >= 1.16
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libgtkhtml-devel >= 2.6.3
@@ -60,10 +61,11 @@ BuildRequires:	librsvg-devel >= 1:2.15.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libwmf-devel >= 2:0.2.8
-BuildRequires:	pango-devel >= 1:1.12.2
+BuildRequires:	pango-devel >= 1:1.18.0
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.6
 BuildRequires:	rpm-pythonprov
+BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 %if %{with gnomevfs}
