@@ -4,6 +4,7 @@
 %bcond_without	gnomevfs	# without GNOME VFS support
 %bcond_without	gnome		# convenient alias for gnomevfs
 %bcond_without	python		# without python plugins
+%bcond_without	webkit		# without webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 #
 %if %{without gnome}
@@ -39,21 +40,20 @@ BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	babl-devel >= 0.0.22
 BuildRequires:	curl-devel >= 7.15.1
-BuildRequires:	dbus-devel >= 0.70
+BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	gegl-devel >= 0.0.18
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.16.1
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	gtk-doc >= 1.6
-BuildRequires:	gtk-webkit-devel
+%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 0.1}
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool >= 0.35.5
 BuildRequires:	iso-codes
 BuildRequires:	lcms-devel >= 1.16
 BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel >= 0.6.15
-BuildRequires:	libgtkhtml-devel >= 2.6.3
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel >= 1.2.12
@@ -318,13 +318,14 @@ Wtyczka SVG dla GIMPa.
 %{__automake}
 %configure \
 	%{!?with_gnomevfs:--disable-gnomevfs} \
-	%{!?with_python: --disable-python} \
-	--with-html-dir=%{_gtkdocdir} \
+	%{!?with_python:--disable-python} \
 	--enable-default-binary \
 	--enable-gimp-remote \
-	--enable-static \
 	--enable-gtk-doc \
-	%{?with_posix_shm:--with-shm=posix}
+	--enable-static \
+	--with-html-dir=%{_gtkdocdir} \
+	%{?with_posix_shm:--with-shm=posix} \
+	%{!?with_webkit:--without-webkit}
 	
 %{__make}
 
