@@ -23,13 +23,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.6.4
-Release:	2
+Version:	2.6.5
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.6/%{name}-%{version}.tar.bz2
-# Source0-md5:	4e8185e40ab06559ce6dd5ef61b3e83b
+# Source0-md5:	cd13050bc6bde6d8d8fd38eff6276033
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
