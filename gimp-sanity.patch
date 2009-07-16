@@ -1,0 +1,24 @@
+--- gimp/app/sanity.c~	2008-11-20 23:43:08.000000000 +0100
++++ gimp/app/sanity.c	2009-07-16 14:31:04.372896443 +0200
+@@ -268,7 +268,8 @@
+ 
+   if (babl_major_version < BABL_REQUIRED_MAJOR ||
+       babl_minor_version < BABL_REQUIRED_MINOR ||
+-      babl_micro_version < BABL_REQUIRED_MICRO)
++      (babl_minor_version == BABL_REQUIRED_MINOR &&
++       babl_micro_version < BABL_REQUIRED_MICRO))
+     {
+       return g_strdup_printf
+         ("BABL version too old!\n\n"
+--- gimp/app/sanity.c~	2009-07-16 14:32:02.917908312 +0200
++++ gimp/app/sanity.c	2009-07-16 14:34:55.401254723 +0200
+@@ -307,7 +307,8 @@
+ 
+   if (gegl_major_version < GEGL_REQUIRED_MAJOR ||
+       gegl_minor_version < GEGL_REQUIRED_MINOR ||
+-      gegl_micro_version < GEGL_REQUIRED_MICRO)
++      (gegl_minor_version == GEGL_REQUIRED_MINOR &&
++       gegl_micro_version < GEGL_REQUIRED_MICRO))
+     {
+       return g_strdup_printf
+         ("GEGL version too old!\n\n"
