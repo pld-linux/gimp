@@ -24,7 +24,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.6.6
-Release:	5
+Release:	6
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
@@ -310,6 +310,7 @@ Wtyczka SVG dla GIMPa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
