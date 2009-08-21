@@ -23,13 +23,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.6.7
-Release:	1
+Version:	2.7.0
+Release:	0.1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.6/%{name}-%{version}.tar.bz2
-# Source0-md5:	77ed86a8de9b48587efb24f2b115ad38
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.7/%{name}-%{version}.tar.bz2
+# Source0-md5:	bd9fb22079a547f1f302c219b1a29fcc
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -369,20 +369,20 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %doc AUTHORS ChangeLog NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.6
+%attr(755,root,root) %{_bindir}/gimp-2.7
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-2.6
+%attr(755,root,root) %{_bindir}/gimp-console-2.7
 %attr(755,root,root) %{_bindir}/gimp-console
-%attr(755,root,root) %{_bindir}/gimp-remote-2.6
+%attr(755,root,root) %{_bindir}/gimp-remote-2.7
 %attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_mandir}/man1/gimp-2.6.1*
+%{_mandir}/man1/gimp-2.7.1*
 %{_mandir}/man1/gimp.1*
-%{_mandir}/man1/gimp-console-2.6.1*
+%{_mandir}/man1/gimp-console-2.7.1*
 %{_mandir}/man1/gimp-console.1*
-%{_mandir}/man1/gimp-remote-2.6.1*
+%{_mandir}/man1/gimp-remote-2.7.1*
 %{_mandir}/man1/gimp-remote.1*
-%{_mandir}/man5/gimprc-2.6.5*
+%{_mandir}/man5/gimprc-2.7.5*
 %{_mandir}/man5/gimprc.5*
 
 %dir %{_libdir}/gimp
