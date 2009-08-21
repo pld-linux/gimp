@@ -26,7 +26,7 @@ Name:		gimp
 Version:	2.7.0
 Release:	0.1
 Epoch:		1
-License:	GPL v2+
+License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.7/%{name}-%{version}.tar.bz2
 # Source0-md5:	bd9fb22079a547f1f302c219b1a29fcc
