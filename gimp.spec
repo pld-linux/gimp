@@ -41,6 +41,7 @@ BuildRequires:	automake
 BuildRequires:	babl-devel >= 0.0.22
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-glib-devel >= 0.70
+BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gegl-devel >= 0.0.18
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
@@ -64,10 +65,10 @@ BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pango-devel >= 1:1.18.0
 BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.6
+%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 BuildRequires:	rpm-pythonprov
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
-%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 %if %{with gnomevfs}
 BuildRequires:	gnome-keyring-devel >= 0.5.1
 BuildRequires:	gnome-vfs2-devel >= 2.15.91
@@ -326,7 +327,7 @@ Wtyczka SVG dla GIMPa.
 	--with-html-dir=%{_gtkdocdir} \
 	%{?with_posix_shm:--with-shm=posix} \
 	%{!?with_webkit:--without-webkit}
-	
+
 %{__make}
 
 %install
