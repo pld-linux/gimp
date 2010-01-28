@@ -314,9 +314,10 @@ Wtyczka SVG dla GIMPa.
 %patch3 -p1
 
 %build
+rm acinclude.m4 m4macros/gtk-doc.m4
 %{__gtkdocize}
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4macros
 %{__autoconf}
 %{__autoheader}
 %{__automake}
