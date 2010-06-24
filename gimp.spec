@@ -23,17 +23,16 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.6.8
-Release:	4
+Version:	2.6.9
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.6/%{name}-%{version}.tar.bz2
-# Source0-md5:	a4d9462c9420954824a80c9b1963f9d9
+# Source0-md5:	e5d0cc6f3ce127e51d7f3d3124b16a99
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
-Patch3:		%{name}-libpng.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -68,6 +67,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	poppler-glib-devel >= 0.6
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
 %if %{with gnomevfs}
@@ -311,7 +311,6 @@ Wtyczka SVG dla GIMPa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 rm acinclude.m4 m4macros/gtk-doc.m4
