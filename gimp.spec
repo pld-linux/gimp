@@ -48,9 +48,9 @@ BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.16.1
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	gtk-doc >= 1.6
-%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 0.1}
+%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.0}
 BuildRequires:	hal-devel >= 0.5.7
-BuildRequires:	intltool >= 0.35.5
+BuildRequires:	intltool >= 0.36.3
 BuildRequires:	iso-codes
 BuildRequires:	lcms-devel >= 1.16
 BuildRequires:	libart_lgpl-devel
@@ -63,25 +63,31 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 1:1.4.2-9
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pango-devel >= 1:1.18.0
-BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-glib-devel >= 0.6
-%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
+BuildRequires:	zlib-devel
 %if %{with gnomevfs}
-BuildRequires:	gnome-keyring-devel >= 0.5.1
 BuildRequires:	gnome-vfs2-devel >= 2.15.91
+BuildRequires:	libgnome-keyring-devel >= 0.5.1
 BuildRequires:	libgnomeui-devel >= 2.15.91
+%endif
+%if %{with python}
+BuildRequires:	python-devel >= 1:2.5
+BuildRequires:	python-pygtk-devel >= 2:2.10.4
 %endif
 Requires(post,postun):	gtk+2 >= 2:2.10.13
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	curl >= 7.15.1
-Requires:	glib2 >= 1:2.12.3
-Requires:	gtk+2 >= 2:2.10.13
+Requires:	dbus-glib >= 0.70
 Requires:	hicolor-icon-theme
-Requires:	pango >= 1:1.12.2
+Requires:	lcms >= 1.16
+Requires:	libexif >= 0.6.15
 %{?with_python:Requires:	python-pygtk-gtk >= 1:2.10.4}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -198,16 +204,18 @@ ftp://ftp.gimp.org/pub/gimp/fonts/sharefonts-0.10.tar.gz. якщо хочете
 
 %package libs
 Summary:	GIMP libraries
-Summary(pl.UTF-8):	Biblioteki GIMPa
+Summary(pl.UTF-8):	Biblioteki GIMP-a
 License:	LGPL v2+
 Group:		Libraries
-Requires:	gtk+2 >= 2:2.10.6
+Requires:	glib2 >= 1:2.16.1
+Requires:	gtk+2 >= 2:2.12.5
+Requires:	pango >= 1:1.18.0
 
 %description libs
 This package contains GIMP libraries.
 
 %description libs -l pl.UTF-8
-Pakiet zawiera biblioteki GIMPa.
+Pakiet zawiera biblioteki GIMP-a.
 
 %package devel
 Summary:	GIMP plugin and extension development kit
@@ -224,7 +232,8 @@ Summary(zh_TW.UTF-8):	[開發]gimp的開發包
 License:	LGPL v2+
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	gtk+2-devel >= 2:2.10.0
+Requires:	glib2-devel >= 1:2.16.1
+Requires:	gtk+2-devel >= 2:2.12.5
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -298,7 +307,7 @@ Summary:	SVG plugin for GIMP
 Summary(pl.UTF-8):	Wtyczka SVG dla GIMPa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	librsvg >= 2.2.0
+Requires:	librsvg >= 2.15.0
 
 %description svg
 SVG plugin for GIMP.
@@ -370,7 +379,7 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog LICENSE NEWS README
 %doc docs/Wilber*
 
 %attr(755,root,root) %{_bindir}/gimp-2.6
