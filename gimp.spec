@@ -24,7 +24,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.6.11
-Release:	3
+Release:	4
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
@@ -81,7 +81,8 @@ BuildRequires:	libgnomeui-devel >= 2.15.91
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
 %endif
-Requires(post,postun):	gtk+2 >= 2:2.10.13
+Requires(post,postun):	gtk-update-icon-cache
+Requires(post,postun):	hicolor-icon-theme
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	curl >= 7.15.1
 Requires:	dbus-glib >= 0.70
@@ -367,12 +368,12 @@ rm -rf $RPM_BUILD_ROOT
 %post
 umask 022
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
-gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
+%update_icon_cache hicolor
 
 %postun
 umask 022
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
-gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
+%update_icon_cache hicolor
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
