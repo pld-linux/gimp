@@ -353,12 +353,9 @@ rm -rf $RPM_BUILD_ROOT
 ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
 echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
-# Remove obsolete files
-rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
-rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
-
-# error: gimp-2.4.6-1: req /usr/share/locale/ca@valencia/LC_MESSAGES not found
-rm -r $RPM_BUILD_ROOT%{_datadir}/locale/ca@valencia
+# remove unneeded files
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
 
 %find_lang %{name} --all-name
 
