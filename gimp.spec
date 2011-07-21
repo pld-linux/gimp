@@ -24,7 +24,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.6.11
-Release:	4
+Release:	4.1
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
@@ -33,6 +33,7 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v2.6/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
+Patch3:		%{name}-udev.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -49,7 +50,6 @@ BuildRequires:	glib2-devel >= 1:2.16.1
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	gtk-doc >= 1.6
 %{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.0}
-BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool >= 0.36.3
 BuildRequires:	iso-codes
 BuildRequires:	lcms-devel >= 1.16
@@ -67,6 +67,7 @@ BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-glib-devel >= 0.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	udev-glib-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXmu-devel
@@ -321,6 +322,7 @@ Wtyczka SVG dla GIMPa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 rm acinclude.m4 m4macros/gtk-doc.m4
