@@ -324,6 +324,8 @@ Wtyczka SVG dla GIMPa.
 %patch2 -p1
 %patch3 -p1
 
+mv modules/gimpinputdevicestore-hal.c modules/gimpinputdevicestore-gudev.c
+
 %build
 rm acinclude.m4 m4macros/gtk-doc.m4
 %{__gtkdocize}
