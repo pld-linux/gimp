@@ -67,7 +67,7 @@ BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-glib-devel >= 0.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires:	udev-glib-devel
+BuildRequires:	udev-glib-devel >= 167
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXmu-devel
