@@ -344,9 +344,6 @@ echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
 
-# error: gimp-2.4.6-1: req /usr/share/locale/ca@valencia/LC_MESSAGES not found
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/locale/ca@valencia
-
 %find_lang %{name} --all-name
 
 %clean
