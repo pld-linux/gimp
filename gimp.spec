@@ -38,11 +38,11 @@ URL:		http://www.gimp.org/
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
-BuildRequires:	babl-devel >= 0.0.22
+BuildRequires:	babl-devel >= 0.1.4
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
-BuildRequires:	gegl-devel >= 0.0.18
+BuildRequires:	gegl-devel >= 0.1.6
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.16.1
