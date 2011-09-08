@@ -23,13 +23,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.7.1
+Version:	2.7.3
 Release:	0.1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.7/%{name}-%{version}.tar.bz2
-# Source0-md5:	4932a0a1645ecd5b23ea6155ddda013d
+# Source0-md5:	851b55dc4af966e62ef5c8b679bcc623
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -341,11 +341,11 @@ ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
 echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
 # Remove obsolete files
-rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
-rm -f $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
 
 # error: gimp-2.4.6-1: req /usr/share/locale/ca@valencia/LC_MESSAGES not found
-rm -r $RPM_BUILD_ROOT%{_datadir}/locale/ca@valencia
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/locale/ca@valencia
 
 %find_lang %{name} --all-name
 
