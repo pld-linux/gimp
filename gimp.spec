@@ -321,7 +321,6 @@ Wtyczka SVG dla GIMPa.
 	%{!?with_gnomevfs:--disable-gnomevfs} \
 	%{!?with_python:--disable-python} \
 	--enable-default-binary \
-	--enable-gimp-remote \
 	--enable-gtk-doc \
 	--enable-static \
 	--with-html-dir=%{_gtkdocdir} \
@@ -371,15 +370,11 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-console-2.7
 %attr(755,root,root) %{_bindir}/gimp-console
-%attr(755,root,root) %{_bindir}/gimp-remote-2.7
-%attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
 %{_mandir}/man1/gimp-2.7.1*
 %{_mandir}/man1/gimp.1*
 %{_mandir}/man1/gimp-console-2.7.1*
 %{_mandir}/man1/gimp-console.1*
-%{_mandir}/man1/gimp-remote-2.7.1*
-%{_mandir}/man1/gimp-remote.1*
 %{_mandir}/man5/gimprc-2.7.5*
 %{_mandir}/man5/gimprc.5*
 
@@ -425,7 +420,6 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 %config %{_sysconfdir}/%{name}/%{mver}/gtkrc*
 %config %{_sysconfdir}/%{name}/%{mver}/menurc
-%config %{_sysconfdir}/%{name}/%{mver}/ps-menurc
 %config %{_sysconfdir}/%{name}/%{mver}/sessionrc
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
 
