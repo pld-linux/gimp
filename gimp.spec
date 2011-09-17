@@ -65,6 +65,7 @@ BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pango-devel >= 1:1.18.0
 BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-glib-devel >= 0.6
+BuildRequires:	poppler-glib-devel(gdk)
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	udev-glib-devel >= 167
