@@ -24,7 +24,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.6.11
-Release:	7
+Release:	8
 Epoch:		1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
@@ -34,6 +34,7 @@ Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
 Patch3:		%{name}-udev.patch
+Patch4:		%{name}-2.6.11-poppler-0.17.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -324,6 +325,7 @@ Wtyczka SVG dla GIMPa.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 mv modules/gimpinputdevicestore-hal.c modules/gimpinputdevicestore-gudev.c
 
