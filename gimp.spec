@@ -41,15 +41,17 @@ BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	babl-devel >= 0.0.22
 BuildRequires:	curl-devel >= 7.15.1
+BuildRequires:	cairo-devel >= 1.4.10
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
+BuildRequires:	fontconfig-devel >= 1:2.2.0
 BuildRequires:	gegl-devel >= 0.0.18
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.16.1
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	gtk-doc >= 1.6
-%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.0}
+%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.1.0}
 BuildRequires:	intltool >= 0.36.3
 BuildRequires:	iso-codes
 BuildRequires:	lcms-devel >= 1.16
@@ -67,7 +69,7 @@ BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-devel >= 0.17
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires:	udev-glib-devel >= 167
+BuildRequires:	udev-glib-devel >= 1:167
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXmu-devel
