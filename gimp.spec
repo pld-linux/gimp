@@ -25,13 +25,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.7.3
-Release:	0.1
+Version:	2.8.0
+Release:	0.rc1.1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.7/%{name}-%{version}.tar.bz2
-# Source0-md5:	851b55dc4af966e62ef5c8b679bcc623
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.8/%{name}-%{version}-RC1.tar.bz2
+# Source0-md5:	134396e4399b7e753ffca7ba366c418f
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -44,7 +44,7 @@ BuildRequires:	babl-devel >= 0.1.4
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
-BuildRequires:	gegl-devel >= 0.1.6
+BuildRequires:	gegl-devel >= 0.2.0
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.16.1
