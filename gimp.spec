@@ -357,17 +357,14 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %doc AUTHORS ChangeLog NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.7
+%attr(755,root,root) %{_bindir}/gimp-2.8
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-2.7
+%attr(755,root,root) %{_bindir}/gimp-console-2.8
 %attr(755,root,root) %{_bindir}/gimp-console
 %{_desktopdir}/gimp.desktop
-%{_mandir}/man1/gimp-2.7.1*
-%{_mandir}/man1/gimp.1*
-%{_mandir}/man1/gimp-console-2.7.1*
-%{_mandir}/man1/gimp-console.1*
-%{_mandir}/man5/gimprc-2.7.5*
-%{_mandir}/man5/gimprc.5*
+%{_mandir}/man1/gimp[-.]*
+%{_mandir}/man1/gimp-console[-.]*
+%{_mandir}/man5/gimprc[-.]*
 
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
@@ -391,6 +388,7 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %dir %{_datadir}/gimp
 %dir %{_datadir}/gimp/%{mver}
 %{_datadir}/gimp/%{mver}/brushes
+%{_datadir}/gimp/%{mver}/dynamics
 %{_datadir}/gimp/%{mver}/fractalexplorer
 %{_datadir}/gimp/%{mver}/gfig
 %{_datadir}/gimp/%{mver}/gflare
@@ -401,8 +399,11 @@ gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 %{_datadir}/gimp/%{mver}/palettes
 %{_datadir}/gimp/%{mver}/patterns
 %{_datadir}/gimp/%{mver}/scripts
+%{_datadir}/gimp/%{mver}/tags
 %{_datadir}/gimp/%{mver}/themes
 %{_datadir}/gimp/%{mver}/tips
+%{_datadir}/gimp/%{mver}/tool-presets
+%{_datadir}/gimp/%{mver}/ui
 
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/%{mver}
