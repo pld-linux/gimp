@@ -46,7 +46,6 @@ BuildRequires:	glib2-devel >= 1:2.16.1
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	gtk-doc >= 1.6
 %{?with_webkit:BuildRequires:	gtk-webkit-devel >= 0.1}
-BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool >= 0.35.5
 BuildRequires:	iso-codes
 BuildRequires:	lcms-devel >= 1.16
