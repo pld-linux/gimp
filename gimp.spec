@@ -308,7 +308,7 @@ SVG plugin for GIMP.
 Wtyczka SVG dla GIMPa.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-RC1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
