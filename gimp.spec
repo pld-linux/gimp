@@ -332,7 +332,9 @@ echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
 # Remove obsolete files
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
+%if %{with python}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
+%endif
 
 %find_lang %{name} --all-name
 
