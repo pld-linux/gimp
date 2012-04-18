@@ -49,7 +49,6 @@ BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	intltool >= 0.35.5
 BuildRequires:	iso-codes
 BuildRequires:	lcms-devel >= 1.16
-BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
