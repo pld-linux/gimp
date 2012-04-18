@@ -3,15 +3,10 @@
 #
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
-%bcond_without	gnomevfs	# without GNOME VFS support
-%bcond_without	gnome		# convenient alias for gnomevfs
 %bcond_without	python		# without python plugins
 %bcond_without	webkit		# without webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 #
-%if %{without gnome}
-%undefine	with_gnomevfs
-%endif
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -71,11 +66,6 @@ BuildRequires:	poppler-glib-devel >= 0.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
-%if %{with gnomevfs}
-BuildRequires:	gnome-keyring-devel >= 0.5.1
-BuildRequires:	gnome-vfs2-devel >= 2.15.91
-BuildRequires:	libgnomeui-devel >= 2.15.91
-%endif
 Requires(post,postun):	gtk+2 >= 2:2.10.13
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	curl >= 7.15.1
@@ -320,7 +310,6 @@ Wtyczka SVG dla GIMPa.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{!?with_gnomevfs:--disable-gnomevfs} \
 	%{!?with_python:--disable-python} \
 	--enable-default-binary \
 	--enable-gtk-doc \
