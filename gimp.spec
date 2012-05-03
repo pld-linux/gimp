@@ -1,15 +1,12 @@
 #
+# TODO: some unpackaged files
+#
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
-%bcond_without	gnomevfs	# without GNOME VFS support
-%bcond_without	gnome		# convenient alias for gnomevfs
 %bcond_without	python		# without python plugins
 %bcond_without	webkit		# without webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 #
-%if %{without gnome}
-%undefine	with_gnomevfs
-%endif
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -23,13 +20,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.6.12
-Release:	3
+Version:	2.8.0
+Release:	0.1
 Epoch:		1
-License:	GPL v2+
+License:	GPL v3+
 Group:		X11/Applications/Graphics
-Source0:	ftp://ftp.gimp.org/pub/gimp/v2.6/%{name}-%{version}.tar.bz2
-# Source0-md5:	9f876ee63a0c4a4c83f50f32fb3bbe63
+Source0:	ftp://ftp.gimp.org/pub/gimp/v2.8/%{name}-%{version}.tar.bz2
+# Source0-md5:	28997d14055f15db063eb92e1c8a7ebb
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -39,13 +36,12 @@ URL:		http://www.gimp.org/
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
-BuildRequires:	babl-devel >= 0.0.22
+BuildRequires:	babl-devel >= 0.1.4
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	cairo-devel >= 1.4.10
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
-BuildRequires:	fontconfig-devel >= 1:2.2.0
-BuildRequires:	gegl-devel >= 0.0.18
+BuildRequires:	gegl-devel >= 0.2.0
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.16.1
@@ -55,7 +51,6 @@ BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	intltool >= 0.36.3
 BuildRequires:	iso-codes
 BuildRequires:	lcms-devel >= 1.16
-BuildRequires:	libart_lgpl-devel
 BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
@@ -67,6 +62,7 @@ BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pango-devel >= 1:1.18.0
 BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-devel >= 0.17
+%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	udev-glib-devel >= 1:167
@@ -74,18 +70,7 @@ BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
-BuildRequires:	zlib-devel
-%if %{with gnomevfs}
-BuildRequires:	gnome-vfs2-devel >= 2.15.91
-BuildRequires:	libgnome-keyring-devel >= 0.5.1
-BuildRequires:	libgnomeui-devel >= 2.15.91
-%endif
-%if %{with python}
-BuildRequires:	python-devel >= 1:2.5
-BuildRequires:	python-pygtk-devel >= 2:2.10.4
-%endif
-Requires(post,postun):	gtk-update-icon-cache
-Requires(post,postun):	hicolor-icon-theme
+Requires(post,postun):	gtk+2 >= 2:2.10.13
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	curl >= 7.15.1
 Requires:	dbus-glib >= 0.70
@@ -337,10 +322,8 @@ rm acinclude.m4 m4macros/gtk-doc.m4
 %{__autoheader}
 %{__automake}
 %configure \
-	%{!?with_gnomevfs:--disable-gnomevfs} \
 	%{!?with_python:--disable-python} \
 	--enable-default-binary \
-	--enable-gimp-remote \
 	--enable-gtk-doc \
 	--enable-static \
 	--with-html-dir=%{_gtkdocdir} \
@@ -359,9 +342,11 @@ rm -rf $RPM_BUILD_ROOT
 ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
 echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 
-# remove unneeded files
+# Remove obsolete files
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
+%if %{with python}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
+%endif
 
 %find_lang %{name} --all-name
 
@@ -386,21 +371,14 @@ umask 022
 %doc AUTHORS ChangeLog LICENSE NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.6
+%attr(755,root,root) %{_bindir}/gimp-2.8
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-2.6
+%attr(755,root,root) %{_bindir}/gimp-console-2.8
 %attr(755,root,root) %{_bindir}/gimp-console
-%attr(755,root,root) %{_bindir}/gimp-remote-2.6
-%attr(755,root,root) %{_bindir}/gimp-remote
 %{_desktopdir}/gimp.desktop
-%{_mandir}/man1/gimp-2.6.1*
-%{_mandir}/man1/gimp.1*
-%{_mandir}/man1/gimp-console-2.6.1*
-%{_mandir}/man1/gimp-console.1*
-%{_mandir}/man1/gimp-remote-2.6.1*
-%{_mandir}/man1/gimp-remote.1*
-%{_mandir}/man5/gimprc-2.6.5*
-%{_mandir}/man5/gimprc.5*
+%{_mandir}/man1/gimp[-.]*
+%{_mandir}/man1/gimp-console[-.]*
+%{_mandir}/man5/gimprc[-.]*
 
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
@@ -424,6 +402,7 @@ umask 022
 %dir %{_datadir}/gimp
 %dir %{_datadir}/gimp/%{mver}
 %{_datadir}/gimp/%{mver}/brushes
+%{_datadir}/gimp/%{mver}/dynamics
 %{_datadir}/gimp/%{mver}/fractalexplorer
 %{_datadir}/gimp/%{mver}/gfig
 %{_datadir}/gimp/%{mver}/gflare
@@ -434,8 +413,11 @@ umask 022
 %{_datadir}/gimp/%{mver}/palettes
 %{_datadir}/gimp/%{mver}/patterns
 %{_datadir}/gimp/%{mver}/scripts
+%{_datadir}/gimp/%{mver}/tags
 %{_datadir}/gimp/%{mver}/themes
 %{_datadir}/gimp/%{mver}/tips
+%{_datadir}/gimp/%{mver}/tool-presets
+%{_datadir}/gimp/%{mver}/ui
 
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/%{mver}
@@ -444,7 +426,6 @@ umask 022
 %config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 %config %{_sysconfdir}/%{name}/%{mver}/gtkrc*
 %config %{_sysconfdir}/%{name}/%{mver}/menurc
-%config %{_sysconfdir}/%{name}/%{mver}/ps-menurc
 %config %{_sysconfdir}/%{name}/%{mver}/sessionrc
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
 
