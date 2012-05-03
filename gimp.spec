@@ -30,7 +30,6 @@ Source0:	ftp://ftp.gimp.org/pub/gimp/v2.8/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
-Patch3:		%{name}-udev.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -309,12 +308,10 @@ Wtyczka SVG dla GIMPa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-
-mv modules/gimpinputdevicestore-hal.c modules/gimpinputdevicestore-gudev.c
+#%patch3 -p1
 
 %build
-rm acinclude.m4 m4macros/gtk-doc.m4
+rm acinclude.m4
 %{__gtkdocize}
 %{__libtoolize}
 %{__aclocal} -I m4macros
