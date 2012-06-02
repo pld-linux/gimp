@@ -33,46 +33,57 @@ Patch2:		%{name}-gcc4.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
+BuildRequires:	atk-devel >= 1:2.2.0
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
-BuildRequires:	babl-devel >= 0.1.4
+BuildRequires:	babl-devel >= 0.1.10
 BuildRequires:	curl-devel >= 7.15.1
-BuildRequires:	cairo-devel >= 1.4.10
+BuildRequires:	cairo-devel >= 1.10.2
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
+BuildRequires:	fontconfig-devel >= 2.2.0
+BuildRequires:	gdk-pixbuf2-devel >= 2.24.1
 BuildRequires:	gegl-devel >= 0.2.0
 BuildRequires:	gettext-devel
+BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
-BuildRequires:	glib2-devel >= 1:2.16.1
-BuildRequires:	gtk+2-devel >= 2:2.12.5
+BuildRequires:	glib2-devel >= 1:2.30.2
+BuildRequires:	gtk+2-devel >= 2:2.24.10
 BuildRequires:	gtk-doc >= 1.6
-%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.1.0}
-BuildRequires:	intltool >= 0.36.3
+%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.6.1}
+BuildRequires:	intltool >= 0.40.1
 BuildRequires:	iso-codes
+BuildRequires:	jasper-devel
 BuildRequires:	lcms-devel >= 1.16
 BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
-BuildRequires:	libpng-devel >= 1.2.12
-BuildRequires:	librsvg-devel >= 1:2.15.0
+BuildRequires:	libpng-devel >= 1.2.37
+BuildRequires:	librsvg-devel >= 1:2.36.0
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool >= 1:1.4.2-9
+BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libwmf-devel >= 2:0.2.8
-BuildRequires:	pango-devel >= 1:1.18.0
+BuildRequires:	pango-devel >= 1:1.29.4
 BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-devel >= 0.17
+%{?with_python:BuildRequires:	python >= 1:2.5.0}
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	udev-glib-devel >= 1:167
+BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
-Requires(post,postun):	gtk+2 >= 2:2.10.13
+Requires(post,postun):	gtk+2 >= 2:2.24.10
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	atk >= 1:2.2.0
+Requires:	babl >= 0.1.10
 Requires:	curl >= 7.15.1
 Requires:	dbus-glib >= 0.70
+Requires:	fontconfig-libs >= 2.2.0
+Requires:	gegl >= 0.2.0
 Requires:	hicolor-icon-theme
 Requires:	lcms >= 1.16
 Requires:	libexif >= 0.6.15
@@ -195,9 +206,11 @@ Summary:	GIMP libraries
 Summary(pl.UTF-8):	Biblioteki GIMP-a
 License:	LGPL v2+
 Group:		Libraries
-Requires:	glib2 >= 1:2.16.1
-Requires:	gtk+2 >= 2:2.12.5
-Requires:	pango >= 1:1.18.0
+Requires:	cairo >= 1.10.2
+Requires:	gdk-pixbuf2 >= 2.24.1
+Requires:	glib2 >= 1:2.30.2
+Requires:	gtk+2 >= 2:2.24.10
+Requires:	pango >= 1:1.29.4
 
 %description libs
 This package contains GIMP libraries.
@@ -220,8 +233,11 @@ Summary(zh_TW.UTF-8):	[開發]gimp的開發包
 License:	LGPL v2+
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	glib2-devel >= 1:2.16.1
-Requires:	gtk+2-devel >= 2:2.12.5
+Requires:	cairo-devel >= 1.10.2
+Requires:	gdk-pixbuf2-devel >= 2.24.1
+Requires:	glib2-devel >= 1:2.30.2
+Requires:	gtk+2-devel >= 2:2.24.10
+Requires:	pango-devel >= 1:1.29.4
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -295,7 +311,7 @@ Summary:	SVG plugin for GIMP
 Summary(pl.UTF-8):	Wtyczka SVG dla GIMPa
 Group:		X11/Applications/Graphics
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	librsvg >= 2.15.0
+Requires:	librsvg >= 1:2.36.0
 
 %description svg
 SVG plugin for GIMP.
@@ -320,6 +336,7 @@ rm acinclude.m4
 %{__automake}
 %configure \
 	%{!?with_python:--disable-python} \
+	--disable-silent-rules \
 	--enable-default-binary \
 	--enable-gtk-doc \
 	--enable-static \
