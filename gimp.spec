@@ -1,6 +1,4 @@
 #
-# TODO: some unpackaged files
-#
 # Conditional build:
 %bcond_without	aalib		# without aa plugin (which requires aalib)
 %bcond_without	python		# without python plugins
