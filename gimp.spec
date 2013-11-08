@@ -18,13 +18,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.8.6
-Release:	3
+Version:	2.8.8
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	12b3fdf33d1f07ae79b412a9e38b9693
+# Source0-md5:	ef2547c3514a1096931637bd6250635a
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -52,7 +52,7 @@ BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	intltool >= 0.40.1
 BuildRequires:	iso-codes
 BuildRequires:	jasper-devel
-BuildRequires:	lcms-devel >= 1.16
+BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
@@ -83,7 +83,7 @@ Requires:	dbus-glib >= 0.70
 Requires:	fontconfig-libs >= 2.2.0
 Requires:	gegl >= 0.2.0
 Requires:	hicolor-icon-theme
-Requires:	lcms >= 1.16
+Requires:	lcms2 >= 2.2
 Requires:	libexif >= 0.6.15
 %{?with_python:Requires:	python-pygtk-gtk >= 1:2.10.4}
 Obsoletes:	gimp-data-min
@@ -339,6 +339,7 @@ rm acinclude.m4
 	--enable-gtk-doc \
 	--enable-static \
 	--with-html-dir=%{_gtkdocdir} \
+	--with-lcms=2 \
 	%{?with_posix_shm:--with-shm=posix} \
 	%{!?with_webkit:--without-webkit}
 
