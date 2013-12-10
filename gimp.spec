@@ -18,16 +18,17 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.8.8
+Version:	2.8.10
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	ftp://ftp.gimp.org/pub/gimp/v2.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	ef2547c3514a1096931637bd6250635a
+# Source0-md5:	84c964aab7044489af69f7319bb59b47
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
+Patch3:		%{name}-freetype.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -322,10 +323,10 @@ Wtyczka SVG dla GIMPa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 
 %build
-rm acinclude.m4
+%{__rm} acinclude.m4
 %{__gtkdocize}
 %{__libtoolize}
 %{__aclocal} -I m4macros
@@ -388,6 +389,7 @@ umask 022
 %attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-console-2.8
 %attr(755,root,root) %{_bindir}/gimp-console
+%{_datadir}/appdata/gimp.appdata.xml
 %{_desktopdir}/gimp.desktop
 %{_mandir}/man1/gimp-2.8.1*
 %{_mandir}/man1/gimp.1*
