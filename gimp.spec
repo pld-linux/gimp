@@ -4,7 +4,7 @@
 %bcond_without	python		# without python plugins
 %bcond_without	webkit		# without webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
-#
+
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -19,7 +19,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.8.10
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
@@ -36,8 +36,8 @@ BuildRequires:	atk-devel >= 1:2.2.0
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	babl-devel >= 0.1.10
-BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	cairo-devel >= 1.10.2
+BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fontconfig-devel >= 2.2.0
@@ -280,6 +280,9 @@ Summary:	GIMP API documentation
 Summary(pl.UTF-8):	Dokumentacja API GIMPa
 Group:		Documentation
 Requires:	gtk-doc-common
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description apidocs
 GIMP API documentation.
