@@ -42,7 +42,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fontconfig-devel >= 2.2.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.24.1
 BuildRequires:	gegl-devel >= 0.2.0
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.30.2
