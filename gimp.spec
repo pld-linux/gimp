@@ -28,6 +28,7 @@ Source0:	http://ftp.gimp.org/pub/gimp/v2.8/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
+Patch3:		bump_Babl-GEGL_versions.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -41,7 +42,7 @@ BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fontconfig-devel >= 2.2.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.24.1
-BuildRequires:	gegl-devel >= 0.2.0
+BuildRequires:	gegl-devel >= 0.3.0
 BuildRequires:	gettext-tools
 BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
@@ -81,7 +82,7 @@ Requires:	babl >= 0.1.10
 Requires:	curl >= 7.15.1
 Requires:	dbus-glib >= 0.70
 Requires:	fontconfig-libs >= 2.2.0
-Requires:	gegl >= 0.2.0
+Requires:	gegl >= 0.3.0
 Requires:	hicolor-icon-theme
 Requires:	lcms2 >= 2.2
 Requires:	libexif >= 0.6.15
@@ -325,6 +326,7 @@ Wtyczka SVG dla GIMPa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__rm} acinclude.m4
