@@ -19,7 +19,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.8.14
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
