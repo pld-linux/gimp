@@ -18,17 +18,18 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.8.18
-Release:	2
+Version:	2.8.20
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	http://ftp.gimp.org/pub/gimp/v2.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	5adaa11a68bc8a42bb2c778fee4d389c
+# Source0-md5:	d405640c426b234d6efc36fb4f5bae57
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
 Patch3:		bump_Babl-GEGL_versions.patch
+Patch4:		fix_GEGL_missing_symbol.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -327,6 +328,7 @@ Wtyczka SVG dla GIMPa.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__rm} acinclude.m4
