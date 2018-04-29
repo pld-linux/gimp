@@ -19,7 +19,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.10.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
@@ -46,6 +46,7 @@ BuildRequires:	gettext-tools
 BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
 BuildRequires:	glib2-devel >= 1:2.30.2
+BuildRequires:	glib-networking
 BuildRequires:	gtk+2-devel >= 2:2.24.10
 BuildRequires:	gtk-doc >= 1.6
 %{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.6.1}
@@ -62,6 +63,7 @@ BuildRequires:	librsvg-devel >= 1:2.36.0
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libwmf-devel >= 2:0.2.8
+BuildRequires:	mypaint-brushes-devel
 BuildRequires:	pango-devel >= 1:1.29.4
 BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-data >= 0.4.7
