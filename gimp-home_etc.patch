@@ -1,20 +1,14 @@
 --- gimp-2.7.1/libgimpbase/gimpenv.c~	2010-06-13 21:15:08.000000000 +0200
 +++ gimp-2.7.1/libgimpbase/gimpenv.c	2010-07-19 10:30:13.787427066 +0200
-@@ -155,7 +155,7 @@
-   static gchar *last_env_gimp_dir = NULL;
+@@ -259,7 +259,9 @@ gimp_directory (void)
+         }
+       else
+         {
+-          const gchar *home_dir = g_get_home_dir ();
++          const gchar *home_dir = g_getenv("HOME_ETC");
++          if (!home_dir)
++            home_dir = g_get_home_dir ();
  
-   const gchar  *env_gimp_dir;
--  const gchar  *home_dir;
-+  const gchar  *home_dir = g_getenv("HOME_ETC");;
- 
-   env_gimp_dir = g_getenv ("GIMP2_DIRECTORY");
- 
-@@ -194,7 +194,7 @@
-   g_free (last_env_gimp_dir);
-   last_env_gimp_dir = g_strdup (env_gimp_dir);
- 
--  home_dir = g_get_home_dir ();
-+  if (!home_dir) home_dir = g_get_home_dir ();
- 
-   if (env_gimp_dir)
-     {
+           if (home_dir)
+             gimp_dir = g_build_filename (home_dir, env_gimp_dir, NULL);
+    {

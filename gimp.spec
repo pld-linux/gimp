@@ -18,32 +18,30 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.8.22
+Version:	2.10.0
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
-Source0:	http://ftp.gimp.org/pub/gimp/v2.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	7e4fd7a53b1d3c32dff642ab1a94b44d
+Source0:	http://ftp.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
+# Source0-md5:	5e91357ede5a5d5cb0db981ff8f9726c
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
-Patch3:		bump_Babl-GEGL_versions.patch
-Patch4:		fix_GEGL_missing_symbol.patch
 URL:		http://www.gimp.org/
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	atk-devel >= 1:2.2.0
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
-BuildRequires:	babl-devel >= 0.1.10
+BuildRequires:	babl-devel >= 0.1.46
 BuildRequires:	cairo-devel >= 1.10.2
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fontconfig-devel >= 2.2.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.24.1
-BuildRequires:	gegl-devel >= 0.3.0
+BuildRequires:	gegl-devel >= 0.4.0
 BuildRequires:	gettext-tools
 BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
@@ -58,6 +56,7 @@ BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
+BuildRequires:	libmypaint-devel >= 1.3.0
 BuildRequires:	libpng-devel >= 1.2.37
 BuildRequires:	librsvg-devel >= 1:2.36.0
 BuildRequires:	libtiff-devel
@@ -65,9 +64,10 @@ BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	pango-devel >= 1:1.29.4
 BuildRequires:	pkgconfig >= 1:0.16
+BuildRequires:	poppler-data >= 0.4.7
 BuildRequires:	poppler-devel >= 0.17
-%{?with_python:BuildRequires:	python >= 1:2.5.0}
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
+%{?with_python:BuildRequires:	python >= 1:2.5.0}
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	udev-glib-devel >= 1:167
@@ -79,14 +79,15 @@ BuildRequires:	xorg-lib-libXpm-devel
 Requires(post,postun):	gtk+2 >= 2:2.24.10
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	atk >= 1:2.2.0
-Requires:	babl >= 0.1.10
+Requires:	babl >= 0.1.46
 Requires:	curl >= 7.15.1
 Requires:	dbus-glib >= 0.70
 Requires:	fontconfig-libs >= 2.2.0
-Requires:	gegl >= 0.3.0
+Requires:	gegl >= 0.4.0
 Requires:	hicolor-icon-theme
 Requires:	lcms2 >= 2.2
 Requires:	libexif >= 0.6.15
+Requires:	mypaint-brushes
 %{?with_python:Requires:	python-pygtk-gtk >= 1:2.10.4}
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
@@ -327,8 +328,6 @@ Wtyczka SVG dla GIMPa.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 %{__rm} acinclude.m4
@@ -347,7 +346,8 @@ Wtyczka SVG dla GIMPa.
 	--with-html-dir=%{_gtkdocdir} \
 	--with-lcms=2 \
 	%{?with_posix_shm:--with-shm=posix} \
-	%{!?with_webkit:--without-webkit}
+	%{!?with_webkit:--without-webkit} \
+	--without-appdata-test
 
 %{__make}
 
@@ -374,12 +374,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 umask 022
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+[ ! -x %{_bindir}/update-desktop-database ] || %{_bindir}/update-desktop-database >/dev/null 2>&1 ||:
 %update_icon_cache hicolor
 
 %postun
 umask 022
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+[ ! -x %{_bindir}/update-desktop-database ] || %{_bindir}/update-desktop-database >/dev/null 2>&1
 %update_icon_cache hicolor
 
 %post	libs -p /sbin/ldconfig
@@ -390,17 +390,19 @@ umask 022
 %doc AUTHORS ChangeLog LICENSE NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.8
+%attr(755,root,root) %{_bindir}/gimp-2.10
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-2.8
+%attr(755,root,root) %{_bindir}/gimp-console-2.10
 %attr(755,root,root) %{_bindir}/gimp-console
-%{_datadir}/appdata/gimp.appdata.xml
+%attr(755,root,root) %{_libexecdir}/gimp-debug-tool-2.0
+%{_datadir}/metainfo/gimp-data-extras.metainfo.xml
+%{_datadir}/metainfo/org.gimp.GIMP.appdata.xml
 %{_desktopdir}/gimp.desktop
-%{_mandir}/man1/gimp-2.8.1*
+%{_mandir}/man1/gimp-2.10.1*
 %{_mandir}/man1/gimp.1*
-%{_mandir}/man1/gimp-console-2.8.1*
+%{_mandir}/man1/gimp-console-2.10.1*
 %{_mandir}/man1/gimp-console.1*
-%{_mandir}/man5/gimprc-2.8.5*
+%{_mandir}/man5/gimprc-2.10.5*
 %{_mandir}/man5/gimprc.5*
 
 %dir %{_libdir}/gimp
@@ -426,11 +428,13 @@ umask 022
 %dir %{_datadir}/gimp/%{mver}
 %{_datadir}/gimp/%{mver}/brushes
 %{_datadir}/gimp/%{mver}/dynamics
+%{_datadir}/gimp/%{mver}/file-raw
 %{_datadir}/gimp/%{mver}/fractalexplorer
 %{_datadir}/gimp/%{mver}/gfig
 %{_datadir}/gimp/%{mver}/gflare
 %{_datadir}/gimp/%{mver}/gimpressionist
 %{_datadir}/gimp/%{mver}/gradients
+%{_datadir}/gimp/%{mver}/icons
 %{_datadir}/gimp/%{mver}/images
 %{_datadir}/gimp/%{mver}/menus
 %{_datadir}/gimp/%{mver}/palettes
