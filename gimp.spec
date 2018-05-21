@@ -5,6 +5,9 @@
 %bcond_without	webkit		# without webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
+%define	babl_ver	0.1.50
+%define	gegl_ver	0.4.2
+
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -18,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.0
-Release:	2
+Version:	2.10.2
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	http://ftp.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	5e91357ede5a5d5cb0db981ff8f9726c
+# Source0-md5:	66b527cac13485be411dd254896c20ae
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -34,14 +37,14 @@ BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	atk-devel >= 1:2.2.0
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
-BuildRequires:	babl-devel >= 0.1.46
+BuildRequires:	babl-devel >= %{babl_ver}
 BuildRequires:	cairo-devel >= 1.10.2
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fontconfig-devel >= 2.2.0
 BuildRequires:	gdk-pixbuf2-devel >= 2.24.1
-BuildRequires:	gegl-devel >= 0.4.0
+BuildRequires:	gegl-devel >= %{gegl_ver}
 BuildRequires:	gettext-tools
 BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
@@ -55,6 +58,7 @@ BuildRequires:	iso-codes
 BuildRequires:	jasper-devel
 BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libexif-devel >= 0.6.15
+BuildRequires:	libheif-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libmypaint-devel >= 1.3.0
@@ -81,11 +85,11 @@ BuildRequires:	xorg-lib-libXpm-devel
 Requires(post,postun):	gtk+2 >= 2:2.24.10
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	atk >= 1:2.2.0
-Requires:	babl >= 0.1.46
+Requires:	babl >= %{babl_ver}
 Requires:	curl >= 7.15.1
 Requires:	dbus-glib >= 0.70
 Requires:	fontconfig-libs >= 2.2.0
-Requires:	gegl >= 0.4.0
+Requires:	gegl >= %{gegl_ver}
 Requires:	hicolor-icon-theme
 Requires:	lcms2 >= 2.2
 Requires:	libexif >= 0.6.15
@@ -349,7 +353,8 @@ Wtyczka SVG dla GIMPa.
 	--with-lcms=2 \
 	%{?with_posix_shm:--with-shm=posix} \
 	%{!?with_webkit:--without-webkit} \
-	--without-appdata-test
+	--without-appdata-test \
+	--with-bug-report-url="https://www.pld-linux.org/"
 
 %{__make}
 
