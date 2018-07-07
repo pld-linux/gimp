@@ -5,8 +5,8 @@
 %bcond_without	webkit		# without webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.50
-%define	gegl_ver	0.4.2
+%define	babl_ver	0.1.52
+%define	gegl_ver	0.4.4
 
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.2
+Version:	2.10.4
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	http://ftp.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	66b527cac13485be411dd254896c20ae
+# Source0-md5:	9e0a3703a920da8b3e51e845fa3bff7d
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -72,6 +72,7 @@ BuildRequires:	pango-devel >= 1:1.29.4
 BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-data >= 0.4.7
 BuildRequires:	poppler-devel >= 0.17
+BuildRequires:	poppler-glib-devel >= 0.44.0
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 %{?with_python:BuildRequires:	python >= 1:2.5.0}
 BuildRequires:	rpm-pythonprov
@@ -401,6 +402,7 @@ umask 022
 %attr(755,root,root) %{_bindir}/gimp
 %attr(755,root,root) %{_bindir}/gimp-console-2.10
 %attr(755,root,root) %{_bindir}/gimp-console
+%attr(755,root,root) %{_bindir}/gimp-test-clipboard-2.0
 %attr(755,root,root) %{_libexecdir}/gimp-debug-tool-2.0
 %{_datadir}/metainfo/gimp-data-extras.metainfo.xml
 %{_datadir}/metainfo/org.gimp.GIMP.appdata.xml
