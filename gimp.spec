@@ -5,8 +5,8 @@
 %bcond_without	webkit		# without webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.52
-%define	gegl_ver	0.4.4
+%define	babl_ver	0.1.58
+%define	gegl_ver	0.4.12
 
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.4
-Release:	3
+Version:	2.10.8
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	http://ftp.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	9e0a3703a920da8b3e51e845fa3bff7d
+# Source0-md5:	b020e441bc8c5a9bd3061d2126119821
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
@@ -42,13 +42,13 @@ BuildRequires:	cairo-devel >= 1.10.2
 BuildRequires:	curl-devel >= 7.15.1
 BuildRequires:	dbus-glib-devel >= 0.70
 BuildRequires:	docbook-dtd412-xml
-BuildRequires:	fontconfig-devel >= 2.2.0
-BuildRequires:	gdk-pixbuf2-devel >= 2.24.1
+BuildRequires:	fontconfig-devel >= 2.12.4
+BuildRequires:	gdk-pixbuf2-devel >= 2.30.8
 BuildRequires:	gegl-devel >= %{gegl_ver}
 BuildRequires:	gettext-tools
 BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
-BuildRequires:	glib2-devel >= 1:2.30.2
+BuildRequires:	glib2-devel >= 1:2.54.2
 BuildRequires:	glib-networking
 BuildRequires:	gtk+2-devel >= 2:2.24.10
 BuildRequires:	gtk-doc >= 1.6
@@ -56,7 +56,7 @@ BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	intltool >= 0.40.1
 BuildRequires:	iso-codes
 BuildRequires:	jasper-devel
-BuildRequires:	lcms2-devel >= 2.2
+BuildRequires:	lcms2-devel >= 2.8
 BuildRequires:	libexif-devel >= 0.6.15
 BuildRequires:	libheif-devel
 BuildRequires:	libjpeg-devel
@@ -73,6 +73,7 @@ BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-data >= 0.4.7
 BuildRequires:	poppler-devel >= 0.17
 BuildRequires:	poppler-glib-devel >= 0.44.0
+%{?with_python:BuildRequires:	python-pycairo-devel >= 1.12.2}
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 %{?with_python:BuildRequires:	python >= 1:2.5.0}
 BuildRequires:	rpm-pythonprov
