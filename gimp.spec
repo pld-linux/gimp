@@ -5,8 +5,8 @@
 %bcond_without	webkit		# without webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.58
-%define	gegl_ver	0.4.12
+%define	babl_ver	0.1.62
+%define	gegl_ver	0.4.14
 
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.8
-Release:	3
+Version:	2.10.10
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	http://ftp.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	b020e441bc8c5a9bd3061d2126119821
+# Source0-md5:	0b837ea2bbf801da7f5306df4c99fa18
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
