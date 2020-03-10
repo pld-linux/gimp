@@ -6,8 +6,8 @@
 %bcond_without	webkit		# webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.62
-%define	gegl_ver	0.4.14
+%define	babl_ver	0.1.74
+%define	gegl_ver	0.4.22
 
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -22,18 +22,17 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.10
-Release:	3
+Version:	2.10.18
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
-Source0:	http://ftp.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	0b837ea2bbf801da7f5306df4c99fa18
+Source0:	https://download.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
+# Source0-md5:	096d04ffb2c4559cb2152f507ff31c9c
 Patch0:		%{name}-home_etc.patch
-Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc4.patch
 Patch3:		%{name}-no-checks-for-runtime-deps.patch
-URL:		http://www.gimp.org/
+URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
@@ -61,8 +60,9 @@ BuildRequires:	gtk-doc >= 1.6
 BuildRequires:	harfbuzz-devel >= 0.9.19
 BuildRequires:	intltool >= 0.40.1
 BuildRequires:	iso-codes
+BuildRequires:	json-glib-devel >= 1.2.6
 BuildRequires:	lcms2-devel >= 2.8
-BuildRequires:	libheif-devel >= 1.1.0
+BuildRequires:	libheif-devel >= 1.6
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libmypaint-devel >= 1.3.0
@@ -74,8 +74,7 @@ BuildRequires:	libtool >= 2:2.2
 %{?with_libunwind:BuildRequires:	libunwind-devel >= 1.1.0}
 BuildRequires:	libwebp-devel >= 0.6.0
 BuildRequires:	libwmf-devel >= 2:0.2.8
-BuildRequires:	mypaint-brushes-devel >= 1.0
-BuildRequires:	mypaint-brushes-devel < 2
+BuildRequires:	mypaint-brushes-1-devel >= 1.0
 BuildRequires:	openjpeg2-devel >= 2.1.0
 BuildRequires:	pango-devel >= 1:1.29.4
 BuildRequires:	perl-base >= 1:5.10.0
@@ -86,6 +85,7 @@ BuildRequires:	poppler-glib-devel >= 0.50.0
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	sed >= 4.0
 BuildRequires:	udev-glib-devel >= 1:167
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXext-devel
@@ -93,7 +93,7 @@ BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
 BuildRequires:	xorg-lib-libXt-devel
-BuildRequires:	xz-devel
+BuildRequires:	xz-devel >= 1:5.0.0
 BuildRequires:	zlib-devel
 Requires(post,postun):	gtk+2 >= 2:2.24.32
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -105,18 +105,21 @@ Requires:	freetype >= 1:2.1.7
 Requires:	harfbuzz >= 0.9.19
 Requires:	hicolor-icon-theme
 Requires:	iso-codes
-Requires:	libheif >= 1.1.0
+Requires:	json-glib >= 1.2.6
+Requires:	libheif >= 1.6
 Requires:	libmypaint >= 1.3.0
 Requires:	libpng >= 2:1.6.25
 Requires:	libwebp >= 0.6.0
 Requires:	libwmf-libs >= 2:0.2.8
-Requires:	mypaint-brushes >= 1.0
-Requires:	mypaint-brushes < 2
+Requires:	mypaint-brushes-1 >= 1.0
 Requires:	openjpeg2 >= 2.1.0
 Requires:	poppler-data >= 0.4.7
 Requires:	poppler-glib >= 0.50.0
 %{?with_python:Requires:	python-pygtk-gtk >= 1:2.10.4}
 Requires:	udev-glib >= 1:167
+Requires:	xz-libs >= 1:5.0.0
+# for https
+Suggests:	glib-networking
 Obsoletes:	gimp-data-min
 Obsoletes:	gimp-libgimp
 Obsoletes:	gimp-print
@@ -343,9 +346,10 @@ Wtyczka SVG dla GIMPa.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
+%{__sed} -i -e '1s,/usr/bin/env python,%{__python},' plug-ins/pygimp/plug-ins/gradients-save-as-css.py
 
 %build
 %{__rm} acinclude.m4
@@ -454,6 +458,7 @@ umask 022
 
 %dir %{_datadir}/gimp
 %dir %{_datadir}/gimp/%{mver}
+%{_datadir}/gimp/%{mver}/gimp-release
 %{_datadir}/gimp/%{mver}/brushes
 %{_datadir}/gimp/%{mver}/dynamics
 %{_datadir}/gimp/%{mver}/file-raw
@@ -476,12 +481,13 @@ umask 022
 
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/%{mver}
-%config %verify(not md5 mtime) %{_sysconfdir}/%{name}/%{mver}/gimprc*
+%config %verify(not md5 mtime size) %{_sysconfdir}/%{name}/%{mver}/gimprc*
 %config(noreplace) %{_sysconfdir}/%{name}/%{mver}/templaterc
 %config %{_sysconfdir}/%{name}/%{mver}/controllerrc
 %config %{_sysconfdir}/%{name}/%{mver}/gtkrc*
 %config %{_sysconfdir}/%{name}/%{mver}/menurc
 %config %{_sysconfdir}/%{name}/%{mver}/sessionrc
+%config %{_sysconfdir}/%{name}/%{mver}/toolrc
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
 
 %files libs
