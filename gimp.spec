@@ -302,9 +302,7 @@ Summary:	GIMP API documentation
 Summary(pl.UTF-8):	Dokumentacja API GIMPa
 Group:		Documentation
 Requires:	gtk-doc-common
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 GIMP API documentation.
