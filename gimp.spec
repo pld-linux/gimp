@@ -6,8 +6,8 @@
 %bcond_without	webkit		# webkit-based help browser
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.74
-%define	gegl_ver	0.4.22
+%define	babl_ver	0.1.78
+%define	gegl_ver	0.4.30
 
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -22,13 +22,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.22
+Version:	2.10.24
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	9d559ba6f039da033754f1d62a91cc39
+# Source0-md5:	31e4a055ba34e6841f42a6b2439ca480
 Patch0:		%{name}-home_etc.patch
 Patch2:		%{name}-gcc4.patch
 Patch3:		%{name}-no-checks-for-runtime-deps.patch
@@ -51,7 +51,7 @@ BuildRequires:	gettext-tools >= 0.19
 BuildRequires:	gexiv2-devel >= 0.10.6
 BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
-BuildRequires:	glib2-devel >= 1:2.54.2
+BuildRequires:	glib2-devel >= 1:2.56.2
 BuildRequires:	glib-networking
 BuildRequires:	gtk+2-devel >= 2:2.24.32
 BuildRequires:	gtk-update-icon-cache >= 2.24.32
@@ -62,10 +62,10 @@ BuildRequires:	intltool >= 0.40.1
 BuildRequires:	iso-codes
 BuildRequires:	json-glib-devel >= 1.2.6
 BuildRequires:	lcms2-devel >= 2.8
-BuildRequires:	libheif-devel >= 1.6
+BuildRequires:	libheif-devel >= 1.10
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
-BuildRequires:	libmypaint-devel >= 1.3.0
+BuildRequires:	libmypaint-devel >= 1.4.0
 BuildRequires:	libpng-devel >= 2:1.6.25
 BuildRequires:	librsvg-devel >= 1:2.40.6
 BuildRequires:	libstdc++-devel >= 6:5
@@ -76,7 +76,7 @@ BuildRequires:	libwebp-devel >= 0.6.0
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	mypaint-brushes-1-devel >= 1.0
 BuildRequires:	openjpeg2-devel >= 2.1.0
-BuildRequires:	pango-devel >= 1:1.29.4
+BuildRequires:	pango-devel >= 1:1.32.0
 BuildRequires:	perl-base >= 1:5.10.0
 BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-glib-devel >= 0.50.0
@@ -106,8 +106,8 @@ Requires:	harfbuzz >= 0.9.19
 Requires:	hicolor-icon-theme
 Requires:	iso-codes
 Requires:	json-glib >= 1.2.6
-Requires:	libheif >= 1.6
-Requires:	libmypaint >= 1.3.0
+Requires:	libheif >= 1.10
+Requires:	libmypaint >= 1.4.0
 Requires:	libpng >= 2:1.6.25
 Requires:	libwebp >= 0.6.0
 Requires:	libwmf-libs >= 2:0.2.8
@@ -227,10 +227,10 @@ Requires:	cairo >= 1.12.2
 Requires:	gdk-pixbuf2 >= 2.30.8
 Requires:	gegl >= %{gegl_ver}
 Requires:	gexiv2 >= 0.10.6
-Requires:	glib2 >= 1:2.54.2
+Requires:	glib2 >= 1:2.56.2
 Requires:	gtk+2 >= 2:2.24.32
 Requires:	lcms2 >= 2.8
-Requires:	pango >= 1:1.29.4
+Requires:	pango >= 1:1.32.0
 
 %description libs
 This package contains GIMP libraries.
@@ -256,9 +256,9 @@ Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	cairo-devel >= 1.12.2
 Requires:	gdk-pixbuf2-devel >= 2.30.8
 Requires:	gegl-devel >= %{gegl_ver}
-Requires:	glib2-devel >= 1:2.54.2
+Requires:	glib2-devel >= 1:2.56.2
 Requires:	gtk+2-devel >= 2:2.24.32
-Requires:	pango-devel >= 1:1.29.4
+Requires:	pango-devel >= 1:1.32.0
 
 %description devel
 Header files for writing GIMP plugins and extensions.
