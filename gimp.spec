@@ -30,7 +30,6 @@ Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
 # Source0-md5:	31e4a055ba34e6841f42a6b2439ca480
 Patch0:		%{name}-home_etc.patch
-Patch2:		%{name}-gcc4.patch
 Patch3:		%{name}-no-checks-for-runtime-deps.patch
 URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
@@ -344,7 +343,6 @@ Wtyczka SVG dla GIMPa.
 %prep
 %setup -q
 %patch0 -p1
-%patch2 -p1
 %patch3 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' plug-ins/pygimp/plug-ins/gradients-save-as-css.py
