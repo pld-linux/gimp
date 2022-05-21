@@ -7,7 +7,7 @@
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
 %define	babl_ver	0.1.78
-%define	gegl_ver	0.4.30
+%define	gegl_ver	0.4.34
 
 %define	mver	2.0
 Summary:	The GNU Image Manipulation Program
@@ -22,13 +22,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.24
-Release:	3
+Version:	2.10.30
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	31e4a055ba34e6841f42a6b2439ca480
+# Source0-md5:	564fe77da27eaa4dfc73dc8358733d24
 Patch0:		%{name}-home_etc.patch
 Patch3:		%{name}-no-checks-for-runtime-deps.patch
 URL:		https://www.gimp.org/
@@ -119,9 +119,9 @@ Requires:	udev-glib >= 1:167
 Requires:	xz-libs >= 1:5.0.0
 # for https
 Suggests:	glib-networking
-Obsoletes:	gimp-data-min
-Obsoletes:	gimp-libgimp
-Obsoletes:	gimp-print
+Obsoletes:	gimp-data-min < 1.1.1
+Obsoletes:	gimp-libgimp < 1.1.1
+Obsoletes:	gimp-print < 1:2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
