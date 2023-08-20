@@ -83,6 +83,7 @@ BuildRequires:	poppler-glib-devel >= 0.50.0
 %{?with_python:BuildRequires:	python >= 1:2.5.0}
 %{?with_python:BuildRequires:	python-pycairo-devel >= 1.12.2}
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
