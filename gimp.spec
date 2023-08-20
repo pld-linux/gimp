@@ -22,13 +22,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.32
-Release:	2
+Version:	2.10.34
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	fd99bd8336c0d3aa09598e68d6e4a4d9
+# Source0-md5:	0dae3a42d261621d62a336ef2aee052a
 Patch0:		%{name}-home_etc.patch
 Patch3:		%{name}-no-checks-for-runtime-deps.patch
 URL:		https://www.gimp.org/
@@ -63,7 +63,7 @@ BuildRequires:	json-glib-devel >= 1.2.6
 BuildRequires:	lcms2-devel >= 2.8
 BuildRequires:	libheif-devel >= 1.10
 BuildRequires:	libjpeg-devel
-BuildRequires:	libjxl-devel >= 0.6.1
+BuildRequires:	libjxl-devel >= 0.7.0
 BuildRequires:	libmng-devel
 BuildRequires:	libmypaint-devel >= 1.4.0
 BuildRequires:	libpng-devel >= 2:1.6.25
