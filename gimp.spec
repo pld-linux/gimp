@@ -96,6 +96,7 @@ BuildRequires:	xorg-lib-libXpm-devel
 BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xz-devel >= 1:5.0.0
 BuildRequires:	zlib-devel
+Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk+2 >= 2:2.24.32
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	OpenEXR >= 1.6.1
@@ -401,13 +402,11 @@ echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 rm -rf $RPM_BUILD_ROOT
 
 %post
-umask 022
-[ ! -x %{_bindir}/update-desktop-database ] || %{_bindir}/update-desktop-database >/dev/null 2>&1 ||:
+%update_desktop_database_post
 %update_icon_cache hicolor
 
 %postun
-umask 022
-[ ! -x %{_bindir}/update-desktop-database ] || %{_bindir}/update-desktop-database >/dev/null 2>&1
+%update_desktop_database_postun
 %update_icon_cache hicolor
 
 %post	libs -p /sbin/ldconfig
