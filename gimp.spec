@@ -350,8 +350,9 @@ Wtyczka SVG dla GIMPa.
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' plug-ins/pygimp/plug-ins/gradients-save-as-css.py
 
-%build
 %{__rm} acinclude.m4
+
+%build
 %{__gtkdocize}
 %{__libtoolize}
 %{__aclocal} -I m4macros
