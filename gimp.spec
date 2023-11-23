@@ -4,6 +4,7 @@
 %bcond_without	python		# python plugins
 %bcond_without	libunwind	# detailed backtraces using libunwind
 %bcond_without	webkit		# webkit-based help browser
+%bcond_without	static_libs	# static libraries
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
 %define	babl_ver	0.1.78
@@ -85,7 +86,7 @@ BuildRequires:	poppler-glib-devel >= 0.50.0
 %{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	rpmbuild(macros) >= 1.527
 BuildRequires:	sed >= 4.0
 BuildRequires:	udev-glib-devel >= 1:167
 BuildRequires:	xorg-lib-libXcursor-devel
@@ -364,7 +365,7 @@ Wtyczka SVG dla GIMPa.
 	--disable-silent-rules \
 	--enable-default-binary \
 	--enable-gtk-doc \
-	--enable-static \
+	%{__enable_disable static_libs static} \
 	--without-appdata-test \
 	--with-bug-report-url="https://www.pld-linux.org/" \
 	--with-html-dir=%{_gtkdocdir} \
@@ -389,9 +390,10 @@ echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libgimp*.la
 # dynamic modules loaded via gmodule
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.{a,la}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.la
+%{?with_static_libs:%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.a}
 %if %{with python}
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{a,la,py}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{%{?with_static_libs:a,}la,py}
 %endif
 
 # don't hide {python,python2,python3} behind /usr/bin/env
@@ -530,6 +532,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/gimptool-%{mver}.1*
 %{_mandir}/man1/gimptool.1*
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgimp-2.0.a
@@ -541,6 +544,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libgimpthumb-2.0.a
 %{_libdir}/libgimpui-2.0.a
 %{_libdir}/libgimpwidgets-2.0.a
+%endif
 
 %files apidocs
 %defattr(644,root,root,755)
