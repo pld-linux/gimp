@@ -24,13 +24,14 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	2.10.38
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
 # Source0-md5:	b5e37c9570a8ee723debe6d3728555ae
 Patch0:		%{name}-home_etc.patch
+Patch1:		%{name}-types.patch
 Patch3:		%{name}-no-checks-for-runtime-deps.patch
 URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
@@ -347,6 +348,7 @@ Wtyczka SVG dla GIMPa.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 %patch3 -p1
 
 %{__sed} -i -e '1s,/usr/bin/env python,%{__python},' plug-ins/pygimp/plug-ins/gradients-save-as-css.py
