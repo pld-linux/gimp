@@ -8,9 +8,10 @@
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
 %define	babl_ver	0.1.78
-%define	gegl_ver	0.4.38
+%define	gegl_ver	0.4.52
 
-%define	mver	2.0
+%define		rc	RC2
+%define		mver	3.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
 Summary(es.UTF-8):	Programa de manipulación de imagen GNU
@@ -23,13 +24,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	2.10.38
-Release:	2
+Version:	3.0.0
+Release:	0.%{rc}.0.1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
-Source0:	https://download.gimp.org/pub/gimp/v2.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	b5e37c9570a8ee723debe6d3728555ae
+Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}-%{rc}.tar.xz
+# Source0-md5:	b72e2b31daec5203330876faa3a86c92
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-types.patch
 Patch3:		%{name}-no-checks-for-runtime-deps.patch
@@ -57,7 +58,7 @@ BuildRequires:	glib-networking
 BuildRequires:	gtk+2-devel >= 2:2.24.32
 BuildRequires:	gtk-update-icon-cache >= 2.24.32
 BuildRequires:	gtk-doc >= 1.6
-%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.6.1}
+#%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.6.1}
 BuildRequires:	harfbuzz-devel >= 0.9.19
 BuildRequires:	intltool >= 0.40.1
 BuildRequires:	iso-codes
@@ -82,14 +83,15 @@ BuildRequires:	pango-devel >= 1:1.32.0
 BuildRequires:	perl-base >= 1:5.10.0
 BuildRequires:	pkgconfig >= 1:0.16
 BuildRequires:	poppler-glib-devel >= 0.50.0
-%{?with_python:BuildRequires:	python >= 1:2.5.0}
-%{?with_python:BuildRequires:	python-pycairo-devel >= 1.12.2}
-%{?with_python:BuildRequires:	python-pygtk-devel >= 1:2.10.4}
+BuildRequires:	poppler-data
+%{?with_python:BuildRequires:	python3}
+%{?with_python:BuildRequires:	python3-pycairo-devel >= 1.12.2}
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.527
 BuildRequires:	sed >= 4.0
 BuildRequires:	udev-glib-devel >= 1:167
+BuildRequires:	vala-gegl >= 0.4.52
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
@@ -119,7 +121,6 @@ Requires:	mypaint-brushes-1 >= 1.0
 Requires:	openjpeg2 >= 2.1.0
 Requires:	poppler-data >= 0.4.7
 Requires:	poppler-glib >= 0.50.0
-%{?with_python:Requires:	python-pygtk-gtk >= 1:2.10.4}
 Requires:	udev-glib >= 1:167
 Requires:	xz-libs >= 1:5.0.0
 # for https
@@ -346,60 +347,56 @@ SVG plugin for GIMP.
 Wtyczka SVG dla GIMPa.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-%patch3 -p1
+%setup -q -n %{name}-%{version}-%{rc}
+#%patch0 -p1
+##%patch1 -p1
+#%patch3 -p1
 
-%{__sed} -i -e '1s,/usr/bin/env python,%{__python},' plug-ins/pygimp/plug-ins/gradients-save-as-css.py
-
-%{__rm} acinclude.m4
+#%{__sed} -i -e '1s,/usr/bin/env python,%{__python},' plug-ins/pygimp/plug-ins/gradients-save-as-css.py
 
 %build
-%{__gtkdocize}
-%{__libtoolize}
-%{__aclocal} -I m4macros
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	%{!?with_python:--disable-python} \
-	--disable-silent-rules \
-	--enable-default-binary \
-	--enable-gtk-doc \
-	%{__enable_disable static_libs static} \
-	--without-appdata-test \
-	--with-bug-report-url="https://www.pld-linux.org/" \
-	--with-html-dir=%{_gtkdocdir} \
-	--with-lcms=2 \
-	%{!?with_libunwind:--without-libunwind} \
-	--with-sendmail=/usr/lib/sendmail \
-	%{?with_posix_shm:--with-shm=posix} \
-	%{!?with_webkit:--without-webkit}
+%meson build
 
-%{__make}
+%ninja_build -C build
+
+#	%{!?with_python:--disable-python} \
+#	--enable-default-binary \
+#	--enable-gtk-doc \
+#	%{__enable_disable static_libs static} \
+#	--without-appdata-test \
+#	--with-bug-report-url="https://www.pld-linux.org/" \
+#	--with-html-dir=%{_gtkdocdir} \
+#	--with-lcms=2 \
+#	%{!?with_libunwind:--without-libunwind} \
+#	--with-sendmail=/usr/lib/sendmail \
+#	%{?with_posix_shm:--with-shm=posix} \
+#	%{!?with_webkit:--without-webkit}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+%ninja_install -C build
 
-# Link gimptool to gimptool-2.0.1
-ln -s gimptool-2.0 $RPM_BUILD_ROOT%{_bindir}/gimptool
-echo '.so gimptool-2.0.1' > $RPM_BUILD_ROOT%{_mandir}/man1/gimptool.1
+# Fix mn page symlinks
+for m in gimp gimp-console gimptool ; do
+	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/${m}{,-3}.1
+	echo ".so ${m}-3.0.1" > $RPM_BUILD_ROOT%{_mandir}/man1/${m}-3.1
+	echo ".so ${m}-3.0.1" > $RPM_BUILD_ROOT%{_mandir}/man1/${m}.1
+done
 
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libgimp*.la
-# dynamic modules loaded via gmodule
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.la
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man5/gimprc{,-3}.5
+echo ".so gimprc-3.0.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc-3.5
+echo ".so gimprc-3.0.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
+
 %{?with_static_libs:%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.a}
-%if %{with python}
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/python/*.{%{?with_static_libs:a,}la,py}
-%endif
 
-# don't hide {python,python2,python3} behind /usr/bin/env
-%{__sed} -i -e '1s,/usr/bin/env python,/usr/bin/python,' $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/plug-ins/*/*.py
+# don't hide python/python3 behind /usr/bin/env
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python3(\s|$),#!%{__python3}\1,' \
+	$RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/plug-ins/*/*.py \
+	$RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/extensions/*/*.py
+
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+gimp-script-fu-interpreter-3.0(\s|$),#!%{_bindir}/gimp-script-fu-interpreter-3.0\1,' \
+	$RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/plug-ins/test-sphere-v3/test-sphere-v3.scm
 
 %find_lang %{name} --all-name
 
@@ -419,25 +416,26 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog LICENSE NEWS README
+%doc AUTHORS LICENSE NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-2.10
+%attr(755,root,root) %{_bindir}/gimp-3.0
+%attr(755,root,root) %{_bindir}/gimp-3
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-2.10
+%attr(755,root,root) %{_bindir}/gimp-console-3.0
+%attr(755,root,root) %{_bindir}/gimp-console-3
 %attr(755,root,root) %{_bindir}/gimp-console
-%attr(755,root,root) %{_bindir}/gimp-test-clipboard-2.0
-%attr(755,root,root) %{_libexecdir}/gimp-debug-tool-2.0
-%{_datadir}/metainfo/gimp-data-extras.metainfo.xml
+%attr(755,root,root) %{_bindir}/gimp-script-fu-interpreter-3.0
+%attr(755,root,root) %{_bindir}/gimp-test-clipboard-3.0
+%attr(755,root,root) %{_bindir}/gimp-test-clipboard-3
+%attr(755,root,root) %{_bindir}/gimp-test-clipboard
+%attr(755,root,root) %{_libexecdir}/gimp-debug-tool-3.0
+#%{_datadir}/metainfo/gimp-data-extras.metainfo.xml
 %{_datadir}/metainfo/org.gimp.GIMP.appdata.xml
 %{_desktopdir}/gimp.desktop
 %{_iconsdir}/hicolor/*x*/apps/gimp.png
-%{_mandir}/man1/gimp-2.10.1*
-%{_mandir}/man1/gimp.1*
-%{_mandir}/man1/gimp-console-2.10.1*
-%{_mandir}/man1/gimp-console.1*
-%{_mandir}/man5/gimprc-2.10.5*
-%{_mandir}/man5/gimprc.5*
+%{_mandir}/man1/gimp*.1*
+%{_mandir}/man5/gimprc*.5*
 
 %dir %{_libdir}/gimp
 %dir %{_libdir}/gimp/%{mver}
@@ -450,13 +448,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
 %{_libdir}/gimp/%{mver}/environ
-
-%if %{with python}
-%dir %{_libdir}/gimp/%{mver}/python
-%{_libdir}/gimp/%{mver}/python/*.py[co]
-%{_libdir}/gimp/%{mver}/python/*.png
-%attr(755,root,root) %{_libdir}/gimp/%{mver}/python/*.so
-%endif
 
 %dir %{_datadir}/gimp
 %dir %{_datadir}/gimp/%{mver}
@@ -479,85 +470,82 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gimp/%{mver}/themes
 %{_datadir}/gimp/%{mver}/tips
 %{_datadir}/gimp/%{mver}/tool-presets
-%{_datadir}/gimp/%{mver}/ui
 
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/%{mver}
 %config %verify(not md5 mtime size) %{_sysconfdir}/%{name}/%{mver}/gimprc*
 %config(noreplace) %{_sysconfdir}/%{name}/%{mver}/templaterc
+%config %{_sysconfdir}/%{name}/%{mver}/gimp.css
 %config %{_sysconfdir}/%{name}/%{mver}/controllerrc
-%config %{_sysconfdir}/%{name}/%{mver}/gtkrc*
-%config %{_sysconfdir}/%{name}/%{mver}/menurc
 %config %{_sysconfdir}/%{name}/%{mver}/sessionrc
 %config %{_sysconfdir}/%{name}/%{mver}/toolrc
 %config %{_sysconfdir}/%{name}/%{mver}/unitrc
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgimp-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimp-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpbase-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpbase-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpcolor-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpcolor-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpconfig-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpconfig-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpmath-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpmath-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpmodule-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpmodule-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpthumb-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpthumb-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpui-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpui-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpwidgets-2.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpwidgets-2.0.so.0
+%attr(755,root,root) %{_libdir}/libgimp-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimp-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpbase-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpbase-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpcolor-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpcolor-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpconfig-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpconfig-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpmath-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpmath-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpmodule-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpmodule-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpthumb-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpthumb-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpui-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpui-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimpwidgets-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimpwidgets-3.0.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gimptool-%{mver}
+%attr(755,root,root) %{_bindir}/gimptool-3.0
+%attr(755,root,root) %{_bindir}/gimptool-3
 %attr(755,root,root) %{_bindir}/gimptool
-%attr(755,root,root) %{_libdir}/libgimp-2.0.so
-%attr(755,root,root) %{_libdir}/libgimpbase-2.0.so
-%attr(755,root,root) %{_libdir}/libgimpcolor-2.0.so
-%attr(755,root,root) %{_libdir}/libgimpconfig-2.0.so
-%attr(755,root,root) %{_libdir}/libgimpmath-2.0.so
-%attr(755,root,root) %{_libdir}/libgimpmodule-2.0.so
-%attr(755,root,root) %{_libdir}/libgimpthumb-2.0.so
-%attr(755,root,root) %{_libdir}/libgimpui-2.0.so
-%attr(755,root,root) %{_libdir}/libgimpwidgets-2.0.so
-%{_pkgconfigdir}/gimp-2.0.pc
-%{_pkgconfigdir}/gimpthumb-2.0.pc
-%{_pkgconfigdir}/gimpui-2.0.pc
-%{_includedir}/gimp-2.0
-%{_aclocaldir}/gimp-2.0.m4
-%{_mandir}/man1/gimptool-%{mver}.1*
-%{_mandir}/man1/gimptool.1*
+%attr(755,root,root) %{_libdir}/libgimp-3.0.so
+%attr(755,root,root) %{_libdir}/libgimpbase-3.0.so
+%attr(755,root,root) %{_libdir}/libgimpcolor-3.0.so
+%attr(755,root,root) %{_libdir}/libgimpconfig-3.0.so
+%attr(755,root,root) %{_libdir}/libgimpmath-3.0.so
+%attr(755,root,root) %{_libdir}/libgimpmodule-3.0.so
+%attr(755,root,root) %{_libdir}/libgimpthumb-3.0.so
+%attr(755,root,root) %{_libdir}/libgimpui-3.0.so
+%attr(755,root,root) %{_libdir}/libgimpwidgets-3.0.so
+%{_pkgconfigdir}/gimp-3.0.pc
+%{_pkgconfigdir}/gimpthumb-3.0.pc
+%{_pkgconfigdir}/gimpui-3.0.pc
+%{_includedir}/gimp-3.0
+%{_mandir}/man1/gimptool*.1*
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libgimp-2.0.a
-%{_libdir}/libgimpbase-2.0.a
-%{_libdir}/libgimpcolor-2.0.a
-%{_libdir}/libgimpconfig-2.0.a
-%{_libdir}/libgimpmath-2.0.a
-%{_libdir}/libgimpmodule-2.0.a
-%{_libdir}/libgimpthumb-2.0.a
-%{_libdir}/libgimpui-2.0.a
-%{_libdir}/libgimpwidgets-2.0.a
+%{_libdir}/libgimp-3.0.a
+%{_libdir}/libgimpbase-3.0.a
+%{_libdir}/libgimpcolor-3.0.a
+%{_libdir}/libgimpconfig-3.0.a
+%{_libdir}/libgimpmath-3.0.a
+%{_libdir}/libgimpmodule-3.0.a
+%{_libdir}/libgimpthumb-3.0.a
+%{_libdir}/libgimpui-3.0.a
+%{_libdir}/libgimpwidgets-3.0.a
 %endif
 
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/libgimp
-%{_gtkdocdir}/libgimpbase
-%{_gtkdocdir}/libgimpcolor
-%{_gtkdocdir}/libgimpconfig
-%{_gtkdocdir}/libgimpmath
-%{_gtkdocdir}/libgimpmodule
-%{_gtkdocdir}/libgimpthumb
-%{_gtkdocdir}/libgimpwidgets
+#%{_gtkdocdir}/libgimp
+#%{_gtkdocdir}/libgimpbase
+#%{_gtkdocdir}/libgimpcolor
+#%{_gtkdocdir}/libgimpconfig
+#%{_gtkdocdir}/libgimpmath
+#%{_gtkdocdir}/libgimpmodule
+#%{_gtkdocdir}/libgimpthumb
+#%{_gtkdocdir}/libgimpwidgets
 
 %if %{with aalib}
 %files aa
