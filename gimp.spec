@@ -1,13 +1,11 @@
 #
 # Conditional build:
 %bcond_without	aalib		# aa plugin (which requires aalib)
-%bcond_without	python		# python plugins
 %bcond_without	libunwind	# detailed backtraces using libunwind
-%bcond_without	webkit		# webkit-based help browser
 %bcond_without	static_libs	# static libraries
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.78
+%define	babl_ver	0.1.110
 %define	gegl_ver	0.4.52
 
 %define		pre	RC2
@@ -25,41 +23,37 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	3.0.0
-Release:	0.%{pre}.0.1
+Release:	0.%{pre}.1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}-%{pre}.tar.xz
 # Source0-md5:	b72e2b31daec5203330876faa3a86c92
 Patch0:		%{name}-home_etc.patch
-Patch1:		%{name}-types.patch
-Patch3:		%{name}-no-checks-for-runtime-deps.patch
 URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
-BuildRequires:	atk-devel >= 1:2.2.0
-BuildRequires:	autoconf >= 2.54
-BuildRequires:	automake
+BuildRequires:	atk-devel >= 1:2.4.0
 BuildRequires:	babl-devel >= %{babl_ver}
 BuildRequires:	bzip2-devel
-BuildRequires:	cairo-devel >= 1.12.2
+BuildRequires:	cairo-devel >= 1.14.0
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	fontconfig-devel >= 2.12.4
-BuildRequires:	freetype-devel >= 1:2.1.7
+BuildRequires:	freetype-devel >= 2.1.7
+BuildRequires:	exiv2-devel >= 0.27.4
 BuildRequires:	gdk-pixbuf2-devel >= 2.30.8
 BuildRequires:	gegl-devel >= %{gegl_ver}
 BuildRequires:	gettext-tools >= 0.19
-BuildRequires:	gexiv2-devel >= 0.10.6
+BuildRequires:	gexiv2-devel >= 0.14.0
 BuildRequires:	ghostscript-devel
 BuildRequires:	giflib-devel
-BuildRequires:	glib2-devel >= 1:2.56.2
 BuildRequires:	glib-networking
-BuildRequires:	gtk+2-devel >= 2:2.24.32
-BuildRequires:	gtk-update-icon-cache >= 2.24.32
+BuildRequires:	glib2-devel >= 1:2.70.0
+BuildRequires:	gtk+3-devel >= 3.24.0
 BuildRequires:	gtk-doc >= 1.6
-#%{?with_webkit:BuildRequires:	gtk-webkit-devel >= 1.6.1}
-BuildRequires:	harfbuzz-devel >= 0.9.19
+BuildRequires:	gtk-update-icon-cache >= 2.24.32
+BuildRequires:	harfbuzz-devel >= 2.8.2
 BuildRequires:	intltool >= 0.40.1
 BuildRequires:	iso-codes
 BuildRequires:	json-glib-devel >= 1.2.6
@@ -73,19 +67,18 @@ BuildRequires:	libpng-devel >= 2:1.6.25
 BuildRequires:	librsvg-devel >= 1:2.40.6
 BuildRequires:	libstdc++-devel >= 6:5
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool >= 2:2.2
 %{?with_libunwind:BuildRequires:	libunwind-devel >= 1.1.0}
 BuildRequires:	libwebp-devel >= 0.6.0
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	mypaint-brushes-1-devel >= 1.0
 BuildRequires:	openjpeg2-devel >= 2.1.0
-BuildRequires:	pango-devel >= 1:1.32.0
+BuildRequires:	pango-devel >= 1:1.50.0
 BuildRequires:	perl-base >= 1:5.10.0
 BuildRequires:	pkgconfig >= 1:0.16
-BuildRequires:	poppler-glib-devel >= 0.50.0
 BuildRequires:	poppler-data
-%{?with_python:BuildRequires:	python3}
-%{?with_python:BuildRequires:	python3-pycairo-devel >= 1.12.2}
+BuildRequires:	poppler-glib-devel >= 0.50.0
+BuildRequires:	python3-pycairo-devel >= 1.12.2
+BuildRequires:	python3
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.527
@@ -105,7 +98,7 @@ Requires(post,postun):	gtk+2 >= 2:2.24.32
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	OpenEXR >= 1.6.1
 Requires:	alsa-lib >= 1.0.11
-Requires:	atk >= 1:2.2.0
+Requires:	atk >= 1:2.4.0
 Requires:	fontconfig-libs >= 2.12.4
 Requires:	freetype >= 1:2.1.7
 Requires:	harfbuzz >= 0.9.19
@@ -228,14 +221,14 @@ Summary(pl.UTF-8):	Biblioteki GIMP-a
 License:	LGPL v2+
 Group:		X11/Libraries
 Requires:	babl >= %{babl_ver}
-Requires:	cairo >= 1.12.2
+Requires:	cairo >= 1.14.0
 Requires:	gdk-pixbuf2 >= 2.30.8
 Requires:	gegl >= %{gegl_ver}
-Requires:	gexiv2 >= 0.10.6
+Requires:	gexiv2 >= 0.14.0
 Requires:	glib2 >= 1:2.56.2
-Requires:	gtk+2 >= 2:2.24.32
+Requires:	gtk+3 >= 3.24.0
 Requires:	lcms2 >= 2.8
-Requires:	pango >= 1:1.32.0
+Requires:	pango >= 1:1.50.0
 
 %description libs
 This package contains GIMP libraries.
@@ -258,12 +251,12 @@ Summary(zh_TW.UTF-8):	[開發]gimp的開發包
 License:	LGPL v2+
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	cairo-devel >= 1.12.2
+Requires:	cairo-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.30.8
 Requires:	gegl-devel >= %{gegl_ver}
 Requires:	glib2-devel >= 1:2.56.2
-Requires:	gtk+2-devel >= 2:2.24.32
-Requires:	pango-devel >= 1:1.32.0
+Requires:	gtk+3-devel >= 3.24.0
+Requires:	pango-devel >= 1:1.50.0
 
 %description devel
 Header files for writing GIMP plugins and extensions.
@@ -348,29 +341,18 @@ Wtyczka SVG dla GIMPa.
 
 %prep
 %setup -q -n %{name}-%{version}-%{pre}
-#%patch0 -p1
-##%patch1 -p1
-#%patch3 -p1
-
-#%{__sed} -i -e '1s,/usr/bin/env python,%{__python},' plug-ins/pygimp/plug-ins/gradients-save-as-css.py
+%patch -P 0 -p1
 
 %build
-%meson build
+%meson build \
+	-Dbug-report-url="https://www.pld-linux.org/" \
+	-Dappdata-test=disabled \
+	-Dwith-sendmail=/usr/lib/sendmail \
+	-Dgi-docgen=enabled \
+	-Dlibunwind=%{__true_false libunwind} \
+	%{?with_posix_shm:-Dshmem-type=posix}
 
 %ninja_build -C build
-
-#	%{!?with_python:--disable-python} \
-#	--enable-default-binary \
-#	--enable-gtk-doc \
-#	%{__enable_disable static_libs static} \
-#	--without-appdata-test \
-#	--with-bug-report-url="https://www.pld-linux.org/" \
-#	--with-html-dir=%{_gtkdocdir} \
-#	--with-lcms=2 \
-#	%{!?with_libunwind:--without-libunwind} \
-#	--with-sendmail=/usr/lib/sendmail \
-#	%{?with_posix_shm:--with-shm=posix} \
-#	%{!?with_webkit:--without-webkit}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -430,10 +412,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimp-test-clipboard-3
 %attr(755,root,root) %{_bindir}/gimp-test-clipboard
 %attr(755,root,root) %{_libexecdir}/gimp-debug-tool-3.0
-#%{_datadir}/metainfo/gimp-data-extras.metainfo.xml
+%attr(755,root,root) %{_libexecdir}/gimp-debug-tool-3
+%attr(755,root,root) %{_libexecdir}/gimp-debug-tool
 %{_datadir}/metainfo/org.gimp.GIMP.appdata.xml
 %{_desktopdir}/gimp.desktop
 %{_iconsdir}/hicolor/*x*/apps/gimp.png
+%{_iconsdir}/hicolor/scalable/apps/gimp.svg
 %{_mandir}/man1/gimp*.1*
 %{_mandir}/man5/gimprc*.5*
 
@@ -444,10 +428,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/*
 %{?with_aalib:%exclude %{_libdir}/gimp/%{mver}/plug-ins/file-aa}
 %exclude %{_libdir}/gimp/%{mver}/plug-ins/file-svg
+%dir %{_libdir}/gimp/%{mver}/extensions
+%dir %{_libdir}/gimp/%{mver}/extensions/org.gimp.extension.goat-exercises
+%{_libdir}/gimp/%{mver}/extensions/org.gimp.extension.goat-exercises/goat-exercise*
+%{_libdir}/gimp/%{mver}/extensions/org.gimp.extension.goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml
 
 %dir %{_libdir}/gimp/%{mver}/modules
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
 %{_libdir}/gimp/%{mver}/environ
+
+%{_libdir}/girepository-1.0/Gimp-3.0.typelib
+%{_libdir}/girepository-1.0/GimpUi-3.0.typelib
 
 %dir %{_datadir}/gimp
 %dir %{_datadir}/gimp/%{mver}
@@ -485,6 +476,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgimp-3.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgimp-3.0.so.0
+%attr(755,root,root) %{_libdir}/libgimp-scriptfu-3.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgimp-scriptfu-3.0.so.0
 %attr(755,root,root) %{_libdir}/libgimpbase-3.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgimpbase-3.0.so.0
 %attr(755,root,root) %{_libdir}/libgimpcolor-3.0.so.*.*.*
@@ -508,6 +501,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gimptool-3
 %attr(755,root,root) %{_bindir}/gimptool
 %attr(755,root,root) %{_libdir}/libgimp-3.0.so
+%attr(755,root,root) %{_libdir}/libgimp-scriptfu-3.0.so
 %attr(755,root,root) %{_libdir}/libgimpbase-3.0.so
 %attr(755,root,root) %{_libdir}/libgimpcolor-3.0.so
 %attr(755,root,root) %{_libdir}/libgimpconfig-3.0.so
@@ -520,12 +514,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/gimpthumb-3.0.pc
 %{_pkgconfigdir}/gimpui-3.0.pc
 %{_includedir}/gimp-3.0
+%{_datadir}/gir-1.0/Gimp-3.0.gir
+%{_datadir}/gir-1.0/GimpUi-3.0.gir
 %{_mandir}/man1/gimptool*.1*
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgimp-3.0.a
+%{_libdir}/libgimp-scriptfu-3.0.a
 %{_libdir}/libgimpbase-3.0.a
 %{_libdir}/libgimpcolor-3.0.a
 %{_libdir}/libgimpconfig-3.0.a
@@ -538,14 +535,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apidocs
 %defattr(644,root,root,755)
-#%{_gtkdocdir}/libgimp
-#%{_gtkdocdir}/libgimpbase
-#%{_gtkdocdir}/libgimpcolor
-#%{_gtkdocdir}/libgimpconfig
-#%{_gtkdocdir}/libgimpmath
-#%{_gtkdocdir}/libgimpmodule
-#%{_gtkdocdir}/libgimpthumb
-#%{_gtkdocdir}/libgimpwidgets
+%{_docdir}/gimp-3.0
 
 %if %{with aalib}
 %files aa
