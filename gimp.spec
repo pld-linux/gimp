@@ -10,7 +10,7 @@
 %define	babl_ver	0.1.78
 %define	gegl_ver	0.4.52
 
-%define		rc	RC2
+%define		pre	RC2
 %define		mver	3.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -25,11 +25,11 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	3.0.0
-Release:	0.%{rc}.0.1
+Release:	0.%{pre}.0.1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
-Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}-%{rc}.tar.xz
+Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}-%{pre}.tar.xz
 # Source0-md5:	b72e2b31daec5203330876faa3a86c92
 Patch0:		%{name}-home_etc.patch
 Patch1:		%{name}-types.patch
@@ -347,7 +347,7 @@ SVG plugin for GIMP.
 Wtyczka SVG dla GIMPa.
 
 %prep
-%setup -q -n %{name}-%{version}-%{rc}
+%setup -q -n %{name}-%{version}-%{pre}
 #%patch0 -p1
 ##%patch1 -p1
 #%patch3 -p1
