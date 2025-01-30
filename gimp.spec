@@ -9,6 +9,7 @@
 %define	gegl_ver	0.4.52
 
 %define		pre	RC2
+%define		rel	2
 %define		mver	3.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -23,7 +24,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	3.0.0
-Release:	0.%{pre}.1
+Release:	0.%{pre}.%{rel}
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
