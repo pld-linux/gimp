@@ -35,31 +35,33 @@ URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
+BuildRequires:	appstream-glib-devel >= 0.7.7
 BuildRequires:	atk-devel >= 1:2.4.0
 BuildRequires:	babl-devel >= %{babl_ver}
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.14.0
-BuildRequires:	docbook-dtd412-xml
-BuildRequires:	fontconfig-devel >= 2.12.4
-BuildRequires:	freetype-devel >= 2.1.7
+BuildRequires:	cfitsio-devel
 BuildRequires:	exiv2-devel >= 0.27.4
+BuildRequires:	fontconfig-devel >= 2.12.4
+BuildRequires:	fonts-TTF-DejaVu
+BuildRequires:	freetype-devel >= 2.1.7
 BuildRequires:	gdk-pixbuf2-devel >= 2.30.8
 BuildRequires:	gegl-devel >= %{gegl_ver}
 BuildRequires:	gettext-tools >= 0.19
 BuildRequires:	gexiv2-devel >= 0.14.0
 BuildRequires:	ghostscript-devel
-BuildRequires:	giflib-devel
+BuildRequires:	gi-docgen
 BuildRequires:	glib-networking
 BuildRequires:	glib2-devel >= 1:2.70.0
+BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+3-devel >= 3.24.0
-BuildRequires:	gtk-doc >= 1.6
-BuildRequires:	gtk-update-icon-cache >= 2.24.32
 BuildRequires:	harfbuzz-devel >= 2.8.2
-BuildRequires:	intltool >= 0.40.1
 BuildRequires:	iso-codes
 BuildRequires:	json-glib-devel >= 1.2.6
 BuildRequires:	lcms2-devel >= 2.8
-BuildRequires:	libheif-devel >= 1.10
+BuildRequires:	libarchive-devel
+BuildRequires:	libgomp-devel
+BuildRequires:	libheif-devel >= 1.15.1
 BuildRequires:	libjpeg-devel
 BuildRequires:	libjxl-devel >= 0.7.0
 BuildRequires:	libmng-devel
@@ -67,31 +69,38 @@ BuildRequires:	libmypaint-devel >= 1.4.0
 BuildRequires:	libpng-devel >= 2:1.6.25
 BuildRequires:	librsvg-devel >= 1:2.40.6
 BuildRequires:	libstdc++-devel >= 6:5
-BuildRequires:	libtiff-devel
+BuildRequires:	libtiff-devel >= 4.0.0
 %{?with_libunwind:BuildRequires:	libunwind-devel >= 1.1.0}
 BuildRequires:	libwebp-devel >= 0.6.0
 BuildRequires:	libwmf-devel >= 2:0.2.8
+BuildRequires:	libxslt-progs
+BuildRequires:	meson >= 0.61.0
 BuildRequires:	mypaint-brushes-1-devel >= 1.0
+BuildRequires:	ninja
 BuildRequires:	openjpeg2-devel >= 2.1.0
 BuildRequires:	pango-devel >= 1:1.50.0
 BuildRequires:	perl-base >= 1:5.10.0
 BuildRequires:	pkgconfig >= 1:0.16
-BuildRequires:	poppler-data
-BuildRequires:	poppler-glib-devel >= 0.50.0
-BuildRequires:	python3-pycairo-devel >= 1.12.2
-BuildRequires:	python3
+BuildRequires:	poppler-data >= 0.4.9
+BuildRequires:	poppler-glib-devel >= 0.69.0
+BuildRequires:	python3 >= 1:3.6
+BuildRequires:	python3-pygobject3
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.527
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
+BuildRequires:	shared-mime-info
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel >= 1:167
-BuildRequires:	vala-gegl >= 0.4.52
+BuildRequires:	vala
+BuildRequires:	vala-babl
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
-BuildRequires:	xorg-lib-libXt-devel
+BuildRequires:	xz
 BuildRequires:	xz-devel >= 1:5.0.0
 BuildRequires:	zlib-devel
 Requires(post,postun):	desktop-file-utils
@@ -99,22 +108,34 @@ Requires(post,postun):	gtk+2 >= 2:2.24.32
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	OpenEXR >= 1.6.1
 Requires:	alsa-lib >= 1.0.11
+Requires:	appstream-glib >= 0.7.7
 Requires:	atk >= 1:2.4.0
+Requires:	babl >= %{babl_ver}
+Requires:	cairo >= 1.14.0
 Requires:	fontconfig-libs >= 2.12.4
 Requires:	freetype >= 1:2.1.7
-Requires:	harfbuzz >= 0.9.19
+Requires:	gdk-pixbuf2 >= 2.30.8
+Requires:	gegl >= %{gegl_ver}
+Requires:	gexiv2 >= 0.14.0
+Requires:	glib2 >= 1:2.70.0
+Requires:	gtk+3 >= 3.24.0
+Requires:	harfbuzz >= 2.8.2
 Requires:	hicolor-icon-theme
 Requires:	iso-codes
 Requires:	json-glib >= 1.2.6
-Requires:	libheif >= 1.10
+Requires:	lcms2 >= 2.8
+Requires:	libheif >= 1.15.1
+Requires:	libjxl >= 0.7.0
 Requires:	libmypaint >= 1.4.0
 Requires:	libpng >= 2:1.6.25
+Requires:	libtiff >= 4.0.0
 Requires:	libwebp >= 0.6.0
 Requires:	libwmf-libs >= 2:0.2.8
 Requires:	mypaint-brushes-1 >= 1.0
 Requires:	openjpeg2 >= 2.1.0
-Requires:	poppler-data >= 0.4.7
-Requires:	poppler-glib >= 0.50.0
+Requires:	pango >= 1:1.50.0
+Requires:	poppler-data >= 0.4.9
+Requires:	poppler-glib >= 0.69.0
 Requires:	udev-glib >= 1:167
 Requires:	xz-libs >= 1:5.0.0
 # for https
@@ -223,10 +244,10 @@ License:	LGPL v2+
 Group:		X11/Libraries
 Requires:	babl >= %{babl_ver}
 Requires:	cairo >= 1.14.0
+Requires:	fontconfig-libs >= 2.12.4
 Requires:	gdk-pixbuf2 >= 2.30.8
 Requires:	gegl >= %{gegl_ver}
-Requires:	gexiv2 >= 0.14.0
-Requires:	glib2 >= 1:2.56.2
+Requires:	glib2 >= 1:2.70.0
 Requires:	gtk+3 >= 3.24.0
 Requires:	lcms2 >= 2.8
 Requires:	pango >= 1:1.50.0
@@ -255,7 +276,7 @@ Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	cairo-devel >= 1.14.0
 Requires:	gdk-pixbuf2-devel >= 2.30.8
 Requires:	gegl-devel >= %{gegl_ver}
-Requires:	glib2-devel >= 1:2.56.2
+Requires:	glib2-devel >= 1:2.70.0
 Requires:	gtk+3-devel >= 3.24.0
 Requires:	pango-devel >= 1:1.50.0
 
