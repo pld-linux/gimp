@@ -5,11 +5,9 @@
 %bcond_without	static_libs	# static libraries
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.110
-%define	gegl_ver	0.4.52
+%define	babl_ver	0.1.112
+%define	gegl_ver	0.4.56
 
-%define		pre	RC2
-%define		rel	2
 %define		mver	3.0
 Summary:	The GNU Image Manipulation Program
 Summary(de.UTF-8):	Das GNU-Bildbearbeitungs-Programm
@@ -24,12 +22,12 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	3.0.0
-Release:	0.%{pre}.%{rel}
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
-Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}-%{pre}.tar.xz
-# Source0-md5:	b72e2b31daec5203330876faa3a86c92
+Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}.tar.xz
+# Source0-md5:	afc666f095a9cb05b3e7a7c682d0a6a9
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
@@ -94,6 +92,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-glib-devel >= 1:167
 BuildRequires:	vala
 BuildRequires:	vala-babl
+BuildRequires:	vala-gegl
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXext-devel
@@ -361,12 +360,25 @@ SVG plugin for GIMP.
 %description svg -l pl.UTF-8
 Wtyczka SVG dla GIMPa.
 
+%package -n vala-gimp
+Summary:	Vala API for gimp
+Summary(pl.UTF-8):	API języka Vala dla gimpa
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+BuildArch:	noarch
+
+%description -n vala-gimp
+Vala API for gimp.
+
+%description -n vala-gimp -l pl.UTF-8
+API języka Vala dla gimpa.
+
 %prep
-%setup -q -n %{name}-%{version}-%{pre}
+%setup -q
 %patch -P 0 -p1
 
 %build
-%meson build \
+%meson \
 	-Dbug-report-url="https://www.pld-linux.org/" \
 	-Dappdata-test=disabled \
 	-Dwith-sendmail=/usr/lib/sendmail \
@@ -374,12 +386,12 @@ Wtyczka SVG dla GIMPa.
 	-Dlibunwind=%{__true_false libunwind} \
 	%{?with_posix_shm:-Dshmem-type=posix}
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 # Fix mn page symlinks
 for m in gimp gimp-console gimptool ; do
@@ -568,3 +580,10 @@ rm -rf $RPM_BUILD_ROOT
 %files svg
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/gimp/%{mver}/plug-ins/file-svg
+
+%files -n vala-gimp
+%defattr(644,root,root,755)
+%{_datadir}/vala/vapi/gimp-3.0.deps
+%{_datadir}/vala/vapi/gimp-3.0.vapi
+%{_datadir}/vala/vapi/gimp-ui-3.0.deps
+%{_datadir}/vala/vapi/gimp-ui-3.0.vapi
