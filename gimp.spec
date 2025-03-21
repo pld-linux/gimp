@@ -49,6 +49,7 @@ BuildRequires:	gettext-tools >= 0.19
 BuildRequires:	gexiv2-devel >= 0.14.0
 BuildRequires:	ghostscript-devel
 BuildRequires:	gi-docgen
+BuildRequires:	gjs-devel
 BuildRequires:	glib-networking
 BuildRequires:	glib2-devel >= 1:2.70.0
 BuildRequires:	gobject-introspection-devel
@@ -58,6 +59,7 @@ BuildRequires:	iso-codes
 BuildRequires:	json-glib-devel >= 1.2.6
 BuildRequires:	lcms2-devel >= 2.8
 BuildRequires:	libarchive-devel
+BuildRequires:	libbacktrace-devel
 BuildRequires:	libgomp-devel
 BuildRequires:	libheif-devel >= 1.15.1
 BuildRequires:	libjpeg-devel
@@ -376,6 +378,9 @@ API języka Vala dla gimpa.
 %prep
 %setup -q
 %patch -P 0 -p1
+
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+gjs(\s|$),#!/usr/bin/gjs\1,' \
+	extensions/goat-exercises/goat-exercise-gjs.js
 
 %build
 %meson \
