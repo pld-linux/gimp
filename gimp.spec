@@ -6,7 +6,7 @@
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
 %define	babl_ver	0.1.112
-%define	gegl_ver	0.4.56
+%define	gegl_ver	0.4.58
 
 %define		mver	3.0
 Summary:	The GNU Image Manipulation Program
@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	3.0.0
+Version:	3.0.2
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}.tar.xz
-# Source0-md5:	afc666f095a9cb05b3e7a7c682d0a6a9
+# Source0-md5:	e08392371ac08ce55c01dc824f734a35
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
@@ -409,7 +409,7 @@ done
 echo ".so gimprc-3.0.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc-3.5
 echo ".so gimprc-3.0.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
 
-%{?with_static_libs:%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.a}
+#%{?with_static_libs:%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.a}
 
 # don't hide python/python3 behind /usr/bin/env
 %{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python3(\s|$),#!%{__python3}\1,' \
