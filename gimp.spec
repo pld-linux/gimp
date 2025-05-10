@@ -22,7 +22,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	3.0.2
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
@@ -366,7 +366,7 @@ Wtyczka SVG dla GIMPa.
 Summary:	Vala API for gimp
 Summary(pl.UTF-8):	API języka Vala dla gimpa
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 BuildArch:	noarch
 
 %description -n vala-gimp
