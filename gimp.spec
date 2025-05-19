@@ -5,7 +5,7 @@
 %bcond_without	static_libs	# static libraries
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.112
+%define	babl_ver	0.1.114
 %define	gegl_ver	0.4.58
 
 %define		mver	3.0
@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	3.0.2
+Version:	3.0.4
 Release:	2
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}.tar.xz
-# Source0-md5:	e08392371ac08ce55c01dc824f734a35
+# Source0-md5:	eaeb6f9973a474a6b8eb168ed25d1f2a
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
