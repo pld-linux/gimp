@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	3.0.4
-Release:	4
+Version:	3.0.6
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}.tar.xz
-# Source0-md5:	eaeb6f9973a474a6b8eb168ed25d1f2a
+# Source0-md5:	3eb20ad46b6fcd7938ec64929c40320d
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
 BuildRequires:	OpenEXR-devel >= 1.6.1
@@ -95,6 +95,7 @@ BuildRequires:	udev-glib-devel >= 1:167
 BuildRequires:	vala
 BuildRequires:	vala-babl
 BuildRequires:	vala-gegl
+BuildRequires:	vala-gexiv2
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXcursor-devel
 BuildRequires:	xorg-lib-libXext-devel
