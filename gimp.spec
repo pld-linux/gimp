@@ -30,10 +30,10 @@ Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}.tar.xz
 # Source0-md5:	3eb20ad46b6fcd7938ec64929c40320d
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
+BuildRequires:	AppStream-devel >= 0.16.1
 BuildRequires:	OpenEXR-devel >= 1.6.1
 %{?with_aalib:BuildRequires:	aalib-devel}
 BuildRequires:	alsa-lib-devel >= 1.0.11
-BuildRequires:	appstream-glib-devel >= 0.7.7
 BuildRequires:	atk-devel >= 1:2.4.0
 BuildRequires:	babl-devel >= %{babl_ver}
 BuildRequires:	bzip2-devel
@@ -108,9 +108,9 @@ BuildRequires:	zlib-devel
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk+2 >= 2:2.24.32
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	AppStream >= 0.16.1
 Requires:	OpenEXR >= 1.6.1
 Requires:	alsa-lib >= 1.0.11
-Requires:	appstream-glib >= 0.7.7
 Requires:	atk >= 1:2.4.0
 Requires:	babl >= %{babl_ver}
 Requires:	cairo >= 1.14.0
