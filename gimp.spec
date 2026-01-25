@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	3.0.6
-Release:	2
+Version:	3.0.8
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}.tar.xz
-# Source0-md5:	3eb20ad46b6fcd7938ec64929c40320d
+# Source0-md5:	5cb3e2672d4ba926c162bcd2665ed55b
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
 BuildRequires:	AppStream-devel >= 0.16.1
@@ -36,6 +36,7 @@ BuildRequires:	OpenEXR-devel >= 1.6.1
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	atk-devel >= 1:2.4.0
 BuildRequires:	babl-devel >= %{babl_ver}
+BuildRequires:	bash-completion-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.14.0
 BuildRequires:	cfitsio-devel
@@ -238,6 +239,20 @@ imaging і антиаліасинг, різноманітні конвертор
 GIMP має підтримку сценаріїв (scripting facility), проте багато з
 включених до поставки сценаріїв припускають наявність шрифтів, які не
 можуть бути включені в дистрибутив.
+
+%package -n bash-completion-gimp
+Summary:	Bash Completion for %{name}
+Summary(pl.UTF-8):	Uzupełnianie parametrów polecenia gimp dla powłoki BASH
+Group:		Applications/Shells
+Requires:	%{name} = %{version}
+Requires:	bash-completion
+BuildArch:	noarch
+
+%description -n bash-completion-gimp
+Bash completion script for gimp.
+
+%description -n bash-completion-gimp -l pl.UTF-8
+Uzupełnianie parametrów polecenia gimp-a dla powłoki BASH.
 
 %package libs
 Summary:	GIMP libraries
@@ -474,7 +489,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gimp/%{mver}/extensions/org.gimp.extension.goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml
 
 %dir %{_libdir}/gimp/%{mver}/modules
-%attr(755,root,root) %{_libdir}/gimp/%{mver}/modules/*.so
+%{_libdir}/gimp/%{mver}/modules/*.so
 %{_libdir}/gimp/%{mver}/environ
 
 %{_libdir}/girepository-1.0/Gimp-3.0.typelib
@@ -514,42 +529,42 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgimp-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimp-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimp-scriptfu-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimp-scriptfu-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpbase-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpbase-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpcolor-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpcolor-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpconfig-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpconfig-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpmath-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpmath-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpmodule-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpmodule-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpthumb-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpthumb-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpui-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpui-3.0.so.0
-%attr(755,root,root) %{_libdir}/libgimpwidgets-3.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgimpwidgets-3.0.so.0
+%{_libdir}/libgimp-3.0.so.*.*.*
+%ghost %{_libdir}/libgimp-3.0.so.0
+%{_libdir}/libgimp-scriptfu-3.0.so.*.*.*
+%ghost %{_libdir}/libgimp-scriptfu-3.0.so.0
+%{_libdir}/libgimpbase-3.0.so.*.*.*
+%ghost %{_libdir}/libgimpbase-3.0.so.0
+%{_libdir}/libgimpcolor-3.0.so.*.*.*
+%ghost %{_libdir}/libgimpcolor-3.0.so.0
+%{_libdir}/libgimpconfig-3.0.so.*.*.*
+%ghost %{_libdir}/libgimpconfig-3.0.so.0
+%{_libdir}/libgimpmath-3.0.so.*.*.*
+%ghost %{_libdir}/libgimpmath-3.0.so.0
+%{_libdir}/libgimpmodule-3.0.so.*.*.*
+%ghost %{_libdir}/libgimpmodule-3.0.so.0
+%{_libdir}/libgimpthumb-3.0.so.*.*.*
+%ghost %{_libdir}/libgimpthumb-3.0.so.0
+%{_libdir}/libgimpui-3.0.so.*.*.*
+%ghost %{_libdir}/libgimpui-3.0.so.0
+%{_libdir}/libgimpwidgets-3.0.so.*.*.*
+%ghost %{_libdir}/libgimpwidgets-3.0.so.0
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gimptool-3.0
 %attr(755,root,root) %{_bindir}/gimptool-3
 %attr(755,root,root) %{_bindir}/gimptool
-%attr(755,root,root) %{_libdir}/libgimp-3.0.so
-%attr(755,root,root) %{_libdir}/libgimp-scriptfu-3.0.so
-%attr(755,root,root) %{_libdir}/libgimpbase-3.0.so
-%attr(755,root,root) %{_libdir}/libgimpcolor-3.0.so
-%attr(755,root,root) %{_libdir}/libgimpconfig-3.0.so
-%attr(755,root,root) %{_libdir}/libgimpmath-3.0.so
-%attr(755,root,root) %{_libdir}/libgimpmodule-3.0.so
-%attr(755,root,root) %{_libdir}/libgimpthumb-3.0.so
-%attr(755,root,root) %{_libdir}/libgimpui-3.0.so
-%attr(755,root,root) %{_libdir}/libgimpwidgets-3.0.so
+%{_libdir}/libgimp-3.0.so
+%{_libdir}/libgimp-scriptfu-3.0.so
+%{_libdir}/libgimpbase-3.0.so
+%{_libdir}/libgimpcolor-3.0.so
+%{_libdir}/libgimpconfig-3.0.so
+%{_libdir}/libgimpmath-3.0.so
+%{_libdir}/libgimpmodule-3.0.so
+%{_libdir}/libgimpthumb-3.0.so
+%{_libdir}/libgimpui-3.0.so
+%{_libdir}/libgimpwidgets-3.0.so
 %{_pkgconfigdir}/gimp-3.0.pc
 %{_pkgconfigdir}/gimpthumb-3.0.pc
 %{_pkgconfigdir}/gimpui-3.0.pc
@@ -593,3 +608,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/vala/vapi/gimp-3.0.vapi
 %{_datadir}/vala/vapi/gimp-ui-3.0.deps
 %{_datadir}/vala/vapi/gimp-ui-3.0.vapi
+
+%files -n bash-completion-gimp
+%defattr(644,root,root,755)
+%{bash_compdir}/%{name}-3.0
