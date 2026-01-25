@@ -36,7 +36,7 @@ BuildRequires:	OpenEXR-devel >= 1.6.1
 BuildRequires:	alsa-lib-devel >= 1.0.11
 BuildRequires:	atk-devel >= 1:2.4.0
 BuildRequires:	babl-devel >= %{babl_ver}
-BuildRequires:	bash-completion-devel
+BuildRequires:	bash-completion-devel >= 1:2.0
 BuildRequires:	bzip2-devel
 BuildRequires:	cairo-devel >= 1.14.0
 BuildRequires:	cfitsio-devel
@@ -47,6 +47,7 @@ BuildRequires:	freetype-devel >= 2.1.7
 BuildRequires:	gdk-pixbuf2-devel >= 2.30.8
 BuildRequires:	gegl-devel >= %{gegl_ver}
 BuildRequires:	gettext-tools >= 0.19
+BuildRequires:	gexiv2-devel < 0.15.0
 BuildRequires:	gexiv2-devel >= 0.14.0
 BuildRequires:	ghostscript-devel
 BuildRequires:	gi-docgen
