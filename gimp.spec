@@ -401,6 +401,7 @@ API języka Vala dla gimpa.
 
 %build
 %meson \
+	%{!?with_static_libs:--default-library=shared} \
 	-Dbug-report-url="https://www.pld-linux.org/" \
 	-Dappdata-test=disabled \
 	-Dwith-sendmail=/usr/lib/sendmail \
@@ -425,8 +426,6 @@ done
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man5/gimprc{,-3}.5
 echo ".so gimprc-3.0.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc-3.5
 echo ".so gimprc-3.0.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
-
-#%{?with_static_libs:%{__rm} $RPM_BUILD_ROOT%{_libdir}/gimp/%{mver}/modules/*.a}
 
 # don't hide python/python3 behind /usr/bin/env
 %{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python3(\s|$),#!%{__python3}\1,' \
