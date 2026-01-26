@@ -22,7 +22,7 @@ Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
 Version:	3.0.8
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
@@ -245,7 +245,7 @@ GIMP має підтримку сценаріїв (scripting facility), прот
 Summary:	Bash Completion for %{name}
 Summary(pl.UTF-8):	Uzupełnianie parametrów polecenia gimp dla powłoki BASH
 Group:		Applications/Shells
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	bash-completion
 BuildArch:	noarch
 
