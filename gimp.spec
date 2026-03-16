@@ -63,11 +63,11 @@ BuildRequires:	lcms2-devel >= 2.8
 BuildRequires:	libarchive-devel
 BuildRequires:	libbacktrace-devel
 BuildRequires:	libgomp-devel
-BuildRequires:	libheif-devel >= 1.15.1
+BuildRequires:	libheif-devel >= 1.17.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libjxl-devel >= 0.7.0
 BuildRequires:	libmng-devel
-BuildRequires:	libmypaint-devel >= 1.4.0
+BuildRequires:	libmypaint-devel >= 1.5.0
 BuildRequires:	libpng-devel >= 2:1.6.25
 BuildRequires:	librsvg-devel >= 1:2.40.6
 BuildRequires:	libstdc++-devel >= 6:5
@@ -128,14 +128,14 @@ Requires:	hicolor-icon-theme
 Requires:	iso-codes
 Requires:	json-glib >= 1.2.6
 Requires:	lcms2 >= 2.8
-Requires:	libheif >= 1.15.1
+Requires:	libheif >= 1.17.0
 Requires:	libjxl >= 0.7.0
-Requires:	libmypaint >= 1.4.0
+Requires:	libmypaint >= 1.5.0
 Requires:	libpng >= 2:1.6.25
 Requires:	libtiff >= 4.0.0
 Requires:	libwebp >= 0.6.0
 Requires:	libwmf-libs >= 2:0.2.8
-Requires:	mypaint-brushes-1 >= 1.0
+Requires:	mypaint-brushes >= 2.0
 Requires:	openjpeg2 >= 2.1.0
 Requires:	pango >= 1:1.50.0
 Requires:	poppler-data >= 0.4.9
