@@ -5,8 +5,8 @@
 %bcond_without	static_libs	# static libraries
 %bcond_with	posix_shm	# with POSIX SHM (default is SysV SHM)
 
-%define	babl_ver	0.1.114
-%define	gegl_ver	0.4.58
+%define	babl_ver	0.1.118
+%define	gegl_ver	0.4.66
 
 %define		mver	3.0
 Summary:	The GNU Image Manipulation Program
@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	3.0.8
-Release:	2
+Version:	3.2.0
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
-Source0:	https://download.gimp.org/pub/gimp/v3.0/%{name}-%{version}.tar.xz
-# Source0-md5:	5cb3e2672d4ba926c162bcd2665ed55b
+Source0:	https://download.gimp.org/pub/gimp/v3.2/%{name}-%{version}.tar.xz
+# Source0-md5:	7299fb97cbae66429de38a6b1755c7fe
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
 BuildRequires:	AppStream-devel >= 0.16.1
@@ -77,7 +77,7 @@ BuildRequires:	libwebp-devel >= 0.6.0
 BuildRequires:	libwmf-devel >= 2:0.2.8
 BuildRequires:	libxslt-progs
 BuildRequires:	meson >= 0.61.0
-BuildRequires:	mypaint-brushes-1-devel >= 1.0
+BuildRequires:	mypaint-brushes-devel >= 2.0
 BuildRequires:	ninja
 BuildRequires:	openjpeg2-devel >= 2.1.0
 BuildRequires:	pango-devel >= 1:1.50.0
@@ -419,13 +419,13 @@ rm -rf $RPM_BUILD_ROOT
 # Fix mn page symlinks
 for m in gimp gimp-console gimptool ; do
 	%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/${m}{,-3}.1
-	echo ".so ${m}-3.0.1" > $RPM_BUILD_ROOT%{_mandir}/man1/${m}-3.1
-	echo ".so ${m}-3.0.1" > $RPM_BUILD_ROOT%{_mandir}/man1/${m}.1
+	echo ".so ${m}-3.2.1" > $RPM_BUILD_ROOT%{_mandir}/man1/${m}-3.1
+	echo ".so ${m}-3.2.1" > $RPM_BUILD_ROOT%{_mandir}/man1/${m}.1
 done
 
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man5/gimprc{,-3}.5
-echo ".so gimprc-3.0.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc-3.5
-echo ".so gimprc-3.0.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
+echo ".so gimprc-3.2.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc-3.5
+echo ".so gimprc-3.2.5" > $RPM_BUILD_ROOT%{_mandir}/man5/gimprc.5
 
 # don't hide python/python3 behind /usr/bin/env
 %{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+python3(\s|$),#!%{__python3}\1,' \
@@ -456,17 +456,17 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS LICENSE NEWS README
 %doc docs/Wilber*
 
-%attr(755,root,root) %{_bindir}/gimp-3.0
+%attr(755,root,root) %{_bindir}/gimp-3.2
 %attr(755,root,root) %{_bindir}/gimp-3
 %attr(755,root,root) %{_bindir}/gimp
-%attr(755,root,root) %{_bindir}/gimp-console-3.0
+%attr(755,root,root) %{_bindir}/gimp-console-3.2
 %attr(755,root,root) %{_bindir}/gimp-console-3
 %attr(755,root,root) %{_bindir}/gimp-console
 %attr(755,root,root) %{_bindir}/gimp-script-fu-interpreter-3.0
-%attr(755,root,root) %{_bindir}/gimp-test-clipboard-3.0
+%attr(755,root,root) %{_bindir}/gimp-test-clipboard-3.2
 %attr(755,root,root) %{_bindir}/gimp-test-clipboard-3
 %attr(755,root,root) %{_bindir}/gimp-test-clipboard
-%attr(755,root,root) %{_libexecdir}/gimp-debug-tool-3.0
+%attr(755,root,root) %{_libexecdir}/gimp-debug-tool-3.2
 %attr(755,root,root) %{_libexecdir}/gimp-debug-tool-3
 %attr(755,root,root) %{_libexecdir}/gimp-debug-tool
 %{_datadir}/metainfo/org.gimp.GIMP.appdata.xml
@@ -552,7 +552,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gimptool-3.0
+%attr(755,root,root) %{_bindir}/gimptool-3.2
 %attr(755,root,root) %{_bindir}/gimptool-3
 %attr(755,root,root) %{_bindir}/gimptool
 %{_libdir}/libgimp-3.0.so
@@ -611,4 +611,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n bash-completion-gimp
 %defattr(644,root,root,755)
-%{bash_compdir}/%{name}-3.0
+%{bash_compdir}/%{name}-3.2
