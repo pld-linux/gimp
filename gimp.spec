@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	3.2.0
+Version:	3.2.2
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v3.2/%{name}-%{version}.tar.xz
-# Source0-md5:	7299fb97cbae66429de38a6b1755c7fe
+# Source0-md5:	cf0ddfe3e59930b53758c11a8b55027a
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
 BuildRequires:	AppStream-devel >= 0.16.1
