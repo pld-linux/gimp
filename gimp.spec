@@ -21,13 +21,13 @@ Summary(uk.UTF-8):	The GNU Image Manipulation Program
 Summary(zh_CN.UTF-8):	[图像]GNU图象处理工具
 Summary(zh_TW.UTF-8):	[圖像]GNU圖象處理工具
 Name:		gimp
-Version:	3.2.2
+Version:	3.2.4
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		X11/Applications/Graphics
 Source0:	https://download.gimp.org/pub/gimp/v3.2/%{name}-%{version}.tar.xz
-# Source0-md5:	cf0ddfe3e59930b53758c11a8b55027a
+# Source0-md5:	4a5a233cf24e599bbf73084a3583e29f
 Patch0:		%{name}-home_etc.patch
 URL:		https://www.gimp.org/
 BuildRequires:	AppStream-devel >= 0.16.1
@@ -108,7 +108,7 @@ BuildRequires:	xz
 BuildRequires:	xz-devel >= 1:5.0.0
 BuildRequires:	zlib-devel
 Requires(post,postun):	desktop-file-utils
-Requires(post,postun):	gtk+2 >= 2:2.24.32
+Requires(post,postun):	gtk+3 >= 3.24.0
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	AppStream >= 0.16.1
 Requires:	OpenEXR >= 1.6.1
